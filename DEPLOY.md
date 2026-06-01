@@ -89,8 +89,8 @@ Upload `index.html` to any web server.
 | Feature | Detail |
 |---|---|
 | Token | USDT (BEP-20) on BSC |
-| Soft Cap | 150,000 USDT |
-| Hard Cap | 500,000 USDT |
+| Soft Cap | 500,000 USDT |
+| Hard Cap | 1,000,000 USDT |
 | Seed Tier | $0.08/token, 30% bonus, 1k-50k USDT |
 | Private Tier | $0.10/token, 15% bonus, 500-30k USDT |
 | Public Tier | $0.15/token, 5% bonus, 100-10k USDT |

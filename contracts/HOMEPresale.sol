@@ -13,7 +13,7 @@ pragma solidity ^0.8.19;
  *   Private: $0.10/token, 15% bonus,   500-30,000 USDT
  *   Public:  $0.15/token,  5% bonus,   100-10,000 USDT
  *
- * Caps: Soft = 150,000 USDT | Hard = 500,000 USDT
+ * Caps: Soft = 500,000 USDT | Hard = 1,000,000 USDT
  */
 contract HOMEPresale {
     // ── Errors ──
@@ -57,8 +57,8 @@ contract HOMEPresale {
     uint256 public immutable deployTime;
 
     uint256 public totalRaised;          // Total USDT received (wei)
-    uint256 public softCap;              // 150,000 USDT (wei)
-    uint256 public hardCap;              // 500,000 USDT (wei)
+    uint256 public softCap;              // 500,000 USDT (wei)
+    uint256 public hardCap;              // 1,000,000 USDT (wei)
     bool public isActive = true;
 
     mapping(string => Tier) public tiers;
@@ -82,8 +82,8 @@ contract HOMEPresale {
         deployTime = block.timestamp;
 
         // Caps: 150k / 500k USDT
-        softCap = 150_000 * 1e18;
-        hardCap = 500_000 * 1e18;
+        softCap = 500_000 * 1e18;
+        hardCap = 1_000_000 * 1e18;
 
         // Seed tier: $0.08, 30% bonus, 1k-50k USDT, max 500 contributors
         _setTier("seed",      0.08 ether, 3000, 1_000 ether, 50_000 ether, 500);
