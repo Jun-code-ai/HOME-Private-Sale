@@ -105,7 +105,12 @@ tailwind.config = {
 <style>
   /* ── Base ── */
   html { scroll-behavior: smooth; }
-  body { background: #050508; overflow-x: hidden; }
+  body { background: #050508; color: #ffffff; overflow-x: hidden; }
+  /* Fallback visible text before Tailwind loads */
+  h1, h2, h3, h4, p, span, a, button, div, li, td, th, label, code {
+    color: inherit;
+  }
+  a { color: #00FF88; }
 
   /* ── Scanline overlay ── */
   .scanlines::after {
@@ -168,12 +173,16 @@ tailwind.config = {
 
   /* ── Reveal on scroll ── */
   .reveal {
-    opacity: 0;
-    transform: translateY(40px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
                 transform 0.8s cubic-bezier(0.16,1,0.3,1);
   }
-  .reveal.visible {
+  .reveal.reveal-hidden {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  .reveal.reveal-hidden.visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1606,26 +1615,30 @@ function toggleLang() {
 }
 
 function applyLanguage() {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (!key) return;
-    const text = t(key);
-    if (!text || text === key) return;
-    if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
-      el.childNodes[0].textContent = text;
-    } else if (!el.querySelector('svg, img, button, input, span, div')) {
-      el.textContent = text;
+  try {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (!key) return;
+      const text = t(key);
+      if (!text || text === key) return;
+      if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
+        el.childNodes[0].textContent = text;
+      } else if (!el.querySelector('svg, img, button, input, span, div, br')) {
+        el.textContent = text;
+      }
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (key) el.placeholder = t(key);
+    });
+    const langLabel = document.getElementById('lang-label');
+    if (langLabel) langLabel.textContent = currentLang === 'zh' ? '中' : 'EN';
+    const walletBtn = document.getElementById('wallet-btn-text');
+    if (walletBtn && typeof userAddress === 'undefined') {
+      walletBtn.textContent = t('nav_login');
     }
-  });
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-i18n-placeholder');
-    if (key) el.placeholder = t(key);
-  });
-  const langLabel = document.getElementById('lang-label');
-  if (langLabel) langLabel.textContent = currentLang === 'zh' ? '中' : 'EN';
-  const walletBtn = document.getElementById('wallet-btn-text');
-  if (walletBtn && (!userAddress || typeof userAddress === 'undefined')) {
-    walletBtn.textContent = t('nav_login');
+  } catch(e) {
+    console.warn('applyLanguage error (non-fatal):', e);
   }
 }
 
@@ -1689,6 +1702,7 @@ function applyLanguage() {
 
 // ── Particle Canvas ──
 (function() {
+  try {
   const canvas = document.getElementById('particle-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -1772,11 +1786,17 @@ function applyLanguage() {
   });
   init();
   animate();
+  } catch(e) { console.warn('Particle canvas error (non-fatal):', e); }
 })();
 
 // ── Scroll Reveal ──
 (function() {
   const reveals = document.querySelectorAll('.reveal');
+  if (!reveals.length) return;
+
+  // Hide all reveals initially (CSS default is now visible for safety)
+  reveals.forEach(el => el.classList.add('reveal-hidden'));
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1786,6 +1806,14 @@ function applyLanguage() {
   }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
   reveals.forEach(el => observer.observe(el));
+
+  // Safety: after 3 seconds, show everything regardless
+  setTimeout(() => {
+    reveals.forEach(el => {
+      el.classList.add('visible');
+      el.classList.remove('reveal-hidden');
+    });
+  }, 3000);
 })();
 
 // ── Parallax Scroll ──
@@ -1837,8 +1865,11 @@ function applyLanguage() {
 
 // ── Animate Progress Bar ──
 (function() {
+  try {
   const bar = document.getElementById('main-progress-bar');
   if (!bar) return;
+  // Always show the bar after a short delay
+  setTimeout(() => { if (bar) bar.style.width = '57.5%'; }, 500);
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1848,6 +1879,7 @@ function applyLanguage() {
     });
   }, { threshold: 0.5 });
   observer.observe(bar);
+  } catch(e) { console.warn('Progress bar error:', e); }
 })();
 
 // ── Wallet Connection (Real Web3) ──
