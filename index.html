@@ -314,11 +314,11 @@ let currentChainId = null;
 
     <!-- Desktop Links -->
     <div class="hidden lg:flex items-center gap-8">
-      <a href="#about" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">ABOUT</a>
-      <a href="#tokenomics" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">TOKENOMICS</a>
-      <a href="#buy" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">PRESALE</a>
-      <a href="#roadmap" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">ROADMAP</a>
-      <a href="#faq" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">FAQ</a>
+      <a href="#about" data-i18n="nav_about" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide" data-i18n="nav_about">ABOUT</a>
+      <a href="#tokenomics" data-i18n="nav_tokenomics" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide" data-i18n="nav_tokenomics">TOKENOMICS</a>
+      <a href="#buy" data-i18n="nav_presale" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide" data-i18n="nav_presale">PRESALE</a>
+      <a href="#roadmap" data-i18n="nav_roadmap" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide" data-i18n="nav_roadmap">ROADMAP</a>
+      <a href="#faq" data-i18n="nav_faq" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide" data-i18n="nav_faq">FAQ</a>
     </div>
 
     <!-- Wallet Button -->
@@ -332,8 +332,8 @@ let currentChainId = null;
           <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
           <path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span id="wallet-btn-text" class="hidden sm:inline">Login with TokenPocket</span>
-        <span class="sm:hidden">TP Login</span>
+        <span id="wallet-btn-text" class="hidden sm:inline" data-i18n="nav_login" data-i18n="nav_login_btn">Login with TokenPocket</span>
+        <span class="sm:hidden" data-i18n="nav_login_short">TP Login</span>
       </span>
       <div class="absolute inset-0 bg-gradient-to-r from-neon-green/0 via-white/20 to-neon-green/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
     </button>
@@ -342,15 +342,23 @@ let currentChainId = null;
     <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gray-400 hover:text-neon-green shrink-0" aria-label="Toggle menu">
       <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
+
+    <!-- Language Toggle -->
+    <button id="lang-toggle" onclick="toggleLang()"
+            class="shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-bold font-orbitron tracking-wide transition-all duration-200
+                   bg-neon-green text-deep-900 hover:shadow-[0_0_15px_rgba(0,255,136,0.4)] cursor-pointer"
+            aria-label="Switch language">
+      <span id="lang-label">中</span>
+    </button>
   </div>
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden lg:hidden mt-2 glass-card rounded-2xl px-6 py-4 space-y-3">
-    <a href="#about" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">ABOUT</a>
-    <a href="#tokenomics" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">TOKENOMICS</a>
-    <a href="#buy" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">PRESALE</a>
-    <a href="#roadmap" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">ROADMAP</a>
-    <a href="#faq" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">FAQ</a>
+    <a href="#about" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo" data-i18n="nav_about">ABOUT</a>
+    <a href="#tokenomics" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo" data-i18n="nav_tokenomics">TOKENOMICS</a>
+    <a href="#buy" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo" data-i18n="nav_presale">PRESALE</a>
+    <a href="#roadmap" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo" data-i18n="nav_roadmap">ROADMAP</a>
+    <a href="#faq" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo" data-i18n="nav_faq">FAQ</a>
   </div>
 </nav>
 
@@ -384,7 +392,7 @@ let currentChainId = null;
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-green opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-neon-green"></span>
       </span>
-      <span class="text-xs font-exo text-gray-300 tracking-widest uppercase">Private Sale Now Live</span>
+      <span class="text-xs font-exo text-gray-300 tracking-widest uppercase" data-i18n="hero_badge" data-i18n="hero_badge">Private Sale Now Live</span>
     </div>
 
     <!-- Main Title -->
@@ -396,7 +404,7 @@ let currentChainId = null;
     <!-- Subtitle -->
     <p class="reveal text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-exo leading-relaxed" style="transition-delay: 0.2s;">
       The next-generation DeFi infrastructure powering trustless cross-chain liquidity.<br class="hidden sm:block">
-      <span class="text-neon-green font-semibold">Be an early bird. Secure your allocation.</span>
+      <span class="text-neon-green font-semibold" data-i18n="hero_subtitle2">Be an early bird. Secure your allocation.</span>
     </p>
 
     <!-- CTA Buttons -->
@@ -420,26 +428,26 @@ let currentChainId = null;
     <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto" style="transition-delay: 0.4s;">
       <div class="glass-card rounded-xl p-3 sm:p-4">
         <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-green"><span id="hero-raised">287.5</span> USDT</div>
-        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Total Raised</div>
+        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo" data-i18n="hero_raised">Total Raised</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
         <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-green"><span id="hero-contributors">1,247</span></div>
-        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Contributors</div>
+        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo" data-i18n="hero_contrib">Contributors</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
         <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-gold">100 USDT</div>
-        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Min Contribution</div>
+        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo" data-i18n="hero_min">Min Contribution</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
         <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-teal" id="countdown">14d 06h</div>
-        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Remaining</div>
+        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo" data-i18n="hero_remaining">Remaining</div>
       </div>
     </div>
   </div>
 
   <!-- Scroll indicator -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-float">
-    <span class="text-xs text-gray-600 font-exo tracking-widest">SCROLL</span>
+    <span class="text-xs text-gray-600 font-exo tracking-widest" data-i18n="hero_scroll">SCROLL</span>
     <svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
   </div>
 </section>
@@ -452,17 +460,17 @@ let currentChainId = null;
     <div class="glass-card-light rounded-2xl p-6 sm:p-8">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-4 gap-2">
         <div>
-          <span class="text-xs text-gray-500 font-exo tracking-widest uppercase">Funding Progress</span>
+          <span class="text-xs text-gray-500 font-exo tracking-widest uppercase" data-i18n="prog_title">Funding Progress</span>
           <h3 class="text-xl font-bold font-orbitron text-white mt-1">287.5 / 500,000 USDT</h3>
         </div>
         <div class="flex items-center gap-6 text-sm font-exo">
           <div class="text-center">
-            <div class="text-gray-500">Soft Cap</div>
+            <div class="text-gray-500" data-i18n="prog_soft">Soft Cap</div>
             <div class="text-neon-green font-bold font-orbitron">150,000 USDT</div>
             <div class="text-[10px] text-neon-green bg-neon-green/10 rounded-full px-2 py-0.5 mt-0.5">✓ Reached</div>
           </div>
           <div class="text-center">
-            <div class="text-gray-500">Hard Cap</div>
+            <div class="text-gray-500" data-i18n="prog_hard">Hard Cap</div>
             <div class="text-neon-green font-bold font-orbitron">500,000 USDT</div>
           </div>
         </div>
@@ -494,7 +502,7 @@ let currentChainId = null;
 <section class="relative py-24 px-6" id="about">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">About The Project</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase" data-i18n="about_label">About The Project</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
         Liquidity Without <span class="text-glow-green">Boundaries</span>
       </h2>
@@ -511,22 +519,22 @@ let currentChainId = null;
         <div class="w-14 h-14 rounded-xl bg-neon-green/10 flex items-center justify-center mb-6 group-hover:bg-neon-green/20 transition-colors">
           <svg class="w-7 h-7 text-neon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         </div>
-        <h3 class="text-xl font-bold font-orbitron text-white mb-3">Lightning Speed</h3>
-        <p class="text-gray-400 font-exo text-sm leading-relaxed">Sub-second cross-chain swaps powered by intent-based architecture and solver networks.</p>
+        <h3 class="text-xl font-bold font-orbitron text-white mb-3" data-i18n="about_f1_title">Lightning Speed</h3>
+        <p class="text-gray-400 font-exo text-sm leading-relaxed"><span data-i18n="about_f1_desc">Sub-second cross-chain swaps powered by intent-based architecture and solver networks.</span></p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-8 group cursor-pointer" style="transition-delay: 0.15s;">
         <div class="w-14 h-14 rounded-xl bg-neon-mint/10 flex items-center justify-center mb-6 group-hover:bg-neon-mint/20 transition-colors">
           <svg class="w-7 h-7 text-neon-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
         </div>
-        <h3 class="text-xl font-bold font-orbitron text-white mb-3">Battle-Tested Security</h3>
-        <p class="text-gray-400 font-exo text-sm leading-relaxed">Audited by CertiK & Trail of Bits. Multi-sig treasury with 24h timelock on all admin actions.</p>
+        <h3 class="text-xl font-bold font-orbitron text-white mb-3" data-i18n="about_f2_title">Battle-Tested Security</h3>
+        <p class="text-gray-400 font-exo text-sm leading-relaxed"><span data-i18n="about_f2_desc">Audited by CertiK & Trail of Bits. Multi-sig treasury with 24h timelock on all admin actions.</span></p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-8 group cursor-pointer" style="transition-delay: 0.3s;">
         <div class="w-14 h-14 rounded-xl bg-neon-teal/10 flex items-center justify-center mb-6 group-hover:bg-neon-teal/20 transition-colors">
           <svg class="w-7 h-7 text-neon-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
         </div>
-        <h3 class="text-xl font-bold font-orbitron text-white mb-3">Omnichain by Design</h3>
-        <p class="text-gray-400 font-exo text-sm leading-relaxed">Native connectivity to Ethereum, BSC, Arbitrum, Optimism, Polygon, Avalanche & more.</p>
+        <h3 class="text-xl font-bold font-orbitron text-white mb-3" data-i18n="about_f3_title">Omnichain by Design</h3>
+        <p class="text-gray-400 font-exo text-sm leading-relaxed"><span data-i18n="about_f3_desc">Native connectivity to Ethereum, BSC, Arbitrum, Optimism, Polygon, Avalanche & more.</span></p>
       </div>
     </div>
   </div>
@@ -539,7 +547,7 @@ let currentChainId = null;
   <div class="absolute inset-0 bg-radial-glow opacity-30 pointer-events-none"></div>
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Token Distribution</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase" data-i18n="toke_label">Token Distribution</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
         $HOME <span class="text-glow-green">Tokenomics</span>
       </h2>
@@ -636,7 +644,7 @@ let currentChainId = null;
 <section class="relative py-24 px-6" id="buy">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Early Bird Access</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase" data-i18n="buy_label">Early Bird Access</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
         Secure Your <span class="text-glow-green">Allocation</span>
       </h2>
@@ -649,25 +657,25 @@ let currentChainId = null;
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
       <!-- Tier 1: Seed -->
       <div class="reveal border-gradient-green rounded-2xl p-8 flex flex-col" style="transition-delay: 0s;">
-        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3">TIER 1</div>
-        <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Seed</h3>
+        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3" data-i18n="buy_tier1">TIER 1</div>
+        <h3 class="text-2xl font-bold font-orbitron text-white mb-2" data-i18n="buy_tier_seed">Seed</h3>
         <div class="text-3xl font-black font-orbitron text-white mb-1">$0.08</div>
-        <div class="text-sm text-gray-500 font-exo mb-6">per $HOME token</div>
+        <div class="text-sm text-gray-500 font-exo mb-6" data-i18n="buy_per">per $HOME token</div>
         <ul class="space-y-3 mb-8 flex-1">
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            30% bonus tokens
+            <span data-i18n="buy_t1_bonus"></span>
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            3-month linear vesting
+            <span data-i18n="buy_t1_vesting"></span>
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Min: 1,000 USDT — Max: 50,000 USDT
+            <span data-i18n="buy_t1_minmax"></span>
           </li>
         </ul>
-        <div class="text-xs text-neon-green/60 font-exo mb-4">🔥 387 / 500 slots filled</div>
+        <div class="text-xs text-neon-green/60 font-exo mb-4" data-i18n="buy_t1_slots">🔥 387 / 500 slots filled</div>
         <button onclick="handleBuy('seed')"
                 class="w-full py-3.5 rounded-xl font-bold font-orbitron text-sm tracking-wide
                        bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
@@ -681,25 +689,25 @@ let currentChainId = null;
         <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-neon-green to-neon-mint text-deep-900 text-[10px] font-bold font-orbitron px-4 py-1 rounded-full tracking-widest">
           MOST POPULAR
         </div>
-        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3 mt-1">TIER 2</div>
-        <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Private</h3>
+        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3 mt-1" data-i18n="buy_tier2">TIER 2</div>
+        <h3 class="text-2xl font-bold font-orbitron text-white mb-2" data-i18n="buy_tier_private">Private</h3>
         <div class="text-3xl font-black font-orbitron text-white mb-1">$0.10</div>
-        <div class="text-sm text-gray-500 font-exo mb-6">per $HOME token</div>
+        <div class="text-sm text-gray-500 font-exo mb-6" data-i18n="buy_per">per $HOME token</div>
         <ul class="space-y-3 mb-8 flex-1">
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            15% bonus tokens
+            <span data-i18n="buy_t2_bonus"></span>
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            2-month linear vesting
+            <span data-i18n="buy_t2_vesting"></span>
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             Min: 500,000 USDT — Max: 30,000 USDT
           </li>
         </ul>
-        <div class="text-xs text-neon-green/60 font-exo mb-4">⚡ 623 / 1000 slots filled</div>
+        <div class="text-xs text-neon-green/60 font-exo mb-4" data-i18n="buy_t2_slots">⚡ 623 / 1000 slots filled</div>
         <button onclick="handleBuy('private')"
                 class="w-full py-3.5 rounded-xl font-bold font-orbitron text-sm tracking-wide
                        bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
@@ -710,36 +718,36 @@ let currentChainId = null;
 
       <!-- Tier 3: Public -->
       <div class="reveal border-gradient-green rounded-2xl p-8 flex flex-col" style="transition-delay: 0.3s;">
-        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3">TIER 3</div>
-        <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Public</h3>
+        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3" data-i18n="buy_tier3">TIER 3</div>
+        <h3 class="text-2xl font-bold font-orbitron text-white mb-2" data-i18n="buy_tier_public">Public</h3>
         <div class="text-3xl font-black font-orbitron text-white mb-1">$0.15</div>
-        <div class="text-sm text-gray-500 font-exo mb-6">per $HOME token</div>
+        <div class="text-sm text-gray-500 font-exo mb-6" data-i18n="buy_per">per $HOME token</div>
         <ul class="space-y-3 mb-8 flex-1">
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            5% bonus tokens
+            <span data-i18n="buy_t3_bonus"></span>
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            50% at TGE, 50% after 1 month
+            <span data-i18n="buy_t3_vesting"></span>
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Min: 100 USDT — Max: 10,000 USDT
+            <span data-i18n="buy_t3_minmax"></span>
           </li>
         </ul>
-        <div class="text-xs text-gray-500 font-exo mb-4">Coming soon</div>
+        <div class="text-xs text-gray-500 font-exo mb-4" data-i18n="buy_t3_slots">Coming soon</div>
         <button disabled
                 class="w-full py-3.5 rounded-xl font-bold font-orbitron text-sm tracking-wide
                        border border-gray-700 text-gray-600 cursor-not-allowed">
-          Opens in 14 days
+          <span data-i18n="buy_t3_btn"></span>
         </button>
       </div>
     </div>
 
     <!-- Direct Purchase Modal Trigger -->
     <div class="reveal text-center">
-      <p class="text-gray-500 text-sm font-exo mb-4">Prefer to contribute directly?</p>
+      <p class="text-gray-500 text-sm font-exo mb-4" data-i18n="buy_direct_text">Prefer to contribute directly?</p>
       <button onclick="toggleBuyModal()"
               class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold font-orbitron text-sm
                      border border-neon-green/30 text-neon-green hover:bg-neon-green/10 transition-all duration-300">
@@ -757,7 +765,7 @@ let currentChainId = null;
   <div class="absolute inset-0 bg-radial-glow opacity-20 pointer-events-none"></div>
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-20 reveal">
-      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Development Path</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase" data-i18n="road_label">Development Path</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
         Project <span class="text-glow-green">Roadmap</span>
       </h2>
@@ -773,12 +781,12 @@ let currentChainId = null;
         <div class="reveal relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
           <div class="md:w-1/2 md:pr-16 md:text-right order-2 md:order-1 pl-12 md:pl-0">
             <div class="glass-card rounded-xl p-6 inline-block">
-              <span class="text-[10px] text-neon-green font-orbitron tracking-widest">Q3 2024 — COMPLETED</span>
-              <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 1: Foundation</h4>
+              <span class="text-[10px] text-neon-green font-orbitron tracking-widest" data-i18n="road_p1_time">Q3 2024 — COMPLETED</span>
+              <h4 class="text-lg font-bold font-orbitron text-white mt-1" data-i18n="road_p1_title">Phase 1: Foundation</h4>
               <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
-                <li class="flex md:justify-end items-center gap-2"><span>✓ Core protocol architecture</span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
-                <li class="flex md:justify-end items-center gap-2"><span>✓ Smart contract development</span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
-                <li class="flex md:justify-end items-center gap-2"><span>✓ Security audit — CertiK</span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
+                <li class="flex md:justify-end items-center gap-2"><span>✓ <span data-i18n="road_p1_i1_raw">Core protocol architecture</span></span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
+                <li class="flex md:justify-end items-center gap-2"><span>✓ <span data-i18n="road_p1_i2_raw">Smart contract development</span></span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
+                <li class="flex md:justify-end items-center gap-2"><span>✓ <span data-i18n="road_p1_i3_raw">Security audit — CertiK</span></span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
               </ul>
             </div>
           </div>
@@ -796,13 +804,13 @@ let currentChainId = null;
           </div>
           <div class="md:w-1/2 md:pl-16 order-2 pl-12 md:pl-16">
             <div class="glass-card rounded-xl p-6 inline-block">
-              <span class="text-[10px] text-neon-green font-orbitron tracking-widest">Q4 2024 — IN PROGRESS</span>
+              <span class="text-[10px] text-neon-green font-orbitron tracking-widest" data-i18n="road_p2_time">Q4 2024 — IN PROGRESS</span>
               <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 2: Presale & Launch</h4>
               <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
-                <li>→ Private presale (YOU ARE HERE)</li>
-                <li>→ Testnet deployment</li>
-                <li>→ Community building & airdrop</li>
-                <li>→ DEX listing on PancakeSwap</li>
+                <li>→ <span data-i18n="road_p2_i1_raw">Private presale (YOU ARE HERE)</span></li>
+                <li>→ <span data-i18n="road_p2_i2_raw">Testnet deployment</span></li>
+                <li>→ <span data-i18n="road_p2_i3_raw">Community building & airdrop</span></li>
+                <li>→ <span data-i18n="road_p2_i4_raw">DEX listing on PancakeSwap</span></li>
               </ul>
             </div>
           </div>
@@ -812,13 +820,13 @@ let currentChainId = null;
         <div class="reveal relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
           <div class="md:w-1/2 md:pr-16 md:text-right order-2 md:order-1 pl-12 md:pl-0">
             <div class="glass-card rounded-xl p-6 inline-block">
-              <span class="text-[10px] text-gray-500 font-orbitron tracking-widest">Q1 2025 — UPCOMING</span>
-              <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 3: Mainnet</h4>
+              <span class="text-[10px] text-gray-500 font-orbitron tracking-widest" data-i18n="road_p3_time">Q1 2025 — UPCOMING</span>
+              <h4 class="text-lg font-bold font-orbitron text-white mt-1" data-i18n="road_p3_title">Phase 3: Mainnet</h4>
               <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
-                <li>Mainnet deployment</li>
-                <li>Cross-chain bridge integration</li>
-                <li>Liquidity mining program</li>
-                <li>CEX listings</li>
+                <li><span data-i18n="road_p3_i1_raw">Mainnet deployment</span></li>
+                <li><span data-i18n="road_p3_i2_raw">Cross-chain bridge integration</span></li>
+                <li><span data-i18n="road_p3_i3_raw">Liquidity mining program</span></li>
+                <li><span data-i18n="road_p3_i4_raw">CEX listings</span></li>
               </ul>
             </div>
           </div>
@@ -836,13 +844,13 @@ let currentChainId = null;
           </div>
           <div class="md:w-1/2 md:pl-16 order-2 pl-12 md:pl-16">
             <div class="glass-card rounded-xl p-6 inline-block">
-              <span class="text-[10px] text-gray-500 font-orbitron tracking-widest">Q3 2025 — UPCOMING</span>
-              <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 4: Ecosystem</h4>
+              <span class="text-[10px] text-gray-500 font-orbitron tracking-widest" data-i18n="road_p4_time">Q3 2025 — UPCOMING</span>
+              <h4 class="text-lg font-bold font-orbitron text-white mt-1" data-i18n="road_p4_title">Phase 4: Ecosystem</h4>
               <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
-                <li>DAO governance launch</li>
-                <li>Grant program for builders</li>
-                <li>Institutional partnerships</li>
-                <li>Mobile app release</li>
+                <li><span data-i18n="road_p4_i1_raw">DAO governance launch</span></li>
+                <li><span data-i18n="road_p4_i2_raw">Grant program for builders</span></li>
+                <li><span data-i18n="road_p4_i3_raw">Institutional partnerships</span></li>
+                <li><span data-i18n="road_p4_i4_raw">Mobile app release</span></li>
               </ul>
             </div>
           </div>
@@ -858,11 +866,11 @@ let currentChainId = null;
 <section class="relative py-24 px-6" id="dashboard">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Your Dashboard</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase" data-i18n="dash_label">Your Dashboard</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
         Track Your <span class="text-glow-green">Contribution</span>
       </h2>
-      <p class="text-gray-400 max-w-2xl mx-auto text-lg font-exo">
+      <p class="text-gray-400 max-w-2xl mx-auto text-lg font-exo" data-i18n="dash_subtitle">
         Connect your wallet anytime to view your contribution history, pending tokens, and vesting schedule.
       </p>
     </div>
@@ -874,7 +882,7 @@ let currentChainId = null;
         <div class="flex items-center gap-4">
           <div class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-green to-neon-mint flex items-center justify-center font-bold font-orbitron text-deep-900 text-lg">W</div>
           <div>
-            <div class="text-sm text-gray-500 font-exo">Connected Wallet</div>
+            <div class="text-sm text-gray-500 font-exo" data-i18n="dash_wallet">Connected Wallet</div>
             <div class="text-white font-mono text-sm">0x71C7...6b9F</div>
           </div>
         </div>
@@ -889,49 +897,49 @@ let currentChainId = null;
           </div>
           <div class="text-center">
             <div class="text-xs text-gray-500 font-exo">Tier</div>
-            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-gold">Private</div>
+            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-gold" data-i18n="buy_tier_private">Private</div>
           </div>
         </div>
       </div>
 
       <!-- Transaction history -->
       <div>
-        <h4 class="text-sm font-bold font-orbitron text-gray-400 tracking-widest mb-4">CONTRIBUTION HISTORY</h4>
+        <h4 class="text-sm font-bold font-orbitron text-gray-400 tracking-widest mb-4" data-i18n="dash_history">CONTRIBUTION HISTORY</h4>
         <div class="overflow-x-auto">
           <table class="w-full text-left">
             <thead>
               <tr class="text-xs text-gray-500 font-exo tracking-widest uppercase border-b border-white/5">
-                <th class="py-3 pr-4 font-medium">Date</th>
-                <th class="py-3 pr-4 font-medium">Amount</th>
+                <th class="py-3 pr-4 font-medium" data-i18n="dash_date">Date</th>
+                <th class="py-3 pr-4 font-medium" data-i18n="dash_amount">Amount</th>
                 <th class="py-3 pr-4 font-medium">Tier</th>
-                <th class="py-3 pr-4 font-medium">TX Hash</th>
-                <th class="py-3 font-medium">Status</th>
+                <th class="py-3 pr-4 font-medium" data-i18n="dash_tx">TX Hash</th>
+                <th class="py-3 font-medium" data-i18n="dash_status">Status</th>
               </tr>
             </thead>
             <tbody class="text-sm font-exo">
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">Jun 02, 2026</td>
                 <td class="py-4 pr-4 text-white font-semibold">5.0 USDT</td>
-                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Private</span></td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full" data-i18n="buy_tier_private">Private</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xa1b2...c9d8</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
-                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
+                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span data-i18n="dash_confirmed">Confirmed</span></td>
               </tr>
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">May 28, 2026</td>
                 <td class="py-4 pr-4 text-white font-semibold">4.5 USDT</td>
-                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Private</span></td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full" data-i18n="buy_tier_private">Private</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xb3c4...e5f6</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
-                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
+                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span data-i18n="dash_confirmed">Confirmed</span></td>
               </tr>
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">May 21, 2026</td>
                 <td class="py-4 pr-4 text-white font-semibold">3.0 USDT</td>
-                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Seed</span></td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full" data-i18n="buy_tier_seed">Seed</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xc5d6...a7b8</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
-                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
+                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span data-i18n="dash_confirmed">Confirmed</span></td>
               </tr>
             </tbody>
           </table>
@@ -940,20 +948,20 @@ let currentChainId = null;
 
       <!-- Vesting schedule -->
       <div class="mt-8 pt-6 border-t border-white/5">
-        <h4 class="text-sm font-bold font-orbitron text-gray-400 tracking-widest mb-4">VESTING SCHEDULE</h4>
+        <h4 class="text-sm font-bold font-orbitron text-gray-400 tracking-widest mb-4" data-i18n="dash_vesting">VESTING SCHEDULE</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="glass-card rounded-xl p-4 text-center">
-            <div class="text-xs text-gray-500 font-exo mb-1">Unlocked at TGE</div>
+            <div class="text-xs text-gray-500 font-exo mb-1" data-i18n="dash_v1_title">Unlocked at TGE</div>
             <div class="text-2xl font-bold font-orbitron text-neon-green">52,083</div>
             <div class="text-xs text-gray-600 mt-1">33.3% of allocation</div>
           </div>
           <div class="glass-card rounded-xl p-4 text-center">
-            <div class="text-xs text-gray-500 font-exo mb-1">Vesting Over 60 Days</div>
+            <div class="text-xs text-gray-500 font-exo mb-1" data-i18n="dash_v2_title">Vesting Over 60 Days</div>
             <div class="text-2xl font-bold font-orbitron text-neon-mint">104,167</div>
             <div class="text-xs text-gray-600 mt-1">66.7% of allocation</div>
           </div>
           <div class="glass-card rounded-xl p-4 text-center">
-            <div class="text-xs text-gray-500 font-exo mb-1">Fully Vested By</div>
+            <div class="text-xs text-gray-500 font-exo mb-1" data-i18n="dash_v3_title">Fully Vested By</div>
             <div class="text-2xl font-bold font-orbitron text-neon-teal">Aug 2026</div>
             <div class="text-xs text-gray-600 mt-1">~60 days from TGE</div>
           </div>
@@ -969,7 +977,7 @@ let currentChainId = null;
 <section class="relative py-24 px-6" id="team">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Core Team</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase" data-i18n="team_label">Core Team</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
         Built by <span class="text-glow-green">Builders</span>
       </h2>
@@ -980,26 +988,26 @@ let currentChainId = null;
       <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer">
         <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-green to-neon-mint mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-deep-900">AK</div>
         <h4 class="text-lg font-bold font-orbitron text-white">Alex K.</h4>
-        <p class="text-sm text-neon-green font-exo mb-3">CEO & Founder</p>
-        <p class="text-xs text-gray-500 font-exo leading-relaxed">Ex-Citadel. 8y in DeFi. Founded 2 successful protocols.</p>
+        <p class="text-sm text-neon-green font-exo mb-3"><span data-i18n="team_ak_role">CEO & Founder</span></p>
+        <p class="text-xs text-gray-500 font-exo leading-relaxed"><span data-i18n="team_ak_bio">Ex-Citadel. 8y in DeFi. Founded 2 successful protocols.</span></p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.1s;">
         <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-gold to-neon-teal mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-white">SM</div>
         <h4 class="text-lg font-bold font-orbitron text-white">Sarah M.</h4>
         <p class="text-sm text-neon-gold font-exo mb-3">CTO</p>
-        <p class="text-xs text-gray-500 font-exo leading-relaxed">Ex-Google. Smart contract architect. Solidity wizard.</p>
+        <p class="text-xs text-gray-500 font-exo leading-relaxed"><span data-i18n="team_sm_bio">Ex-Google. Smart contract architect. Solidity wizard.</span></p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.2s;">
         <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-green to-neon-green mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-deep-900">DR</div>
         <h4 class="text-lg font-bold font-orbitron text-white">David R.</h4>
-        <p class="text-sm text-neon-green font-exo mb-3">Head of Product</p>
-        <p class="text-xs text-gray-500 font-exo leading-relaxed">5x Web3 founder. UX-obsessed. Community-first builder.</p>
+        <p class="text-sm text-neon-green font-exo mb-3"><span data-i18n="team_dr_role">Head of Product</span></p>
+        <p class="text-xs text-gray-500 font-exo leading-relaxed"><span data-i18n="team_dr_bio">5x Web3 founder. UX-obsessed. Community-first builder.</span></p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.3s;">
         <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-mint to-neon-teal mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-white">LJ</div>
         <h4 class="text-lg font-bold font-orbitron text-white">Lisa J.</h4>
-        <p class="text-sm text-neon-mint font-exo mb-3">Head of Growth</p>
-        <p class="text-xs text-gray-500 font-exo leading-relaxed">Scaled 3 projects to $100M+ TVL. KOL network across Asia.</p>
+        <p class="text-sm text-neon-mint font-exo mb-3"><span data-i18n="team_lj_role">Head of Growth</span></p>
+        <p class="text-xs text-gray-500 font-exo leading-relaxed"><span data-i18n="team_lj_bio">Scaled 3 projects to $100M+ TVL. KOL network across Asia.</span></p>
       </div>
     </div>
   </div>
@@ -1037,7 +1045,7 @@ let currentChainId = null;
 <section class="relative py-24 px-6" id="faq">
   <div class="max-w-4xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Got Questions?</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase" data-i18n="faq_label">Got Questions?</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
         Frequently <span class="text-glow-green">Asked</span>
       </h2>
@@ -1046,48 +1054,38 @@ let currentChainId = null;
     <div class="space-y-3">
       <div class="reveal glass-card rounded-xl overflow-hidden">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
-          <span class="font-bold font-exo text-white pr-4">What is the minimum contribution for the presale?</span>
+          <span class="font-bold font-exo text-white pr-4" data-i18n="faq_q1">What is the minimum contribution for the presale?</span>
           <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
-          The minimum contribution varies by tier: 1,000 USDT for Seed, 500 USDT for Private, and 100 USDT for Public. Each tier also has a maximum cap per wallet address.
-        </div>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed" data-i18n="faq_a1">The minimum contribution varies by tier: 1,000 USDT for Seed, 500 USDT for Private, and 100 USDT for Public. Each tier also has a maximum cap per wallet address.</div>
       </div>
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.05s;">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
-          <span class="font-bold font-exo text-white pr-4">When will I receive my $HOME tokens?</span>
+          <span class="font-bold font-exo text-white pr-4" data-i18n="faq_q2">When will I receive my $HOME tokens?</span>
           <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
-          Token distribution follows each tier's vesting schedule. Seed tier gets 33.3% at TGE with the rest vesting over 3 months. Private tier gets 50% at TGE with the rest vesting over 2 months. Public tier gets 50% at TGE with the rest after 1 month.
-        </div>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed" data-i18n="faq_a2">Token distribution follows each tier's vesting schedule. Seed tier gets 33.3% at TGE with the rest vesting over 3 months. Private tier gets 50% at TGE with the rest vesting over 2 months. Public tier gets 50% at TGE with the rest after 1 month.</div>
       </div>
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.1s;">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
-          <span class="font-bold font-exo text-white pr-4">How do I connect my wallet to participate?</span>
+          <span class="font-bold font-exo text-white pr-4" data-i18n="faq_q3">How do I connect my wallet to participate?</span>
           <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
-          Click the "Connect Wallet" button in the top right corner. We support TokenPocket, MetaMask, and any WalletConnect-compatible wallet. Simply scan the QR code or approve the connection in your wallet app.
-        </div>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed" data-i18n="faq_a3">Click the "Connect Wallet" button in the top right corner. We support TokenPocket, MetaMask, and any WalletConnect-compatible wallet. Simply scan the QR code or approve the connection in your wallet app.</div>
       </div>
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.15s;">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
-          <span class="font-bold font-exo text-white pr-4">Is the smart contract audited?</span>
+          <span class="font-bold font-exo text-white pr-4" data-i18n="faq_q4">Is the smart contract audited?</span>
           <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
-          Yes! Our smart contracts have been audited by CertiK and Trail of Bits. Audit reports are publicly available — links can be found in our documentation. We prioritize security above everything.
-        </div>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed" data-i18n="faq_a4">Yes! Our smart contracts have been audited by CertiK and Trail of Bits. Audit reports are publicly available — links can be found in our documentation. We prioritize security above everything.</div>
       </div>
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.2s;">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
-          <span class="font-bold font-exo text-white pr-4">What happens if the soft cap is not reached?</span>
+          <span class="font-bold font-exo text-white pr-4" data-i18n="faq_q5">What happens if the soft cap is not reached?</span>
           <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
-          If the soft cap of 150,000 USDT is not reached by the end of the presale period, all contributions are refundable. Our smart contract includes a refund mechanism that allows you to claim your USDT back.
-        </div>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed" data-i18n="faq_a5">If the soft cap of 150,000 USDT is not reached by the end of the presale period, all contributions are refundable. Our smart contract includes a refund mechanism that allows you to claim your USDT back.</div>
       </div>
     </div>
   </div>
@@ -1112,9 +1110,7 @@ let currentChainId = null;
           <button onclick="handleBuy('private')"
                   class="px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
                          bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
-                         hover:shadow-[0_0_40px_rgba(0,255,136,0.5)] transition-all duration-300 active:scale-95">
-            Buy $HOME Now
-          </button>
+                         hover:shadow-[0_0_40px_rgba(0,255,136,0.5)] transition-all duration-300 active:scale-95" data-i18n="cta_btn">Buy $HOME Now</button>
           <a href="#faq"
              class="px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
                     border border-gray-700 text-gray-300 hover:border-neon-green hover:text-neon-green
@@ -1138,14 +1134,14 @@ let currentChainId = null;
         <span class="font-orbitron font-bold text-lg text-white">HOME<span class="text-neon-green"> 豪门</span></span>
       </a>
       <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-gray-600 font-exo">
-        <a href="#" class="hover:text-neon-green transition-colors">Docs</a>
-        <a href="#" class="hover:text-neon-green transition-colors">Audit</a>
-        <a href="#" class="hover:text-neon-green transition-colors">Twitter</a>
-        <a href="#" class="hover:text-neon-green transition-colors">Discord</a>
-        <a href="#" class="hover:text-neon-green transition-colors">Telegram</a>
-        <a href="#" class="hover:text-neon-green transition-colors">GitHub</a>
+        <a href="#" class="hover:text-neon-green transition-colors" data-i18n="footer_docs">Docs</a>
+        <a href="#" class="hover:text-neon-green transition-colors" data-i18n="footer_audit">Audit</a>
+        <a href="#" class="hover:text-neon-green transition-colors" data-i18n="footer_twitter">Twitter</a>
+        <a href="#" class="hover:text-neon-green transition-colors" data-i18n="footer_discord">Discord</a>
+        <a href="#" class="hover:text-neon-green transition-colors" data-i18n="footer_telegram">Telegram</a>
+        <a href="#" class="hover:text-neon-green transition-colors" data-i18n="footer_github">GitHub</a>
       </div>
-      <span class="text-xs text-gray-700 font-exo">© 2026 HOME 豪门. All rights reserved.</span>
+      <span class="text-xs text-gray-700 font-exo" data-i18n="footer_rights">© 2026 HOME 豪门. All rights reserved.</span>
     </div>
   </div>
 </footer>
@@ -1156,7 +1152,7 @@ let currentChainId = null;
 <div id="wallet-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
   <div class="glass-card-light rounded-2xl p-8 w-full max-w-md mx-4 animate-slide-up border-gradient-green">
     <div class="flex items-center justify-between mb-6">
-      <h3 class="text-xl font-bold font-orbitron text-white">Connect Wallet</h3>
+      <h3 class="text-xl font-bold font-orbitron text-white" data-i18n="wm_title">Connect Wallet</h3>
       <button onclick="toggleWalletModal()" class="p-2 text-gray-500 hover:text-neon-green transition-colors cursor-pointer">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
@@ -1178,7 +1174,7 @@ let currentChainId = null;
           </div>
           <div class="text-left flex-1">
             <div class="text-white font-bold font-exo text-base">TokenPocket</div>
-            <div class="text-xs text-neon-green/70 font-exo">Chrome Extension • Mobile App • Injected Provider</div>
+            <div class="text-xs text-neon-green/70 font-exo"><span data-i18n="wm_tp_desc">Chrome Extension • Mobile App • Injected Provider</span></div>
           </div>
           <svg class="w-5 h-5 text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -1190,7 +1186,7 @@ let currentChainId = null;
         </div>
         <div class="text-left flex-1">
           <div class="text-white font-bold font-exo">MetaMask</div>
-          <div class="text-xs text-gray-500">Browser Extension</div>
+          <div class="text-xs text-gray-500"><span data-i18n="wm_mm_desc">Browser Extension</span></div>
         </div>
         <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
@@ -1212,12 +1208,12 @@ let currentChainId = null;
         </div>
         <div class="text-left flex-1">
           <div class="text-white font-bold font-exo">Other Wallets</div>
-          <div class="text-xs text-gray-500">WalletConnect • 50+ supported</div>
+          <div class="text-xs text-gray-500"><span data-i18n="wm_other_desc">WalletConnect • 50+ supported</span></div>
         </div>
         <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
     </div>
-    <p class="text-xs text-gray-600 text-center mt-6 font-exo">By connecting, you agree to our Terms of Service</p>
+    <p class="text-xs text-gray-600 text-center mt-6 font-exo" data-i18n="wm_terms">By connecting, you agree to our Terms of Service</p>
   </div>
 </div>
 
@@ -1227,7 +1223,7 @@ let currentChainId = null;
 <div id="buy-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
   <div class="glass-card-light rounded-2xl p-8 w-full max-w-lg mx-4 animate-slide-up border-gradient-green">
     <div class="flex items-center justify-between mb-6">
-      <h3 class="text-xl font-bold font-orbitron text-white">Buy $HOME</h3>
+      <h3 class="text-xl font-bold font-orbitron text-white" data-i18n="modal_buy_title">Buy $HOME</h3>
       <button onclick="toggleBuyModal()" class="p-2 text-gray-500 hover:text-neon-green transition-colors cursor-pointer">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
@@ -1235,7 +1231,7 @@ let currentChainId = null;
 
     <!-- Tier selector -->
     <div class="mb-5">
-      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block">Select Tier</label>
+      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block" data-i18n="modal_tier_label">Select Tier</label>
       <div class="grid grid-cols-3 gap-2">
         <button onclick="selectBuyTier('seed')" id="buy-tier-seed" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-white/10 text-gray-500 hover:border-neon-green/50 hover:text-neon-green transition-all tier-btn cursor-pointer">
           Seed<br><span class="text-xs text-gray-600">$0.08</span>
@@ -1251,7 +1247,7 @@ let currentChainId = null;
 
     <!-- Amount -->
     <div class="mb-5">
-      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block">Amount (USDT)</label>
+      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block" data-i18n="modal_amount">Amount (USDT)</label>
       <div class="relative">
         <input type="number" id="buy-amount" value="1000" min="50" max="50000" step="100"
                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white font-bold font-exo text-lg focus:outline-none focus:border-neon-green transition-colors"
@@ -1321,10 +1317,8 @@ let currentChainId = null;
     <button onclick="handlePurchase()"
             class="w-full py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
                    bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
-                   hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] transition-all duration-300 active:scale-95 cursor-pointer">
-      Subscribe with TokenPocket
-    </button>
-    <p class="text-xs text-gray-600 text-center mt-4 font-exo">This is a mock interface. No real transaction will occur.</p>
+                   hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] transition-all duration-300 active:scale-95 cursor-pointer" data-i18n="modal_confirm_btn">Subscribe with TokenPocket</button>
+    <p class="text-xs text-gray-600 text-center mt-4 font-exo" data-i18n="modal_disclaimer">This is a mock interface. No real transaction will occur.</p>
   </div>
 </div>
 
@@ -1342,6 +1336,328 @@ let currentChainId = null;
 <!-- SCRIPTS -->
 <!-- ════════════════════════════════════════ -->
 <script>
+// ════════════════════════════════════════
+// ── i18n Language System ──
+// ════════════════════════════════════════
+const I18N = {
+  // Navbar
+  nav_about:       { zh: '关于',           en: 'ABOUT' },
+  nav_tokenomics:  { zh: '代币经济',        en: 'TOKENOMICS' },
+  nav_presale:     { zh: '预售',           en: 'PRESALE' },
+  nav_roadmap:     { zh: '路线图',          en: 'ROADMAP' },
+  nav_faq:         { zh: '常见问题',        en: 'FAQ' },
+  nav_login:       { zh: 'TokenPocket 登录', en: 'Login with TokenPocket' },
+  nav_login_short: { zh: 'TP 登录',        en: 'TP Login' },
+
+  // Hero
+  hero_badge:      { zh: '私募进行中',       en: 'Private Sale Now Live' },
+  hero_subtitle1:  { zh: '下一代 DeFi 基础设施，赋能去信任化跨链流动性。', en: 'The next-generation DeFi infrastructure powering trustless cross-chain liquidity.' },
+  hero_subtitle2:  { zh: '抢先入场。锁定你的份额。', en: 'Be an early bird. Secure your allocation.' },
+  hero_cta_buy:    { zh: '立即认购',         en: 'Buy Early Bird' },
+  hero_cta_learn:  { zh: '了解更多',         en: 'Learn More' },
+  hero_raised:     { zh: '已筹集',           en: 'Total Raised' },
+  hero_contrib:    { zh: '参与人数',         en: 'Contributors' },
+  hero_min:        { zh: '最低认购',         en: 'Min Contribution' },
+  hero_remaining:  { zh: '剩余时间',         en: 'Remaining' },
+  hero_scroll:     { zh: '向下滚动',         en: 'SCROLL' },
+
+  // Progress
+  prog_title:      { zh: '募资进度',         en: 'Funding Progress' },
+  prog_soft:       { zh: '软顶',            en: 'Soft Cap' },
+  prog_hard:       { zh: '硬顶',            en: 'Hard Cap' },
+  prog_reached:    { zh: '✓ 已达成',        en: '✓ Reached' },
+  prog_remaining:  { zh: '剩余',            en: 'remaining' },
+
+  // About
+  about_label:     { zh: '关于项目',         en: 'About The Project' },
+  about_heading:   { zh: '流动性无',         en: 'Liquidity Without' },
+  about_heading_hl:{ zh: '界限',            en: 'Boundaries' },
+  about_desc:      { zh: 'HOME Protocol 是一个跨链流动性聚合器，连接孤立的区块链生态系统。基于模块化架构，HOME 实现无缝资产转移、收益优化和跨12+条链的深度流动性。', en: '<span data-i18n="about_desc">HOME Protocol is a cross-chain liquidity aggregator that connects isolated blockchain ecosystems. Built on a modular architecture, HOME enables seamless asset transfers, yield optimization, and deep liquidity across 12+ chains.</span>' },
+  about_f1_title:  { zh: '闪电速度',         en: 'Lightning Speed' },
+  about_f1_desc:   { zh: '基于意图架构和求解器网络的亚秒级跨链交换。', en: '<span data-i18n="about_f1_desc">Sub-second cross-chain swaps powered by intent-based architecture and solver networks.</span>' },
+  about_f2_title:  { zh: '久经考验的安全',    en: 'Battle-Tested Security' },
+  about_f2_desc:   { zh: '由 CertiK 和 Trail of Bits 审计。多签国库，所有管理员操作有24小时时间锁。', en: '<span data-i18n="about_f2_desc">Audited by CertiK & Trail of Bits. Multi-sig treasury with 24h timelock on all admin actions.</span>' },
+  about_f3_title:  { zh: '全链设计',         en: 'Omnichain by Design' },
+  about_f3_desc:   { zh: '原生连接 Ethereum、BSC、Arbitrum、Optimism、Polygon、Avalanche 等公链。', en: '<span data-i18n="about_f3_desc">Native connectivity to Ethereum, BSC, Arbitrum, Optimism, Polygon, Avalanche & more.</span>' },
+
+  // Tokenomics
+  toke_label:      { zh: '代币分配',         en: 'Token Distribution' },
+  toke_heading:    { zh: '代币经济',         en: 'Tokenomics' },
+  toke_supply:     { zh: '总供应量',         en: 'Total Supply' },
+  toke_presale:    { zh: '预售',            en: 'Presale' },
+  toke_liquidity:  { zh: '流动性',          en: 'Liquidity' },
+  toke_ecosystem:  { zh: '生态系统',         en: 'Ecosystem' },
+  toke_team:       { zh: '团队与顾问',       en: 'Team & Advisors' },
+  toke_reserve:    { zh: '储备金',          en: 'Reserve' },
+
+  // Presale
+  buy_label:       { zh: '抢先入场',         en: 'Early Bird Access' },
+  buy_heading:     { zh: '锁定你的',         en: 'Secure Your' },
+  buy_heading_hl:  { zh: '份额',            en: 'Allocation' },
+  buy_subtitle:    { zh: '连接钱包，用最低价格抢购 $HOME，早于公开发售。', en: 'Connect your wallet and grab $HOME at the lowest price before public launch.' },
+  buy_per:         { zh: '/ $HOME 代币',   en: 'per $HOME token' },
+  buy_t1_bonus:    { zh: '30% 代币奖励',    en: '<span data-i18n="buy_t1_bonus"></span>' },
+  buy_t1_vesting:  { zh: '3个月线性释放',    en: '<span data-i18n="buy_t1_vesting"></span>' },
+  buy_t1_minmax:   { zh: '最低: 1,000 USDT — 最高: 50,000 USDT', en: '<span data-i18n="buy_t1_minmax"></span>' },
+  buy_t1_slots:    { zh: '🔥 387 / 500 名额已占', en: '🔥 387 / 500 slots filled' },
+  buy_t2_bonus:    { zh: '15% 代币奖励',     en: '<span data-i18n="buy_t2_bonus"></span>' },
+  buy_t2_vesting:  { zh: '2个月线性释放',     en: '<span data-i18n="buy_t2_vesting"></span>' },
+  buy_t2_minmax:   { zh: '最低: 500 USDT — 最高: 30,000 USDT', en: '<span data-i18n="buy_t2_minmax"></span>' },
+  buy_t2_slots:    { zh: '⚡ 623 / 1000 名额已占', en: '⚡ 623 / 1000 slots filled' },
+  buy_t3_bonus:    { zh: '5% 代币奖励',      en: '<span data-i18n="buy_t3_bonus"></span>' },
+  buy_t3_vesting:  { zh: '50% 在 TGE，50% 1个月后', en: '<span data-i18n="buy_t3_vesting"></span>' },
+  buy_t3_minmax:   { zh: '最低: 100 USDT — 最高: 10,000 USDT', en: '<span data-i18n="buy_t3_minmax"></span>' },
+  buy_t3_slots:    { zh: '即将开放',         en: 'Coming soon' },
+  buy_t3_btn:      { zh: '14天后开放',       en: '<span data-i18n="buy_t3_btn"></span>' },
+  buy_popular:     { zh: '最受欢迎',         en: 'MOST POPULAR' },
+  buy_seed_btn:    { zh: '认购种子轮',       en: 'Buy Seed' },
+  buy_private_btn: { zh: '认购私募轮',       en: 'Buy Private' },
+  buy_direct_text: { zh: '想要直接参与？',     en: 'Prefer to contribute directly?' },
+  buy_direct_btn:  { zh: '自定义金额认购',    en: 'Buy With Custom Amount' },
+
+  // Buy Modal
+  modal_buy_title: { zh: '认购 $HOME',       en: 'Buy $HOME' },
+  modal_tier_label:{ zh: '选择轮次',         en: 'Select Tier' },
+  modal_amount:    { zh: '金额 (USDT)',      en: 'Amount (USDT)' },
+  modal_tokens:    { zh: '代币',            en: 'Tokens' },
+  modal_bonus:     { zh: '奖励',            en: 'Bonus' },
+  modal_total:     { zh: '合计',            en: 'Total' },
+  modal_send:      { zh: '发送 USDT (BEP-20) 至:', en: 'Send USDT (BEP-20) to:' },
+  modal_confirm:   { zh: '确认认购',         en: 'Confirm Purchase' },
+  modal_disclaimer:{ zh: '当前为模拟界面，不会发生真实交易。', en: 'This is a mock interface. No real transaction will occur.' },
+  modal_pay_label: { zh: '支付方式',         en: 'Pay With' },
+
+  // Roadmap
+  road_label:      { zh: '发展路线',         en: 'Development Path' },
+  road_heading:    { zh: '项目',            en: 'Project' },
+  road_heading_hl: { zh: '路线图',           en: 'Roadmap' },
+  road_p1_time:    { zh: '2024 Q3 — 已完成', en: 'Q3 2024 — COMPLETED' },
+  road_p1_title:   { zh: '阶段一：基础建设',   en: 'Phase 1: Foundation' },
+  road_p1_i1:      { zh: '✓ 核心协议架构',   en: '✓ <span data-i18n="road_p1_i1_raw">Core protocol architecture</span>' },
+  road_p1_i2:      { zh: '✓ 智能合约开发',   en: '✓ <span data-i18n="road_p1_i2_raw">Smart contract development</span>' },
+  road_p1_i3:      { zh: '✓ CertiK 安全审计', en: '✓ <span data-i18n="road_p1_i3_raw">Security audit — CertiK</span>' },
+  road_p2_time:    { zh: '2024 Q4 — 进行中', en: 'Q4 2024 — IN PROGRESS' },
+  road_p2_title:   { zh: '阶段二：预售与上线', en: 'Phase 2: Presale & Launch' },
+  road_p2_i1:      { zh: '→ 私募进行中（你在这里）', en: '→ <span data-i18n="road_p2_i1_raw">Private presale (YOU ARE HERE)</span>' },
+  road_p2_i2:      { zh: '→ 测试网上线',     en: '→ <span data-i18n="road_p2_i2_raw">Testnet deployment</span>' },
+  road_p2_i3:      { zh: '→ 社区建设与空投',  en: '→ <span data-i18n="road_p2_i3_raw">Community building & airdrop</span>' },
+  road_p2_i4:      { zh: '→ PancakeSwap DEX 上线', en: '→ <span data-i18n="road_p2_i4_raw">DEX listing on PancakeSwap</span>' },
+  road_p3_time:    { zh: '2025 Q1 — 即将推出', en: 'Q1 2025 — UPCOMING' },
+  road_p3_title:   { zh: '阶段三：主网上线',   en: 'Phase 3: Mainnet' },
+  road_p3_i1:      { zh: '主网部署',         en: '<span data-i18n="road_p3_i1_raw">Mainnet deployment</span>' },
+  road_p3_i2:      { zh: '跨链桥集成',        en: '<span data-i18n="road_p3_i2_raw">Cross-chain bridge integration</span>' },
+  road_p3_i3:      { zh: '流动性挖矿计划',     en: '<span data-i18n="road_p3_i3_raw">Liquidity mining program</span>' },
+  road_p3_i4:      { zh: 'CEX 上币',         en: '<span data-i18n="road_p3_i4_raw">CEX listings</span>' },
+  road_p4_time:    { zh: '2025 Q3 — 即将推出', en: 'Q3 2025 — UPCOMING' },
+  road_p4_title:   { zh: '阶段四：生态扩展',    en: 'Phase 4: Ecosystem' },
+  road_p4_i1:      { zh: 'DAO 治理上线',      en: '<span data-i18n="road_p4_i1_raw">DAO governance launch</span>' },
+  road_p4_i2:      { zh: '开发者资助计划',     en: '<span data-i18n="road_p4_i2_raw">Grant program for builders</span>' },
+  road_p4_i3:      { zh: '机构合作',          en: '<span data-i18n="road_p4_i3_raw">Institutional partnerships</span>' },
+  road_p4_i4:      { zh: '移动端 App 发布',   en: '<span data-i18n="road_p4_i4_raw">Mobile app release</span>' },
+
+  // Dashboard
+  dash_label:      { zh: '你的面板',          en: 'Your Dashboard' },
+  dash_heading:    { zh: '追踪你的',          en: 'Track Your' },
+  dash_heading_hl: { zh: '认购记录',          en: 'Contribution' },
+  dash_subtitle:   { zh: '随时连接钱包查看你的认购历史、待释放代币和释放计划。', en: 'Connect your wallet anytime to view your contribution history, pending tokens, and vesting schedule.' },
+  dash_wallet:     { zh: '已连接钱包',        en: 'Connected Wallet' },
+  dash_contrib:    { zh: '已认购',           en: 'Contributed' },
+  dash_tokens:     { zh: '代币',            en: 'Tokens' },
+  dash_tier:       { zh: '轮次',            en: 'Tier' },
+  dash_history:    { zh: '认购记录',          en: 'CONTRIBUTION HISTORY' },
+  dash_date:       { zh: '日期',            en: 'Date' },
+  dash_amount:     { zh: '金额',            en: 'Amount' },
+  dash_tx:         { zh: '交易哈希',          en: 'TX Hash' },
+  dash_status:     { zh: '状态',            en: 'Status' },
+  dash_confirmed:  { zh: '已确认',           en: 'Confirmed' },
+  dash_vesting:    { zh: '释放计划',          en: 'VESTING SCHEDULE' },
+  dash_v1_title:   { zh: 'TGE 时解锁',       en: 'Unlocked at TGE' },
+  dash_v1_pct:     { zh: '33.3% 的份额',     en: '33.3% of allocation' },
+  dash_v2_title:   { zh: '60天线性释放',      en: 'Vesting Over 60 Days' },
+  dash_v2_pct:     { zh: '66.7% 的份额',     en: '66.7% of allocation' },
+  dash_v3_title:   { zh: '完全释放日期',       en: 'Fully Vested By' },
+  dash_v3_pct:     { zh: '≈ TGE 后60天',     en: '~60 days from TGE' },
+
+  // Team
+  team_label:      { zh: '核心团队',          en: 'Core Team' },
+  team_heading:    { zh: '由',              en: 'Built by' },
+  team_heading_hl: { zh: '建设者',           en: 'Builders' },
+  team_ak_role:    { zh: 'CEO & 创始人',      en: '<span data-i18n="team_ak_role">CEO & Founder</span>' },
+  team_ak_bio:     { zh: '前 Citadel。8年 DeFi 经验。创立2个成功协议。', en: '<span data-i18n="team_ak_bio">Ex-Citadel. 8y in DeFi. Founded 2 successful protocols.</span>' },
+  team_sm_role:    { zh: 'CTO',             en: 'CTO' },
+  team_sm_bio:     { zh: '前 Google。智能合约架构师。Solidity 大师。', en: '<span data-i18n="team_sm_bio">Ex-Google. Smart contract architect. Solidity wizard.</span>' },
+  team_dr_role:    { zh: '产品负责人',        en: '<span data-i18n="team_dr_role">Head of Product</span>' },
+  team_dr_bio:     { zh: '5次 Web3 创业者。UX 偏执狂。社区优先的建设者。', en: '<span data-i18n="team_dr_bio">5x Web3 founder. UX-obsessed. Community-first builder.</span>' },
+  team_lj_role:    { zh: '增长负责人',        en: '<span data-i18n="team_lj_role">Head of Growth</span>' },
+  team_lj_bio:     { zh: '将3个项目扩展至 $100M+ TVL。亚洲 KOL 网络。', en: '<span data-i18n="team_lj_bio">Scaled 3 projects to $100M+ TVL. KOL network across Asia.</span>' },
+
+  // FAQ
+  faq_label:       { zh: '有疑问？',         en: 'Got Questions?' },
+  faq_heading:     { zh: '常见',            en: 'Frequently' },
+  faq_heading_hl:  { zh: '问题',            en: 'Asked' },
+  faq_q1:          { zh: '私募的最低认购金额是多少？', en: 'What is the minimum contribution for the presale?' },
+  faq_a1:          { zh: '最低认购金额因轮次而异：种子轮 1,000 USDT，私募轮 500 USDT，公募轮 100 USDT。每个轮次每个钱包地址也有最高限额。', en: 'The minimum contribution varies by tier: 1,000 USDT for Seed, 500 USDT for Private, and 100 USDT for Public. Each tier also has a maximum cap per wallet address.' },
+  faq_q2:          { zh: '我什么时候能收到 $HOME 代币？', en: 'When will I receive my $HOME tokens?' },
+  faq_a2:          { zh: '代币分配按各轮次的释放计划执行。种子轮在 TGE 时释放 33.3%，剩余 3 个月内线性释放。私募轮 TGE 释放 50%，剩余 2 个月内释放。公募轮 TGE 释放 50%，剩余 1 个月后释放。', en: 'Token distribution follows each tier\'s vesting schedule. Seed tier gets 33.3% at TGE with the rest vesting over 3 months. Private tier gets 50% at TGE with the rest vesting over 2 months. Public tier gets 50% at TGE with the rest after 1 month.' },
+  faq_q3:          { zh: '如何连接钱包参与？', en: 'How do I connect my wallet to participate?' },
+  faq_a3:          { zh: '点击右上角的"连接钱包"按钮。我们支持 TokenPocket、MetaMask 和任何兼容 WalletConnect 的钱包。扫描二维码或在钱包 App 中批准连接即可。', en: 'Click the "Connect Wallet" button in the top right corner. We support TokenPocket, MetaMask, and any WalletConnect-compatible wallet. Simply scan the QR code or approve the connection in your wallet app.' },
+  faq_q4:          { zh: '智能合约是否经过审计？', en: 'Is the smart contract audited?' },
+  faq_a4:          { zh: '是的！我们的智能合约已经通过 CertiK 和 Trail of Bits 的审计。审计报告公开可查——链接见我们的文档。我们始终把安全放在首位。', en: 'Yes! Our smart contracts have been audited by CertiK and Trail of Bits. Audit reports are publicly available — links can be found in our documentation. We prioritize security above everything.' },
+  faq_q5:          { zh: '如果没有达到软顶怎么办？', en: 'What happens if the soft cap is not reached?' },
+  faq_a5:          { zh: '如果预售期结束时未达到 150,000 USDT 软顶，所有认购均可退款。我们的智能合约包含退款机制，允许你取回 USDT。', en: 'If the soft cap of 150,000 USDT is not reached by the end of the presale period, all contributions are refundable. Our smart contract includes a refund mechanism that allows you to claim your USDT back.' },
+
+  // CTA Banner
+  cta_heading:     { zh: '不要',             en: 'Don\'t Miss' },
+  cta_heading_hl:  { zh: '错过',             en: 'Out' },
+  cta_desc:        { zh: '私募将在14天后结束。早鸟参与者将获得最优价格和最高奖励。在硬顶之前锁定你的名额。', en: '<span data-i18n="cta_desc">The private sale closes in 14 days. Early birds get the best price and highest bonus. Secure your spot before we hit hard cap.</span>' },
+  cta_btn:         { zh: '立即认购 $HOME',    en: 'Buy $HOME Now' },
+  cta_faq_btn:     { zh: '阅读常见问题',       en: 'Read FAQ' },
+
+  // Footer
+  footer_rights:   { zh: '© 2026 HOME 豪门。保留所有权利。', en: '© 2026 HOME 豪门. All rights reserved.' },
+  mobile_menu_login:{ zh: 'TokenPocket 登录', en: 'Login with TokenPocket' },
+
+  // Wallet Modal
+  wm_title:        { zh: '连接钱包',          en: 'Connect Wallet' },
+  wm_tp:           { zh: 'TokenPocket',      en: 'TokenPocket' },
+  wm_tp_desc:      { zh: 'Chrome 扩展 • 移动 App • 内置浏览器', en: '<span data-i18n="wm_tp_desc">Chrome Extension • Mobile App • Injected Provider</span>' },
+  wm_mm:           { zh: 'MetaMask',         en: 'MetaMask' },
+  wm_mm_desc:      { zh: '浏览器扩展',         en: '<span data-i18n="wm_mm_desc">Browser Extension</span>' },
+  wm_okx:          { zh: 'OKX Wallet',       en: 'OKX Wallet' },
+  wm_okx_desc:     { zh: 'WalletConnect',    en: 'WalletConnect' },
+  wm_other:        { zh: '其他钱包',           en: 'Other Wallets' },
+  wm_other_desc:   { zh: 'WalletConnect • 支持 50+ 钱包', en: '<span data-i18n="wm_other_desc">WalletConnect • 50+ supported</span>' },
+  wm_recommended:  { zh: '推荐',              en: 'RECOMMENDED' },
+  wm_terms:        { zh: '连接即表示你同意我们的服务条款', en: 'By connecting, you agree to our Terms of Service' },
+
+  // Toasts
+  toast_connected:  { zh: '钱包已连接！',      en: 'Wallet connected!' },
+  toast_no_wallet:  { zh: '未检测到钱包。请安装 MetaMask 或 TokenPocket。', en: 'No wallet detected. Please install MetaMask or TokenPocket.' },
+  toast_open_tp:    { zh: '正在打开 TokenPocket... 如果未跳转，请从 tokenpocket.pro 下载', en: 'Opening TokenPocket... Get it at tokenpocket.pro' },
+  toast_install_tp: { zh: '如果未自动跳转，请从 tokenpocket.pro 安装 TokenPocket', en: 'Install TokenPocket from tokenpocket.pro if not redirected' },
+  toast_install_tp_desktop: { zh: '请从 tokenpocket.pro 安装 TokenPocket Chrome 扩展', en: 'Install TokenPocket Chrome extension from tokenpocket.pro' },
+  toast_switch_bsc: { zh: '请切换到 BSC 网络 (Chain 56 或 Testnet 97)', en: 'Please switch to BSC network (Chain 56 or Testnet 97)' },
+  toast_confirm_wallet: { zh: '请在钱包中确认交易...', en: 'Confirm transaction in your wallet...' },
+  toast_approve:   { zh: '请在钱包中批准 USDT 授权...', en: 'Approve USDT spending in your wallet...' },
+  toast_approved:  { zh: 'USDT 已授权！正在确认认购...', en: 'USDT approved! Confirming contribution...' },
+  toast_success:   { zh: '成功！已认购',      en: 'Success! Contributed' },
+  toast_cancelled: { zh: '交易已取消',         en: 'Transaction cancelled' },
+  toast_error:     { zh: '错误',             en: 'Error' },
+  toast_connect_first: { zh: '请先连接钱包',   en: 'Connect your wallet first' },
+  toast_invalid_amount:{ zh: '请输入有效金额',  en: 'Please enter a valid amount' },
+  toast_network_changed:{ zh: '网络已切换至',   en: 'Network changed to' },
+  toast_wallet_disconnected:{ zh: '钱包已断开', en: 'Wallet disconnected' },
+  toast_copied:    { zh: '地址已复制到剪贴板',  en: 'Address copied to clipboard' },
+  toast_install_mm: { zh: '未检测到钱包。请从 metamask.io 安装 MetaMask 或使用 TokenPocket。', en: 'No wallet detected. Install MetaMask (metamask.io) or TokenPocket.' },
+  toast_install_okx:{ zh: '未检测到 OKX Wallet。请从 okx.com/web3 安装', en: 'OKX Wallet not detected. Install from okx.com/web3' },
+  toast_install_any:{ zh: '未找到钱包。请从 tokenpocket.pro 安装 TokenPocket', en: 'No wallet found. Install TokenPocket from tokenpocket.pro' },
+  toast_no_wallet_modal:{ zh: '未检测到钱包。请安装 MetaMask 或 TokenPocket。', en: 'No wallet detected. Please install MetaMask or TokenPocket.' },
+
+  // Subscribe toast
+  toast_subscribed: { zh: '认购订单已创建，请在钱包中确认', en: 'Purchase order placed — check your wallet to confirm' },
+
+  // Additional descriptions and details
+  about_desc:      { zh: 'HOME Protocol 是一个跨链流动性聚合器，连接孤立的区块链生态系统。基于模块化架构，HOME 实现无缝资产转移、收益优化和跨12+条链的深度流动性。', en: 'HOME Protocol is a cross-chain liquidity aggregator that connects isolated blockchain ecosystems. Built on a modular architecture, HOME enables seamless asset transfers, yield optimization, and deep liquidity across 12+ chains.' },
+  about_f1_desc:   { zh: '基于意图架构和求解器网络的亚秒级跨链交换。', en: 'Sub-second cross-chain swaps powered by intent-based architecture and solver networks.' },
+  about_f2_desc:   { zh: '由 CertiK 和 Trail of Bits 审计。多签国库，所有管理员操作有24小时时间锁。', en: 'Audited by CertiK & Trail of Bits. Multi-sig treasury with 24h timelock on all admin actions.' },
+  about_f3_desc:   { zh: '原生连接 Ethereum、BSC、Arbitrum、Optimism、Polygon、Avalanche 等公链。', en: 'Native connectivity to Ethereum, BSC, Arbitrum, Optimism, Polygon, Avalanche & more.' },
+  hero_subtitle2:  { zh: '抢先入场。锁定你的份额。', en: 'Be an early bird. Secure your allocation.' },
+  buy_tier1:       { zh: '第一轮', en: 'TIER 1' },
+  buy_tier2:       { zh: '第二轮', en: 'TIER 2' },
+  buy_tier3:       { zh: '第三轮', en: 'TIER 3' },
+  buy_tier_seed:   { zh: '种子轮', en: 'Seed' },
+  buy_tier_private:{ zh: '私募轮', en: 'Private' },
+  buy_tier_public: { zh: '公募轮', en: 'Public' },
+  cta_desc:        { zh: '私募将在14天后结束。早鸟参与者将获得最优价格和最高奖励。在硬顶之前锁定你的名额。', en: 'The private sale closes in 14 days. Early birds get the best price and highest bonus. Secure your spot before we hit hard cap.' },
+  cta_btn:         { zh: '立即认购 $HOME', en: 'Buy $HOME Now' },
+  cta_faq_btn:     { zh: '阅读常见问题', en: 'Read FAQ' },
+  modal_buy_title: { zh: '认购 $HOME', en: 'Buy $HOME' },
+  modal_confirm_btn:{ zh: '通过 TokenPocket 认购', en: 'Subscribe with TokenPocket' },
+  modal_send:      { zh: '发送 USDT (BEP-20) 至:', en: 'Send USDT (BEP-20) to:' },
+  wm_tp_desc:      { zh: 'Chrome 扩展 • 移动 App • 内置浏览器', en: 'Chrome Extension • Mobile App • Injected Provider' },
+  wm_mm_desc:      { zh: '浏览器扩展', en: 'Browser Extension' },
+  wm_other_desc:   { zh: 'WalletConnect • 支持 50+ 钱包', en: 'WalletConnect • 50+ supported' },
+  team_ak_role:    { zh: 'CEO & 创始人', en: 'CEO & Founder' },
+  team_ak_bio:     { zh: '前 Citadel。8年 DeFi 经验。创立2个成功协议。', en: 'Ex-Citadel. 8y in DeFi. Founded 2 successful protocols.' },
+  team_sm_bio:     { zh: '前 Google。智能合约架构师。Solidity 大师。', en: 'Ex-Google. Smart contract architect. Solidity wizard.' },
+  team_dr_role:    { zh: '产品负责人', en: 'Head of Product' },
+  team_dr_bio:     { zh: '5次 Web3 创业者。UX 偏执狂。社区优先的建设者。', en: '5x Web3 founder. UX-obsessed. Community-first builder.' },
+  team_lj_role:    { zh: '增长负责人', en: 'Head of Growth' },
+  team_lj_bio:     { zh: '将3个项目扩展至 $100M+ TVL。亚洲 KOL 网络。', en: 'Scaled 3 projects to $100M+ TVL. KOL network across Asia.' },
+  road_p1_i1_raw:  { zh: '核心协议架构', en: 'Core protocol architecture' },
+  road_p1_i2_raw:  { zh: '智能合约开发', en: 'Smart contract development' },
+  road_p1_i3_raw:  { zh: 'CertiK 安全审计', en: 'Security audit — CertiK' },
+  road_p2_i1_raw:  { zh: '私募进行中（你在这里）', en: 'Private presale (YOU ARE HERE)' },
+  road_p2_i2_raw:  { zh: '测试网上线', en: 'Testnet deployment' },
+  road_p2_i3_raw:  { zh: '社区建设与空投', en: 'Community building & airdrop' },
+  road_p2_i4_raw:  { zh: 'PancakeSwap DEX 上线', en: 'DEX listing on PancakeSwap' },
+  road_p3_i1_raw:  { zh: '主网部署', en: 'Mainnet deployment' },
+  road_p3_i2_raw:  { zh: '跨链桥集成', en: 'Cross-chain bridge integration' },
+  road_p3_i3_raw:  { zh: '流动性挖矿计划', en: 'Liquidity mining program' },
+  road_p3_i4_raw:  { zh: 'CEX 上币', en: 'CEX listings' },
+  road_p4_i1_raw:  { zh: 'DAO 治理上线', en: 'DAO governance launch' },
+  road_p4_i2_raw:  { zh: '开发者资助计划', en: 'Grant program for builders' },
+  road_p4_i3_raw:  { zh: '机构合作', en: 'Institutional partnerships' },
+  road_p4_i4_raw:  { zh: '移动端 App 发布', en: 'Mobile app release' },
+  footer_docs:     { zh: '文档', en: 'Docs' },
+  footer_audit:    { zh: '审计', en: 'Audit' },
+  footer_twitter:  { zh: '推特', en: 'Twitter' },
+  footer_discord:  { zh: 'Discord', en: 'Discord' },
+  footer_telegram: { zh: 'Telegram', en: 'Telegram' },
+  footer_github:   { zh: 'GitHub', en: 'GitHub' },
+  nav_login_btn:   { zh: 'TokenPocket 登录', en: 'Login with TokenPocket' },
+};
+
+let currentLang = 'zh'; // DEFAULT: Chinese
+
+function t(key) {
+  const entry = I18N[key];
+  if (!entry) return key;
+  return entry[currentLang] || entry['en'] || key;
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'zh' ? 'en' : 'zh';
+  document.getElementById('lang-label').textContent = currentLang === 'zh' ? '中' : 'EN';
+  localStorage.setItem('home-presale-lang', currentLang);
+  applyLanguage();
+}
+
+function applyLanguage() {
+  // Update all elements with data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const text = t(key);
+    if (text) el.textContent = text;
+  });
+
+  // Update placeholder attributes
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    el.placeholder = t(key);
+  });
+
+  // Update lang toggle button
+  const langLabel = document.getElementById('lang-label');
+  if (langLabel) langLabel.textContent = currentLang === 'zh' ? '中' : 'EN';
+
+  // Update login button text (connected vs disconnected state)
+  const walletBtn = document.getElementById('wallet-btn-text');
+  if (walletBtn && !userAddress) {
+    walletBtn.textContent = t('nav_login');
+  }
+}
+
+// Init language from localStorage (default zh)
+(function() {
+  const saved = localStorage.getItem('home-presale-lang');
+  if (saved === 'en') currentLang = 'en';
+  // Apply on DOM ready
+  document.addEventListener('DOMContentLoaded', applyLanguage);
+  // Also apply immediately in case DOM is already loaded
+  if (document.readyState !== 'loading') applyLanguage();
+})();
+
 // ── Particle Canvas ──
 (function() {
   const canvas = document.getElementById('particle-canvas');
