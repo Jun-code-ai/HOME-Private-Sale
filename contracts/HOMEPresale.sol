@@ -81,7 +81,7 @@ contract HOMEPresale {
         owner = msg.sender;
         deployTime = block.timestamp;
 
-        // Caps: 150k / 500k USDT
+        // Caps: 500k / 1M USDT
         softCap = 500_000 * 1e18;
         hardCap = 1_000_000 * 1e18;
 
@@ -125,30 +125,32 @@ contract HOMEPresale {
         Tier storage tier = tiers[_tier];
         if (tier.price == 0) revert InvalidTier();
         if (_amount < tier.minContribution) revert BelowMinimum(tier.minContribution);
-        if (_amount > tier.maxContribution) revert AboveMaximum(tier.maxContribution);
+
+        // Check per-wallet TOTAL cap (not just per-transaction)
+        uint256 newTotal = contributions[msg.sender] + _amount;
+        if (newTotal > tier.maxContribution) revert AboveMaximum(tier.maxContribution);
         if (tier.maxContributors > 0 && tier.contributorCount >= tier.maxContributors) revert TierFull();
 
-        // Calculate tokens
-        // tokens = (_amount / price) * 1e18
+        // CEI: Calculate tokens BEFORE external call
         uint256 baseTokens = (_amount * 1e18) / tier.price;
         uint256 bonusTokens = (baseTokens * tier.bonusBps) / 10_000;
         uint256 totalTokens = baseTokens + bonusTokens;
 
-        // Transfer USDT from user to treasury
-        bool success = usdt.transferFrom(msg.sender, treasuryWallet, _amount);
-        if (!success) revert TransferFailed();
-
-        // Update state
-        contributions[msg.sender] += _amount;
-        tokensOwed[msg.sender] += totalTokens;
-        totalRaised += _amount;
-
-        // Track tier
+        // Track tier BEFORE external call (Checks-Effects-Interactions)
         if (bytes(userTier[msg.sender]).length == 0) {
             userTier[msg.sender] = _tier;
             tier.contributorCount++;
             contributors.push(msg.sender);
         }
+
+        // Update state BEFORE external call
+        contributions[msg.sender] = newTotal;
+        tokensOwed[msg.sender] += totalTokens;
+        totalRaised += _amount;
+
+        // External call LAST (CEI pattern)
+        bool success = usdt.transferFrom(msg.sender, treasuryWallet, _amount);
+        if (!success) revert TransferFailed();
 
         emit Contributed(msg.sender, _tier, _amount, baseTokens, bonusTokens, block.timestamp);
     }
