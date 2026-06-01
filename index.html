@@ -13,8 +13,10 @@
 <!-- Tailwind via CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- ethers.js for Web3 -->
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.13/dist/ethers.umd.min.js"></script>
+<!-- ethers.js for Web3 (loaded async so it never blocks page rendering) -->
+<script defer src="https://cdn.jsdelivr.net/npm/ethers@6.13/dist/ethers.umd.min.js"
+        onerror="console.warn('ethers.js CDN unavailable, Web3 features disabled'); window.ethersLoadFailed=true;">
+</script>
 <script>
 tailwind.config = {
   theme: {
@@ -1850,8 +1852,13 @@ function applyLanguage() {
 
 // ── Wallet Connection (Real Web3) ──
 
+function _ethersOk() {
+  return typeof ethers !== 'undefined' && !window.ethersLoadFailed;
+}
+
 function toggleWalletModal() {
   const modal = document.getElementById('wallet-modal');
+  if (!modal) return;
   modal.classList.toggle('hidden');
   modal.classList.toggle('flex');
 }
@@ -1866,6 +1873,11 @@ function toggleWalletModal() {
  */
 async function connectWallet(walletType) {
   toggleWalletModal();
+
+  if (!_ethersOk()) {
+    showToast('Web3 module loading, please try again in a moment...');
+    return;
+  }
 
   try {
     // ── TokenPocket ──
@@ -1964,6 +1976,7 @@ async function connectWallet(walletType) {
 }
 
 async function _setupContracts() {
+  if (!_ethersOk()) return;
   const chainConfig = CHAIN_CONFIG[currentChainId];
   if (!chainConfig) {
     showToast('Please switch to BSC network (Chain 56 or Testnet 97)');
@@ -2072,7 +2085,7 @@ async function contributeUSDT(amountWei, tier) {
 // ── Live Data Refresh ──
 
 async function refreshLiveData() {
-  if (!presaleContract) return;
+  if (!_ethersOk() || !presaleContract) return;
 
   try {
     const progress = await presaleContract.getProgress();
@@ -2191,7 +2204,7 @@ async function handlePurchase() {
 }
 
 // ── Listen for account/network changes ──
-if (window.ethereum) {
+if (window.ethereum && typeof ethers !== 'undefined') {
   window.ethereum.on('accountsChanged', async (accounts) => {
     if (accounts.length === 0) {
       // Wallet disconnected
