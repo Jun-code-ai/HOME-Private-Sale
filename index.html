@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Protocol — Private Presale</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind via CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        orbitron: ['Orbitron', 'sans-serif'],
+        exo: ['Exo 2', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+      },
+      colors: {
+        neon: {
+          cyan: '#00FFFF',
+          blue: '#0080FF',
+          pink: '#FF006E',
+          purple: '#8B5CF6',
+          green: '#00FF88',
+          gold: '#FFD700',
+        },
+        deep: {
+          900: '#050508',
+          800: '#0A0A0F',
+          700: '#0D0D15',
+          600: '#111122',
+        }
+      },
+      animation: {
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite alternate',
+        'float': 'float 6s ease-in-out infinite',
+        'scanline': 'scanline 8s linear infinite',
+        'border-glow': 'borderGlow 3s ease-in-out infinite',
+        'count-up': 'countUp 0.3s ease-out',
+        'glitch': 'glitch 0.3s ease-in-out',
+        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+        'fade-in': 'fadeIn 0.8s ease-out',
+        'marquee': 'marquee 30s linear infinite',
+      },
+      keyframes: {
+        glowPulse: {
+          '0%': { boxShadow: '0 0 20px rgba(0, 255, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.1)' },
+          '100%': { boxShadow: '0 0 35px rgba(0, 255, 255, 0.5), 0 0 100px rgba(0, 255, 255, 0.2)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        scanline: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100vh)' },
+        },
+        borderGlow: {
+          '0%, 100%': { borderColor: 'rgba(0, 255, 255, 0.3)' },
+          '50%': { borderColor: 'rgba(0, 255, 255, 0.8)' },
+        },
+        glitch: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '20%': { transform: 'translateX(-3px)' },
+          '40%': { transform: 'translateX(3px)' },
+          '60%': { transform: 'translateX(-2px)' },
+          '80%': { transform: 'translateX(2px)' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(40px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
+      backgroundImage: {
+        'grid-pattern': 'linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px)',
+        'radial-glow': 'radial-gradient(ellipse at center, rgba(0, 255, 255, 0.15) 0%, transparent 70%)',
+      },
+      backgroundSize: {
+        'grid': '60px 60px',
+      },
+    }
+  }
+}
+</script>
+
+<style>
+  /* ── Base ── */
+  html { scroll-behavior: smooth; }
+  body { background: #050508; overflow-x: hidden; }
+
+  /* ── Scanline overlay ── */
+  .scanlines::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.15) 0px,
+      rgba(0,0,0,0.15) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    opacity: 0.3;
+  }
+
+  /* ── Glow text utility ── */
+  .text-glow-cyan { text-shadow: 0 0 10px rgba(0,255,255,0.6), 0 0 40px rgba(0,255,255,0.3), 0 0 80px rgba(0,255,255,0.1); }
+  .text-glow-blue { text-shadow: 0 0 10px rgba(0,128,255,0.6), 0 0 40px rgba(0,128,255,0.3); }
+  .text-glow-pink { text-shadow: 0 0 10px rgba(255,0,110,0.6), 0 0 40px rgba(255,0,110,0.3); }
+  .text-glow-green { text-shadow: 0 0 10px rgba(0,255,136,0.6), 0 0 40px rgba(0,255,136,0.3); }
+
+  /* ── Box glow utility ── */
+  .box-glow-cyan { box-shadow: 0 0 20px rgba(0,255,255,0.2), 0 0 60px rgba(0,255,255,0.05); }
+
+  /* ── Glass card ── */
+  .glass-card {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .glass-card-light {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  /* ── Gradient borders ── */
+  .border-gradient-cyan {
+    border: 1px solid transparent;
+    background: linear-gradient(rgba(10,10,15,0.9), rgba(10,10,15,0.9)) padding-box,
+                linear-gradient(135deg, rgba(0,255,255,0.5), rgba(0,128,255,0.3), rgba(139,92,246,0.5)) border-box;
+  }
+
+  /* ── Particle canvas ── */
+  #particle-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  /* ── Parallax layers ── */
+  .parallax-slow { transform: translateY(var(--parallax-y, 0px)) scale(1.05); }
+  .parallax-fast { transform: translateY(var(--parallax-y-fast, 0px)) scale(0.95); }
+
+  /* ── Reveal on scroll ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+                transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Progress bar shimmer ── */
+  .progress-shimmer {
+    background: linear-gradient(90deg,
+      rgba(0,255,255,0) 0%, rgba(0,255,255,0.4) 50%, rgba(0,255,255,0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ── Hover tilt card ── */
+  .tilt-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .tilt-card:hover {
+    transform: translateY(-8px) rotateX(2deg) rotateY(-1deg);
+    box-shadow: 0 20px 60px rgba(0,255,255,0.15), 0 0 100px rgba(0,128,255,0.05);
+  }
+
+  /* ── Marquee scroll smooth ── */
+  .marquee-track { display: flex; width: max-content; }
+
+  /* ── Reduce motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+    .parallax-slow, .parallax-fast { transform: none; }
+  }
+
+  /* ── Custom scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #050508; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,255,255,0.2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0,255,255,0.4); }
+
+  /* ── Glitch hover ── */
+  .glitch-hover:hover { animation: glitch 0.3s ease-in-out; }
+
+  /* ── Tokenomics ring ── */
+  .donut-ring { stroke: rgba(255,255,255,0.05); }
+  .donut-segment { transition: stroke-dashoffset 1.5s ease-out; }
+</style>
+</head>
+<body class="font-body text-white antialiased">
+
+<!-- ════════════════════════════════════════ -->
+<!-- NAVBAR -->
+<!-- ════════════════════════════════════════ -->
+<nav class="fixed top-4 left-4 right-4 z-50 transition-all duration-300" id="navbar">
+  <div class="max-w-7xl mx-auto glass-card rounded-2xl px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2 sm:gap-3 group">
+      <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-base sm:text-lg font-bold text-deep-900 font-orbitron group-hover:animate-glitch">
+        N
+      </div>
+      <span class="font-orbitron font-bold text-base sm:text-lg text-white hidden sm:block">
+        NOVA<span class="text-neon-cyan">.</span>
+      </span>
+    </a>
+
+    <!-- Desktop Links -->
+    <div class="hidden lg:flex items-center gap-8">
+      <a href="#about" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">ABOUT</a>
+      <a href="#tokenomics" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">TOKENOMICS</a>
+      <a href="#buy" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">PRESALE</a>
+      <a href="#roadmap" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">ROADMAP</a>
+      <a href="#faq" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">FAQ</a>
+    </div>
+
+    <!-- Wallet Button -->
+    <button id="connect-wallet-btn" onclick="toggleWalletModal()"
+            class="group relative px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm font-orbitron tracking-wide overflow-hidden transition-all duration-300
+                   bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
+                   hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] active:scale-95 shrink-0">
+      <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
+        <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        <span id="wallet-btn-text" class="hidden sm:inline">Connect Wallet</span>
+        <span class="sm:hidden">Connect</span>
+      </span>
+      <div class="absolute inset-0 bg-gradient-to-r from-neon-cyan/0 via-white/20 to-neon-cyan/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+    </button>
+
+    <!-- Mobile menu toggle -->
+    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gray-400 hover:text-neon-cyan shrink-0" aria-label="Toggle menu">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden lg:hidden mt-2 glass-card rounded-2xl px-6 py-4 space-y-3">
+    <a href="#about" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">ABOUT</a>
+    <a href="#tokenomics" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">TOKENOMICS</a>
+    <a href="#buy" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">PRESALE</a>
+    <a href="#roadmap" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">ROADMAP</a>
+    <a href="#faq" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">FAQ</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════ -->
+<!-- HERO SECTION -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Background orbs -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-cyan/10 rounded-full blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-neon-blue/10 rounded-full blur-[100px] animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-purple/5 rounded-full blur-[150px]"></div>
+  </div>
+
+  <!-- Grid background -->
+  <div class="absolute inset-0 bg-grid-pattern bg-grid opacity-30"></div>
+
+  <!-- Scanline effect -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.03]">
+    <div class="animate-scanline w-full h-px bg-neon-cyan"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-28 pb-20 sm:py-32">
+    <!-- Badge -->
+    <div class="reveal inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 mb-8">
+      <span class="relative flex h-2.5 w-2.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-green opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-neon-green"></span>
+      </span>
+      <span class="text-xs font-exo text-gray-300 tracking-widest uppercase">Private Sale Now Live</span>
+    </div>
+
+    <!-- Main Title -->
+    <h1 class="reveal font-orbitron font-black text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-tight mb-6" style="transition-delay: 0.1s;">
+      <span class="text-glow-cyan">NOVA</span><br class="sm:hidden">
+      <span class="text-white">PROTOCOL</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="reveal text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-exo leading-relaxed" style="transition-delay: 0.2s;">
+      The next-generation DeFi infrastructure powering trustless cross-chain liquidity.<br class="hidden sm:block">
+      <span class="text-neon-cyan font-semibold">Be an early bird. Secure your allocation.</span>
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4 mb-16" style="transition-delay: 0.3s;">
+      <a href="#buy"
+         class="group w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
+                bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
+                hover:shadow-[0_0_40px_rgba(0,255,255,0.5)] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2">
+        Buy Early Bird
+        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      </a>
+      <a href="#about"
+         class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
+                border border-gray-700 text-gray-300 hover:border-neon-cyan hover:text-neon-cyan
+                transition-all duration-300 active:scale-95">
+        Learn More
+      </a>
+    </div>
+
+    <!-- Stats Glance -->
+    <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto" style="transition-delay: 0.4s;">
+      <div class="glass-card rounded-xl p-3 sm:p-4">
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-cyan"><span id="hero-raised">287.5</span> BNB</div>
+        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Total Raised</div>
+      </div>
+      <div class="glass-card rounded-xl p-3 sm:p-4">
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-green"><span id="hero-contributors">1,247</span></div>
+        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Contributors</div>
+      </div>
+      <div class="glass-card rounded-xl p-3 sm:p-4">
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-pink">1 BNB</div>
+        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Min Contribution</div>
+      </div>
+      <div class="glass-card rounded-xl p-3 sm:p-4">
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-purple" id="countdown">14d 06h</div>
+        <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Remaining</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-float">
+    <span class="text-xs text-gray-600 font-exo tracking-widest">SCROLL</span>
+    <svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- PROGRESS BAR SECTION -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-8 px-6" id="progress">
+  <div class="max-w-4xl mx-auto">
+    <div class="glass-card-light rounded-2xl p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-4 gap-2">
+        <div>
+          <span class="text-xs text-gray-500 font-exo tracking-widest uppercase">Funding Progress</span>
+          <h3 class="text-xl font-bold font-orbitron text-white mt-1">287.5 / 500 BNB</h3>
+        </div>
+        <div class="flex items-center gap-6 text-sm font-exo">
+          <div class="text-center">
+            <div class="text-gray-500">Soft Cap</div>
+            <div class="text-neon-green font-bold font-orbitron">150 BNB</div>
+            <div class="text-[10px] text-neon-green bg-neon-green/10 rounded-full px-2 py-0.5 mt-0.5">✓ Reached</div>
+          </div>
+          <div class="text-center">
+            <div class="text-gray-500">Hard Cap</div>
+            <div class="text-neon-cyan font-bold font-orbitron">500 BNB</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="relative h-5 bg-white/5 rounded-full overflow-hidden mb-2">
+        <div id="main-progress-bar" class="absolute inset-y-0 left-0 rounded-full transition-all duration-1000 ease-out"
+             style="width: 0%; background: linear-gradient(90deg, #00FF88, #00FFFF, #0080FF);">
+          <div class="progress-shimmer absolute inset-0 rounded-full"></div>
+        </div>
+        <!-- Soft cap marker -->
+        <div class="absolute top-0 bottom-0 w-0.5 bg-neon-green/60" style="left: 30%;">
+          <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-neon-green font-orbitron whitespace-nowrap">SOFT</span>
+        </div>
+      </div>
+      <div class="text-right text-sm font-bold font-orbitron">
+        <span class="text-neon-cyan" id="progress-percent">57.5%</span>
+        <span class="text-gray-600 mx-1">—</span>
+        <span class="text-gray-500 text-xs font-exo">212.5 BNB remaining</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- ABOUT SECTION -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-24 px-6" id="about">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">About The Project</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
+        Liquidity Without <span class="text-glow-cyan">Boundaries</span>
+      </h2>
+      <p class="text-gray-400 max-w-3xl mx-auto text-lg font-exo leading-relaxed">
+        Nova Protocol is a cross-chain liquidity aggregator that connects isolated blockchain
+        ecosystems. Built on a modular architecture, Nova enables seamless asset transfers,
+        yield optimization, and deep liquidity across 12+ chains.
+      </p>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="reveal tilt-card glass-card rounded-2xl p-8 group cursor-pointer" style="transition-delay: 0s;">
+        <div class="w-14 h-14 rounded-xl bg-neon-cyan/10 flex items-center justify-center mb-6 group-hover:bg-neon-cyan/20 transition-colors">
+          <svg class="w-7 h-7 text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold font-orbitron text-white mb-3">Lightning Speed</h3>
+        <p class="text-gray-400 font-exo text-sm leading-relaxed">Sub-second cross-chain swaps powered by intent-based architecture and solver networks.</p>
+      </div>
+      <div class="reveal tilt-card glass-card rounded-2xl p-8 group cursor-pointer" style="transition-delay: 0.15s;">
+        <div class="w-14 h-14 rounded-xl bg-neon-blue/10 flex items-center justify-center mb-6 group-hover:bg-neon-blue/20 transition-colors">
+          <svg class="w-7 h-7 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold font-orbitron text-white mb-3">Battle-Tested Security</h3>
+        <p class="text-gray-400 font-exo text-sm leading-relaxed">Audited by CertiK & Trail of Bits. Multi-sig treasury with 24h timelock on all admin actions.</p>
+      </div>
+      <div class="reveal tilt-card glass-card rounded-2xl p-8 group cursor-pointer" style="transition-delay: 0.3s;">
+        <div class="w-14 h-14 rounded-xl bg-neon-purple/10 flex items-center justify-center mb-6 group-hover:bg-neon-purple/20 transition-colors">
+          <svg class="w-7 h-7 text-neon-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+        </div>
+        <h3 class="text-xl font-bold font-orbitron text-white mb-3">Omnichain by Design</h3>
+        <p class="text-gray-400 font-exo text-sm leading-relaxed">Native connectivity to Ethereum, BSC, Arbitrum, Optimism, Polygon, Avalanche & more.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- TOKENOMICS SECTION -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-24 px-6" id="tokenomics">
+  <div class="absolute inset-0 bg-radial-glow opacity-30 pointer-events-none"></div>
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Token Distribution</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
+        $NOVA <span class="text-glow-cyan">Tokenomics</span>
+      </h2>
+      <p class="text-gray-400 max-w-2xl mx-auto text-lg font-exo">
+        Total Supply: <span class="text-white font-bold">100,000,000 $NOVA</span>
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <!-- Donut Chart -->
+      <div class="reveal flex justify-center">
+        <div class="relative w-80 h-80">
+          <svg viewBox="0 0 200 200" class="w-full h-full -rotate-90">
+            <!-- Ring segments (stroke-dasharray based on 2*PI*40 ≈ 251.33 circumference) -->
+            <!-- Presale 35% -->
+            <circle cx="100" cy="100" r="65" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="22"/>
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#00FFFF" stroke-width="22"
+                    stroke-dasharray="142.9 265.5" stroke-linecap="round" class="donut-segment"
+                    id="seg-presale" style="stroke-dashoffset: 0;"/>
+            <!-- Liquidity 25% -->
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#0080FF" stroke-width="22"
+                    stroke-dasharray="102 265.5" stroke-linecap="round" class="donut-segment"
+                    id="seg-liquidity" style="stroke-dashoffset: -142.9;"/>
+            <!-- Ecosystem 20% -->
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#8B5CF6" stroke-width="22"
+                    stroke-dasharray="81.7 265.5" stroke-linecap="round" class="donut-segment"
+                    id="seg-ecosystem" style="stroke-dashoffset: -244.9;"/>
+            <!-- Team 12% -->
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#FF006E" stroke-width="22"
+                    stroke-dasharray="49 265.5" stroke-linecap="round" class="donut-segment"
+                    id="seg-team" style="stroke-dashoffset: -326.6;"/>
+            <!-- Advisors 5% -->
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#FFD700" stroke-width="22"
+                    stroke-dasharray="20.4 265.5" stroke-linecap="round" class="donut-segment"
+                    id="seg-advisors" style="stroke-dashoffset: -375.6;"/>
+            <!-- Reserve 3% -->
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#00FF88" stroke-width="22"
+                    stroke-dasharray="12.3 265.5" stroke-linecap="round" class="donut-segment"
+                    id="seg-reserve" style="stroke-dashoffset: -396;"/>
+            <!-- Center hole -->
+            <circle cx="100" cy="100" r="42" fill="#0A0A0F"/>
+            <!-- Center text -->
+            <text x="100" y="97" text-anchor="middle" fill="white" font-size="11" font-family="Exo 2, sans-serif" transform="rotate(90, 100, 100)">TOTAL</text>
+            <text x="100" y="113" text-anchor="middle" fill="#00FFFF" font-size="14" font-weight="700" font-family="Orbitron, sans-serif" transform="rotate(90, 100, 100)">100M</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="reveal space-y-4" style="transition-delay: 0.2s;">
+        <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-neon-cyan shadow-[0_0_10px_rgba(0,255,255,0.5)]"></div>
+            <span class="font-exo text-white text-sm">Presale</span>
+          </div>
+          <span class="font-orbitron font-bold text-neon-cyan">35%</span>
+        </div>
+        <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-neon-blue shadow-[0_0_10px_rgba(0,128,255,0.5)]"></div>
+            <span class="font-exo text-white text-sm">Liquidity</span>
+          </div>
+          <span class="font-orbitron font-bold text-neon-blue">25%</span>
+        </div>
+        <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-neon-purple shadow-[0_0_10px_rgba(139,92,246,0.5)]"></div>
+            <span class="font-exo text-white text-sm">Ecosystem</span>
+          </div>
+          <span class="font-orbitron font-bold text-neon-purple">20%</span>
+        </div>
+        <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-neon-pink shadow-[0_0_10px_rgba(255,0,110,0.5)]"></div>
+            <span class="font-exo text-white text-sm">Team & Advisors</span>
+          </div>
+          <span class="font-orbitron font-bold text-neon-pink">17%</span>
+        </div>
+        <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-neon-green shadow-[0_0_10px_rgba(0,255,136,0.5)]"></div>
+            <span class="font-exo text-white text-sm">Reserve</span>
+          </div>
+          <span class="font-orbitron font-bold text-neon-green">3%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- PRESALE BUY SECTION -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-24 px-6" id="buy">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Early Bird Access</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
+        Secure Your <span class="text-glow-cyan">Allocation</span>
+      </h2>
+      <p class="text-gray-400 max-w-2xl mx-auto text-lg font-exo">
+        Connect your wallet and grab $NOVA at the lowest price before public launch.
+      </p>
+    </div>
+
+    <!-- Tiers -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <!-- Tier 1: Seed -->
+      <div class="reveal border-gradient-cyan rounded-2xl p-8 flex flex-col" style="transition-delay: 0s;">
+        <div class="text-xs text-neon-cyan font-orbitron tracking-widest mb-3">TIER 1</div>
+        <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Seed</h3>
+        <div class="text-3xl font-black font-orbitron text-white mb-1">$0.08</div>
+        <div class="text-sm text-gray-500 font-exo mb-6">per $NOVA token</div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            30% bonus tokens
+          </li>
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            3-month linear vesting
+          </li>
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Min: 1 BNB — Max: 50 BNB
+          </li>
+        </ul>
+        <div class="text-xs text-neon-green/60 font-exo mb-4">🔥 387 / 500 slots filled</div>
+        <button onclick="handleBuy('seed')"
+                class="w-full py-3.5 rounded-xl font-bold font-orbitron text-sm tracking-wide
+                       bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
+                       hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] transition-all duration-300 active:scale-95">
+          Buy Seed
+        </button>
+      </div>
+
+      <!-- Tier 2: Private (HIGHLIGHTED) -->
+      <div class="reveal border-gradient-cyan rounded-2xl p-8 flex flex-col relative md:scale-[1.03] bg-deep-700/50" style="transition-delay: 0.15s;">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900 text-[10px] font-bold font-orbitron px-4 py-1 rounded-full tracking-widest">
+          MOST POPULAR
+        </div>
+        <div class="text-xs text-neon-cyan font-orbitron tracking-widest mb-3 mt-1">TIER 2</div>
+        <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Private</h3>
+        <div class="text-3xl font-black font-orbitron text-white mb-1">$0.10</div>
+        <div class="text-sm text-gray-500 font-exo mb-6">per $NOVA token</div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            15% bonus tokens
+          </li>
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            2-month linear vesting
+          </li>
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Min: 0.5 BNB — Max: 30 BNB
+          </li>
+        </ul>
+        <div class="text-xs text-neon-green/60 font-exo mb-4">⚡ 623 / 1000 slots filled</div>
+        <button onclick="handleBuy('private')"
+                class="w-full py-3.5 rounded-xl font-bold font-orbitron text-sm tracking-wide
+                       bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
+                       hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] transition-all duration-300 active:scale-95">
+          Buy Private
+        </button>
+      </div>
+
+      <!-- Tier 3: Public -->
+      <div class="reveal border-gradient-cyan rounded-2xl p-8 flex flex-col" style="transition-delay: 0.3s;">
+        <div class="text-xs text-neon-cyan font-orbitron tracking-widest mb-3">TIER 3</div>
+        <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Public</h3>
+        <div class="text-3xl font-black font-orbitron text-white mb-1">$0.15</div>
+        <div class="text-sm text-gray-500 font-exo mb-6">per $NOVA token</div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            5% bonus tokens
+          </li>
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            50% at TGE, 50% after 1 month
+          </li>
+          <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
+            <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Min: 0.1 BNB — Max: 10 BNB
+          </li>
+        </ul>
+        <div class="text-xs text-gray-500 font-exo mb-4">Coming soon</div>
+        <button disabled
+                class="w-full py-3.5 rounded-xl font-bold font-orbitron text-sm tracking-wide
+                       border border-gray-700 text-gray-600 cursor-not-allowed">
+          Opens in 14 days
+        </button>
+      </div>
+    </div>
+
+    <!-- Direct Purchase Modal Trigger -->
+    <div class="reveal text-center">
+      <p class="text-gray-500 text-sm font-exo mb-4">Prefer to contribute directly?</p>
+      <button onclick="toggleBuyModal()"
+              class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold font-orbitron text-sm
+                     border border-neon-cyan/30 text-neon-cyan hover:bg-neon-cyan/10 transition-all duration-300">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+        Buy With Custom Amount
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- ROADMAP SECTION -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-24 px-6" id="roadmap">
+  <div class="absolute inset-0 bg-radial-glow opacity-20 pointer-events-none"></div>
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-20 reveal">
+      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Development Path</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
+        Project <span class="text-glow-cyan">Roadmap</span>
+      </h2>
+    </div>
+
+    <!-- Timeline -->
+    <div class="relative">
+      <!-- Center line -->
+      <div class="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-neon-cyan via-neon-blue to-neon-purple md:-translate-x-px"></div>
+
+      <div class="space-y-12">
+        <!-- Phase 1 -->
+        <div class="reveal relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
+          <div class="md:w-1/2 md:pr-16 md:text-right order-2 md:order-1 pl-12 md:pl-0">
+            <div class="glass-card rounded-xl p-6 inline-block">
+              <span class="text-[10px] text-neon-cyan font-orbitron tracking-widest">Q3 2024 — COMPLETED</span>
+              <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 1: Foundation</h4>
+              <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
+                <li class="flex md:justify-end items-center gap-2"><span>✓ Core protocol architecture</span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
+                <li class="flex md:justify-end items-center gap-2"><span>✓ Smart contract development</span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
+                <li class="flex md:justify-end items-center gap-2"><span>✓ Security audit — CertiK</span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
+              </ul>
+            </div>
+          </div>
+          <div class="absolute left-0 md:left-1/2 w-[38px] h-[38px] rounded-full bg-deep-800 border-2 border-neon-green flex items-center justify-center md:-translate-x-1/2 z-10 shadow-[0_0_15px_rgba(0,255,136,0.4)]">
+            <svg class="w-4 h-4 text-neon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div class="md:w-1/2 order-2 md:pl-16 hidden md:block"></div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="reveal relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
+          <div class="md:w-1/2 md:pr-16 hidden md:block order-1"></div>
+          <div class="absolute left-0 md:left-1/2 w-[38px] h-[38px] rounded-full bg-deep-800 border-2 border-neon-cyan flex items-center justify-center md:-translate-x-1/2 z-10 shadow-[0_0_15px_rgba(0,255,255,0.4)] animate-glow-pulse">
+            <div class="w-3 h-3 rounded-full bg-neon-cyan"></div>
+          </div>
+          <div class="md:w-1/2 md:pl-16 order-2 pl-12 md:pl-16">
+            <div class="glass-card rounded-xl p-6 inline-block">
+              <span class="text-[10px] text-neon-cyan font-orbitron tracking-widest">Q4 2024 — IN PROGRESS</span>
+              <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 2: Presale & Launch</h4>
+              <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
+                <li>→ Private presale (YOU ARE HERE)</li>
+                <li>→ Testnet deployment</li>
+                <li>→ Community building & airdrop</li>
+                <li>→ DEX listing on PancakeSwap</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="reveal relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
+          <div class="md:w-1/2 md:pr-16 md:text-right order-2 md:order-1 pl-12 md:pl-0">
+            <div class="glass-card rounded-xl p-6 inline-block">
+              <span class="text-[10px] text-gray-500 font-orbitron tracking-widest">Q1 2025 — UPCOMING</span>
+              <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 3: Mainnet</h4>
+              <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
+                <li>Mainnet deployment</li>
+                <li>Cross-chain bridge integration</li>
+                <li>Liquidity mining program</li>
+                <li>CEX listings</li>
+              </ul>
+            </div>
+          </div>
+          <div class="absolute left-0 md:left-1/2 w-[38px] h-[38px] rounded-full bg-deep-800 border-2 border-gray-700 flex items-center justify-center md:-translate-x-1/2 z-10">
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+          </div>
+          <div class="md:w-1/2 order-2 md:pl-16 hidden md:block"></div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="reveal relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
+          <div class="md:w-1/2 md:pr-16 hidden md:block order-1"></div>
+          <div class="absolute left-0 md:left-1/2 w-[38px] h-[38px] rounded-full bg-deep-800 border-2 border-gray-700 flex items-center justify-center md:-translate-x-1/2 z-10">
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+          </div>
+          <div class="md:w-1/2 md:pl-16 order-2 pl-12 md:pl-16">
+            <div class="glass-card rounded-xl p-6 inline-block">
+              <span class="text-[10px] text-gray-500 font-orbitron tracking-widest">Q3 2025 — UPCOMING</span>
+              <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 4: Ecosystem</h4>
+              <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
+                <li>DAO governance launch</li>
+                <li>Grant program for builders</li>
+                <li>Institutional partnerships</li>
+                <li>Mobile app release</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- DASHBOARD PREVIEW -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-24 px-6" id="dashboard">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Your Dashboard</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
+        Track Your <span class="text-glow-cyan">Contribution</span>
+      </h2>
+      <p class="text-gray-400 max-w-2xl mx-auto text-lg font-exo">
+        Connect your wallet anytime to view your contribution history, pending tokens, and vesting schedule.
+      </p>
+    </div>
+
+    <!-- Mock Dashboard -->
+    <div class="reveal glass-card-light rounded-2xl p-6 sm:p-8 overflow-hidden">
+      <!-- Wallet header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/5">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center font-bold font-orbitron text-deep-900 text-lg">W</div>
+          <div>
+            <div class="text-sm text-gray-500 font-exo">Connected Wallet</div>
+            <div class="text-white font-mono text-sm">0x71C7...6b9F</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 sm:flex sm:items-center sm:gap-6">
+          <div class="text-center">
+            <div class="text-xs text-gray-500 font-exo">Contributed</div>
+            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-cyan">12.5 BNB</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xs text-gray-500 font-exo">$NOVA</div>
+            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-green">156,250</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xs text-gray-500 font-exo">Tier</div>
+            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-pink">Private</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction history -->
+      <div>
+        <h4 class="text-sm font-bold font-orbitron text-gray-400 tracking-widest mb-4">CONTRIBUTION HISTORY</h4>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="text-xs text-gray-500 font-exo tracking-widest uppercase border-b border-white/5">
+                <th class="py-3 pr-4 font-medium">Date</th>
+                <th class="py-3 pr-4 font-medium">Amount</th>
+                <th class="py-3 pr-4 font-medium">Tier</th>
+                <th class="py-3 pr-4 font-medium">TX Hash</th>
+                <th class="py-3 font-medium">Status</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm font-exo">
+              <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
+                <td class="py-4 pr-4 text-gray-300">Jun 02, 2026</td>
+                <td class="py-4 pr-4 text-white font-semibold">5.0 BNB</td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-cyan/10 text-neon-cyan px-2 py-0.5 rounded-full">Private</span></td>
+                <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xa1b2...c9d8</td>
+                <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
+                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
+                <td class="py-4 pr-4 text-gray-300">May 28, 2026</td>
+                <td class="py-4 pr-4 text-white font-semibold">4.5 BNB</td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-cyan/10 text-neon-cyan px-2 py-0.5 rounded-full">Private</span></td>
+                <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xb3c4...e5f6</td>
+                <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
+                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
+                <td class="py-4 pr-4 text-gray-300">May 21, 2026</td>
+                <td class="py-4 pr-4 text-white font-semibold">3.0 BNB</td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-cyan/10 text-neon-cyan px-2 py-0.5 rounded-full">Seed</span></td>
+                <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xc5d6...a7b8</td>
+                <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
+                  <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vesting schedule -->
+      <div class="mt-8 pt-6 border-t border-white/5">
+        <h4 class="text-sm font-bold font-orbitron text-gray-400 tracking-widest mb-4">VESTING SCHEDULE</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="glass-card rounded-xl p-4 text-center">
+            <div class="text-xs text-gray-500 font-exo mb-1">Unlocked at TGE</div>
+            <div class="text-2xl font-bold font-orbitron text-neon-cyan">52,083</div>
+            <div class="text-xs text-gray-600 mt-1">33.3% of allocation</div>
+          </div>
+          <div class="glass-card rounded-xl p-4 text-center">
+            <div class="text-xs text-gray-500 font-exo mb-1">Vesting Over 60 Days</div>
+            <div class="text-2xl font-bold font-orbitron text-neon-blue">104,167</div>
+            <div class="text-xs text-gray-600 mt-1">66.7% of allocation</div>
+          </div>
+          <div class="glass-card rounded-xl p-4 text-center">
+            <div class="text-xs text-gray-500 font-exo mb-1">Fully Vested By</div>
+            <div class="text-2xl font-bold font-orbitron text-neon-purple">Aug 2026</div>
+            <div class="text-xs text-gray-600 mt-1">~60 days from TGE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- TEAM SECTION -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-24 px-6" id="team">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Core Team</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
+        Built by <span class="text-glow-cyan">Builders</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Member -->
+      <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-cyan to-neon-blue mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-deep-900">AK</div>
+        <h4 class="text-lg font-bold font-orbitron text-white">Alex K.</h4>
+        <p class="text-sm text-neon-cyan font-exo mb-3">CEO & Founder</p>
+        <p class="text-xs text-gray-500 font-exo leading-relaxed">Ex-Citadel. 8y in DeFi. Founded 2 successful protocols.</p>
+      </div>
+      <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.1s;">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-pink to-neon-purple mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-white">SM</div>
+        <h4 class="text-lg font-bold font-orbitron text-white">Sarah M.</h4>
+        <p class="text-sm text-neon-pink font-exo mb-3">CTO</p>
+        <p class="text-xs text-gray-500 font-exo leading-relaxed">Ex-Google. Smart contract architect. Solidity wizard.</p>
+      </div>
+      <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.2s;">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-green to-neon-cyan mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-deep-900">DR</div>
+        <h4 class="text-lg font-bold font-orbitron text-white">David R.</h4>
+        <p class="text-sm text-neon-green font-exo mb-3">Head of Product</p>
+        <p class="text-xs text-gray-500 font-exo leading-relaxed">5x Web3 founder. UX-obsessed. Community-first builder.</p>
+      </div>
+      <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.3s;">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-white">LJ</div>
+        <h4 class="text-lg font-bold font-orbitron text-white">Lisa J.</h4>
+        <p class="text-sm text-neon-blue font-exo mb-3">Head of Growth</p>
+        <p class="text-xs text-gray-500 font-exo leading-relaxed">Scaled 3 projects to $100M+ TVL. KOL network across Asia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- PARTNERS MARQUEE -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-12 overflow-hidden border-y border-white/5">
+  <div class="flex animate-marquee">
+    <div class="flex items-center gap-16 px-8 shrink-0">
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">CERTIK</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">CHAINLINK</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">PANCAKESWAP</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">BINANCE LABS</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">TRAIL OF BITS</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">1INCH</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">LAYERZERO</span>
+    </div>
+    <div class="flex items-center gap-16 px-8 shrink-0">
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">CERTIK</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">CHAINLINK</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">PANCAKESWAP</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">BINANCE LABS</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">TRAIL OF BITS</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">1INCH</span>
+      <span class="text-gray-600 font-orbitron font-bold text-lg tracking-widest">LAYERZERO</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- FAQ SECTION -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-24 px-6" id="faq">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Got Questions?</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
+        Frequently <span class="text-glow-cyan">Asked</span>
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+      <div class="reveal glass-card rounded-xl overflow-hidden">
+        <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
+          <span class="font-bold font-exo text-white pr-4">What is the minimum contribution for the presale?</span>
+          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
+          The minimum contribution varies by tier: 1 BNB for Seed, 0.5 BNB for Private, and 0.1 BNB for Public. Each tier also has a maximum cap per wallet address.
+        </div>
+      </div>
+      <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.05s;">
+        <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
+          <span class="font-bold font-exo text-white pr-4">When will I receive my $NOVA tokens?</span>
+          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
+          Token distribution follows each tier's vesting schedule. Seed tier gets 33.3% at TGE with the rest vesting over 3 months. Private tier gets 50% at TGE with the rest vesting over 2 months. Public tier gets 50% at TGE with the rest after 1 month.
+        </div>
+      </div>
+      <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.1s;">
+        <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
+          <span class="font-bold font-exo text-white pr-4">How do I connect my wallet to participate?</span>
+          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
+          Click the "Connect Wallet" button in the top right corner. We support Trust Wallet, MetaMask, and any WalletConnect-compatible wallet. Simply scan the QR code or approve the connection in your wallet app.
+        </div>
+      </div>
+      <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.15s;">
+        <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
+          <span class="font-bold font-exo text-white pr-4">Is the smart contract audited?</span>
+          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
+          Yes! Our smart contracts have been audited by CertiK and Trail of Bits. Audit reports are publicly available — links can be found in our documentation. We prioritize security above everything.
+        </div>
+      </div>
+      <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.2s;">
+        <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
+          <span class="font-bold font-exo text-white pr-4">What happens if the soft cap is not reached?</span>
+          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
+          If the soft cap of 150 BNB is not reached by the end of the presale period, all contributions are refundable. Our smart contract includes a refund mechanism that allows you to claim your BNB back.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- CTA BANNER -->
+<!-- ════════════════════════════════════════ -->
+<section class="relative py-24 px-6">
+  <div class="max-w-4xl mx-auto text-center reveal">
+    <div class="glass-card-light rounded-3xl p-10 sm:p-16 border-gradient-cyan relative overflow-hidden">
+      <div class="absolute inset-0 bg-radial-glow opacity-40 pointer-events-none"></div>
+      <div class="relative z-10">
+        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mb-6">
+          Don't Miss <span class="text-glow-cyan">Out</span>
+        </h2>
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-8 font-exo">
+          The private sale closes in 14 days. Early birds get the best price and highest bonus.
+          Secure your spot before we hit hard cap.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <button onclick="handleBuy('private')"
+                  class="px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
+                         bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
+                         hover:shadow-[0_0_40px_rgba(0,255,255,0.5)] transition-all duration-300 active:scale-95">
+            Buy $NOVA Now
+          </button>
+          <a href="#faq"
+             class="px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
+                    border border-gray-700 text-gray-300 hover:border-neon-cyan hover:text-neon-cyan
+                    transition-all duration-300">
+            Read FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ════════════════════════════════════════ -->
+<footer class="relative py-12 px-6 border-t border-white/5">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-lg font-bold text-deep-900 font-orbitron">N</div>
+        <span class="font-orbitron font-bold text-lg text-white">NOVA<span class="text-neon-cyan">.</span></span>
+      </a>
+      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-gray-600 font-exo">
+        <a href="#" class="hover:text-neon-cyan transition-colors">Docs</a>
+        <a href="#" class="hover:text-neon-cyan transition-colors">Audit</a>
+        <a href="#" class="hover:text-neon-cyan transition-colors">Twitter</a>
+        <a href="#" class="hover:text-neon-cyan transition-colors">Discord</a>
+        <a href="#" class="hover:text-neon-cyan transition-colors">Telegram</a>
+        <a href="#" class="hover:text-neon-cyan transition-colors">GitHub</a>
+      </div>
+      <span class="text-xs text-gray-700 font-exo">© 2026 Nova Protocol. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════ -->
+<!-- WALLET MODAL (Mock) -->
+<!-- ════════════════════════════════════════ -->
+<div id="wallet-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+  <div class="glass-card-light rounded-2xl p-8 w-full max-w-md mx-4 animate-slide-up border-gradient-cyan">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-xl font-bold font-orbitron text-white">Connect Wallet</h3>
+      <button onclick="toggleWalletModal()" class="p-2 text-gray-500 hover:text-neon-cyan transition-colors cursor-pointer">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="space-y-3">
+      <button onclick="mockConnect('Trust Wallet')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
+        <div class="w-10 h-10 rounded-lg bg-neon-blue/20 flex items-center justify-center group-hover:bg-neon-blue/30 transition-colors">
+          <svg class="w-6 h-6 text-neon-blue" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+        </div>
+        <div class="text-left flex-1">
+          <div class="text-white font-bold font-exo">Trust Wallet</div>
+          <div class="text-xs text-gray-500">WalletConnect</div>
+        </div>
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-cyan group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button onclick="mockConnect('MetaMask')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
+        <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 4,9 7,17 12,22 17,17 20,9"/></svg>
+        </div>
+        <div class="text-left flex-1">
+          <div class="text-white font-bold font-exo">MetaMask</div>
+          <div class="text-xs text-gray-500">Browser Extension</div>
+        </div>
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-cyan group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button onclick="mockConnect('WalletConnect')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
+        <div class="w-10 h-10 rounded-lg bg-neon-cyan/20 flex items-center justify-center group-hover:bg-neon-cyan/30 transition-colors">
+          <svg class="w-6 h-6 text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+        </div>
+        <div class="text-left flex-1">
+          <div class="text-white font-bold font-exo">WalletConnect</div>
+          <div class="text-xs text-gray-500">Scan QR Code</div>
+        </div>
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-cyan group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <p class="text-xs text-gray-600 text-center mt-6 font-exo">By connecting, you agree to our Terms of Service</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- BUY MODAL (Mock) -->
+<!-- ════════════════════════════════════════ -->
+<div id="buy-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+  <div class="glass-card-light rounded-2xl p-8 w-full max-w-lg mx-4 animate-slide-up border-gradient-cyan">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-xl font-bold font-orbitron text-white">Buy $NOVA</h3>
+      <button onclick="toggleBuyModal()" class="p-2 text-gray-500 hover:text-neon-cyan transition-colors cursor-pointer">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Tier selector -->
+    <div class="mb-5">
+      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block">Select Tier</label>
+      <div class="grid grid-cols-3 gap-2">
+        <button onclick="selectBuyTier('seed')" id="buy-tier-seed" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-white/10 text-gray-500 hover:border-neon-cyan/50 hover:text-neon-cyan transition-all tier-btn cursor-pointer">
+          Seed<br><span class="text-xs text-gray-600">$0.08</span>
+        </button>
+        <button onclick="selectBuyTier('private')" id="buy-tier-private" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-neon-cyan text-neon-cyan bg-neon-cyan/5 transition-all tier-btn cursor-pointer">
+          Private<br><span class="text-xs text-neon-cyan">$0.10</span>
+        </button>
+        <button onclick="selectBuyTier('public')" id="buy-tier-public" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-white/10 text-gray-500 hover:border-neon-cyan/50 hover:text-neon-cyan transition-all tier-btn cursor-pointer">
+          Public<br><span class="text-xs text-gray-600">$0.15</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Amount -->
+    <div class="mb-5">
+      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block">Amount (BNB)</label>
+      <div class="relative">
+        <input type="number" id="buy-amount" value="5" min="0.5" max="30" step="0.1"
+               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white font-bold font-exo text-lg focus:outline-none focus:border-neon-cyan transition-colors"
+               oninput="updateBuyPreview()" />
+        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-orbitron font-bold text-sm">BNB</span>
+      </div>
+      <div class="flex flex-wrap justify-between gap-y-2 mt-2">
+        <button onclick="setBuyAmount(1)" class="text-xs text-gray-500 hover:text-neon-cyan font-exo cursor-pointer">1 BNB</button>
+        <button onclick="setBuyAmount(5)" class="text-xs text-gray-500 hover:text-neon-cyan font-exo cursor-pointer">5 BNB</button>
+        <button onclick="setBuyAmount(10)" class="text-xs text-gray-500 hover:text-neon-cyan font-exo cursor-pointer">10 BNB</button>
+        <button onclick="setBuyAmount(30)" class="text-xs text-gray-500 hover:text-neon-cyan font-exo cursor-pointer">30 BNB (Max)</button>
+      </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="glass-card rounded-xl p-4 mb-6 space-y-2">
+      <div class="flex justify-between text-sm font-exo">
+        <span class="text-gray-500">Tokens</span>
+        <span class="text-white font-bold"><span id="preview-tokens">50,000</span> $NOVA</span>
+      </div>
+      <div class="flex justify-between text-sm font-exo">
+        <span class="text-gray-500">Bonus (15%)</span>
+        <span class="text-neon-green font-bold">+<span id="preview-bonus">7,500</span> $NOVA</span>
+      </div>
+      <div class="flex justify-between text-sm font-exo pt-2 border-t border-white/5">
+        <span class="text-gray-500">Total</span>
+        <span class="text-neon-cyan font-bold text-lg"><span id="preview-total">57,500</span> $NOVA</span>
+      </div>
+    </div>
+
+    <!-- Send to wallet -->
+    <div class="mb-6 p-4 rounded-xl bg-neon-cyan/5 border border-neon-cyan/20">
+      <div class="text-xs text-gray-500 font-exo mb-1">Send BNB to:</div>
+      <div class="flex items-center gap-2">
+        <code class="text-neon-cyan font-mono text-sm break-all">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</code>
+        <button onclick="copyAddress()" class="p-1.5 text-gray-500 hover:text-neon-cyan transition-colors cursor-pointer shrink-0" title="Copy address">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <button onclick="handlePurchase()"
+            class="w-full py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
+                   bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
+                   hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] transition-all duration-300 active:scale-95 cursor-pointer">
+      Confirm Purchase
+    </button>
+    <p class="text-xs text-gray-600 text-center mt-4 font-exo">This is a mock interface. No real transaction will occur.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- TOAST NOTIFICATION -->
+<!-- ════════════════════════════════════════ -->
+<div id="toast" class="fixed bottom-4 sm:bottom-8 left-4 right-4 sm:left-auto sm:right-8 sm:max-w-sm z-[200] translate-y-[200%] opacity-0 transition-all duration-300 ease-out pointer-events-none">
+  <div class="glass-card-light rounded-xl px-5 py-4 flex items-center gap-3 border-gradient-cyan">
+    <svg class="w-5 h-5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span id="toast-msg" class="text-sm font-exo text-white"></span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SCRIPTS -->
+<!-- ════════════════════════════════════════ -->
+<script>
+// ── Particle Canvas ──
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animationId;
+  let particleCount = 80;
+  let connectionDist = 100;
+
+  function resize() {
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+    // Reduce particles on mobile for performance
+    if (window.innerWidth < 768) {
+      particleCount = 35;
+      connectionDist = 60;
+    } else {
+      particleCount = 80;
+      connectionDist = 100;
+    }
+  }
+
+  class Particle {
+    constructor() {
+      this.reset();
+      this.y = Math.random() * canvas.height;
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = -10;
+      this.size = Math.random() * 2 + 0.5;
+      this.speed = Math.random() * 0.5 + 0.2;
+      this.opacity = Math.random() * 0.5 + 0.2;
+      this.hue = Math.random() > 0.5 ? 195 : 210; // cyan or blue
+    }
+    update() {
+      this.y += this.speed;
+      this.x += Math.sin(this.y * 0.01) * 0.3;
+      if (this.y > canvas.height + 10) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: particleCount }, () => new Particle());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < connectionDist) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0, 255, 255, ${0.06 * (1 - dist / connectionDist)})`;
+          ctx.stroke();
+        }
+      }
+    }
+    animationId = requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    const oldCount = particleCount;
+    resize();
+    if (particleCount !== oldCount) {
+      particles = Array.from({ length: particleCount }, () => new Particle());
+    }
+  });
+  init();
+  animate();
+})();
+
+// ── Scroll Reveal ──
+(function() {
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+})();
+
+// ── Parallax Scroll ──
+(function() {
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq.matches) return;
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    document.documentElement.style.setProperty('--parallax-y', `${scrolled * 0.3}px`);
+    document.documentElement.style.setProperty('--parallax-y-fast', `${scrolled * 0.15}px`);
+  }, { passive: true });
+})();
+
+// ── Navbar shrink on scroll ──
+(function() {
+  const nav = document.getElementById('navbar');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.querySelector('.glass-card').classList.add('bg-deep-800/80');
+    } else {
+      nav.querySelector('.glass-card').classList.remove('bg-deep-800/80');
+    }
+  }, { passive: true });
+})();
+
+// ── Countdown Timer ──
+(function() {
+  const el = document.getElementById('countdown');
+  if (!el) return;
+  // Set end date: 14 days from now
+  const end = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+
+  function update() {
+    const now = Date.now();
+    const diff = end - now;
+    if (diff <= 0) { el.textContent = 'ENDED'; return; }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    el.textContent = `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m`;
+  }
+
+  update();
+  setInterval(update, 60000);
+})();
+
+// ── Animate Progress Bar ──
+(function() {
+  const bar = document.getElementById('main-progress-bar');
+  if (!bar) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        bar.style.width = '57.5%';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  observer.observe(bar);
+})();
+
+// ── Wallet Modal ──
+function toggleWalletModal() {
+  const modal = document.getElementById('wallet-modal');
+  modal.classList.toggle('hidden');
+  modal.classList.toggle('flex');
+}
+
+function mockConnect(wallet) {
+  const btn = document.getElementById('wallet-btn-text');
+  btn.textContent = '0x71C7...6b9F';
+  toggleWalletModal();
+  showToast(`Connected to ${wallet}`);
+  // Update dashboard if present
+  document.getElementById('connect-wallet-btn').classList.remove('from-neon-cyan','to-neon-blue','text-deep-900');
+  document.getElementById('connect-wallet-btn').classList.add('border','border-neon-green','text-neon-green','bg-transparent');
+}
+
+// ── Buy Modal ──
+let selectedTier = 'private';
+
+function toggleBuyModal() {
+  const modal = document.getElementById('buy-modal');
+  modal.classList.toggle('hidden');
+  modal.classList.toggle('flex');
+}
+
+function selectBuyTier(tier) {
+  selectedTier = tier;
+  document.querySelectorAll('.tier-btn').forEach(b => {
+    b.classList.remove('border-neon-cyan', 'text-neon-cyan', 'bg-neon-cyan/5');
+    b.classList.add('border-white/10', 'text-gray-500');
+  });
+  const btn = document.getElementById(`buy-tier-${tier}`);
+  btn.classList.remove('border-white/10', 'text-gray-500');
+  btn.classList.add('border-neon-cyan', 'text-neon-cyan', 'bg-neon-cyan/5');
+  updateBuyPreview();
+}
+
+function setBuyAmount(val) {
+  document.getElementById('buy-amount').value = val;
+  updateBuyPreview();
+}
+
+function updateBuyPreview() {
+  const amount = parseFloat(document.getElementById('buy-amount').value) || 0;
+  const prices = { seed: 0.08, private: 0.10, public: 0.15 };
+  const bonuses = { seed: 0.30, private: 0.15, public: 0.05 };
+  const price = prices[selectedTier];
+  const bonusRate = bonuses[selectedTier];
+  const baseTokens = Math.floor(amount / price);
+  const bonusTokens = Math.floor(baseTokens * bonusRate);
+  const totalTokens = baseTokens + bonusTokens;
+
+  document.getElementById('preview-tokens').textContent = baseTokens.toLocaleString();
+  document.getElementById('preview-bonus').textContent = bonusTokens.toLocaleString();
+  document.getElementById('preview-total').textContent = totalTokens.toLocaleString();
+}
+
+function copyAddress() {
+  navigator.clipboard.writeText('0x71C7656EC7ab88b098defB751B7401B5f6d8976F').then(() => {
+    showToast('Address copied to clipboard');
+  });
+}
+
+function handleBuy(tier) {
+  selectedTier = tier;
+  toggleBuyModal();
+  selectBuyTier(tier);
+}
+
+function handlePurchase() {
+  const amount = parseFloat(document.getElementById('buy-amount').value) || 0;
+  if (amount <= 0) { showToast('Please enter a valid amount'); return; }
+  toggleBuyModal();
+  showToast(`Purchase order placed for ${amount} BNB — check your wallet to confirm`);
+}
+
+// ── FAQ Accordion ──
+function toggleFAQ(btn) {
+  const answer = btn.nextElementSibling;
+  const icon = btn.querySelector('.faq-icon');
+  const isOpen = !answer.classList.contains('hidden');
+  answer.classList.toggle('hidden');
+  icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+// ── Toast Notification ──
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  const msgEl = document.getElementById('toast-msg');
+  msgEl.textContent = msg;
+  toast.style.transform = 'translateY(0)';
+  toast.style.opacity = '1';
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.style.transform = 'translateY(200%)';
+    toast.style.opacity = '0';
+  }, 3000);
+}
+
+// ── Mobile Menu ──
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('hidden');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobile-menu');
+  const nav = document.getElementById('navbar');
+  if (menu && nav && !nav.contains(e.target) && !menu.classList.contains('hidden')) {
+    menu.classList.add('hidden');
+  }
+});
+
+// Close modals with Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const walletModal = document.getElementById('wallet-modal');
+    const buyModal = document.getElementById('buy-modal');
+    if (walletModal && !walletModal.classList.contains('hidden')) {
+      toggleWalletModal();
+    }
+    if (buyModal && !buyModal.classList.contains('hidden')) {
+      toggleBuyModal();
+    }
+    const menu = document.getElementById('mobile-menu');
+    if (menu && !menu.classList.contains('hidden')) {
+      menu.classList.add('hidden');
+    }
+  }
+});
+</script>
+</body>
+</html>
