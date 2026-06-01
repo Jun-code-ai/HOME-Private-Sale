@@ -12,6 +12,9 @@
 
 <!-- Tailwind via CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- ethers.js for Web3 -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13/dist/ethers.umd.min.js"></script>
 <script>
 tailwind.config = {
   theme: {
@@ -222,6 +225,75 @@ tailwind.config = {
   .donut-ring { stroke: rgba(255,255,255,0.05); }
   .donut-segment { transition: stroke-dashoffset 1.5s ease-out; }
 </style>
+
+<!-- ════════════════════════════════════════ -->
+<!-- WEB3 CONFIG -->
+<!-- ════════════════════════════════════════ -->
+<script>
+// ── Blockchain Config ──
+const CHAIN_CONFIG = {
+  // BSC Mainnet
+  56: {
+    name: 'BNB Smart Chain',
+    rpc: 'https://bsc-dataseed.binance.org',
+    usdtAddress: '0x55d398326f99059fF775485246999027B3197955',
+    explorer: 'https://bscscan.com',
+  },
+  // BSC Testnet
+  97: {
+    name: 'BSC Testnet',
+    rpc: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+    usdtAddress: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
+    explorer: 'https://testnet.bscscan.com',
+  },
+};
+
+// ═══ REPLACE THIS WITH YOUR DEPLOYED CONTRACT ADDRESS ═══
+const PRESALE_CONTRACT_ADDRESS = '0x_YOUR_DEPLOYED_CONTRACT_ADDRESS_HERE_';
+
+// ── Contract ABI ──
+const PRESALE_ABI = [
+  // State
+  "function usdt() view returns (address)",
+  "function treasuryWallet() view returns (address)",
+  "function totalRaised() view returns (uint256)",
+  "function softCap() view returns (uint256)",
+  "function hardCap() view returns (uint256)",
+  "function isActive() view returns (bool)",
+  "function deployTime() view returns (uint256)",
+  // Tiers
+  "function tiers(string) view returns (uint256 price, uint256 bonusBps, uint256 minContribution, uint256 maxContribution, uint256 contributorCount, uint256 maxContributors)",
+  "function tierKeys(uint256) view returns (string)",
+  // User
+  "function contributions(address) view returns (uint256)",
+  "function tokensOwed(address) view returns (uint256)",
+  "function userTier(address) view returns (string)",
+  "function getUserInfo(address) view returns (uint256, uint256, string, uint256)",
+  "function getProgress() view returns (uint256, uint256, uint256, uint256, bool, bool)",
+  "function getTierInfo(string) view returns (uint256, uint256, uint256, uint256, uint256, uint256)",
+  "function getContributorCount() view returns (uint256)",
+  // Actions
+  "function contribute(uint256, string)",
+  // Events
+  "event Contributed(address indexed user, string tier, uint256 usdtAmount, uint256 tokenAmount, uint256 bonusTokens, uint256 timestamp)",
+];
+
+// USDT ABI (minimal — just what we need)
+const USDT_ABI = [
+  "function approve(address spender, uint256 amount) returns (bool)",
+  "function allowance(address owner, address spender) view returns (uint256)",
+  "function balanceOf(address account) view returns (uint256)",
+  "function decimals() view returns (uint8)",
+];
+
+// ── Global State ──
+let signer = null;
+let presaleContract = null;
+let usdtContract = null;
+let userAddress = null;
+let currentChainId = null;
+</script>
+
 </head>
 <body class="font-body text-white antialiased">
 
@@ -348,7 +420,7 @@ tailwind.config = {
     <!-- Stats Glance -->
     <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto" style="transition-delay: 0.4s;">
       <div class="glass-card rounded-xl p-3 sm:p-4">
-        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-green"><span id="hero-raised">287.5</span> BNB</div>
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-green"><span id="hero-raised">287.5</span> USDT</div>
         <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Total Raised</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
@@ -356,7 +428,7 @@ tailwind.config = {
         <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Contributors</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
-        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-gold">1 BNB</div>
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-gold">100 USDT</div>
         <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Min Contribution</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
@@ -382,17 +454,17 @@ tailwind.config = {
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-4 gap-2">
         <div>
           <span class="text-xs text-gray-500 font-exo tracking-widest uppercase">Funding Progress</span>
-          <h3 class="text-xl font-bold font-orbitron text-white mt-1">287.5 / 500 BNB</h3>
+          <h3 class="text-xl font-bold font-orbitron text-white mt-1">287.5 / 500,000 USDT</h3>
         </div>
         <div class="flex items-center gap-6 text-sm font-exo">
           <div class="text-center">
             <div class="text-gray-500">Soft Cap</div>
-            <div class="text-neon-green font-bold font-orbitron">150 BNB</div>
+            <div class="text-neon-green font-bold font-orbitron">150,000 USDT</div>
             <div class="text-[10px] text-neon-green bg-neon-green/10 rounded-full px-2 py-0.5 mt-0.5">✓ Reached</div>
           </div>
           <div class="text-center">
             <div class="text-gray-500">Hard Cap</div>
-            <div class="text-neon-green font-bold font-orbitron">500 BNB</div>
+            <div class="text-neon-green font-bold font-orbitron">500,000 USDT</div>
           </div>
         </div>
       </div>
@@ -411,7 +483,7 @@ tailwind.config = {
       <div class="text-right text-sm font-bold font-orbitron">
         <span class="text-neon-green" id="progress-percent">57.5%</span>
         <span class="text-gray-600 mx-1">—</span>
-        <span class="text-gray-500 text-xs font-exo">212.5 BNB remaining</span>
+        <span class="text-gray-500 text-xs font-exo">212.5 USDT remaining</span>
       </div>
     </div>
   </div>
@@ -593,7 +665,7 @@ tailwind.config = {
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Min: 1 BNB — Max: 50 BNB
+            Min: 1,000 USDT — Max: 50,000 USDT
           </li>
         </ul>
         <div class="text-xs text-neon-green/60 font-exo mb-4">🔥 387 / 500 slots filled</div>
@@ -625,7 +697,7 @@ tailwind.config = {
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Min: 0.5 BNB — Max: 30 BNB
+            Min: 500,000 USDT — Max: 30,000 USDT
           </li>
         </ul>
         <div class="text-xs text-neon-green/60 font-exo mb-4">⚡ 623 / 1000 slots filled</div>
@@ -654,7 +726,7 @@ tailwind.config = {
           </li>
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Min: 0.1 BNB — Max: 10 BNB
+            Min: 100 USDT — Max: 10,000 USDT
           </li>
         </ul>
         <div class="text-xs text-gray-500 font-exo mb-4">Coming soon</div>
@@ -810,7 +882,7 @@ tailwind.config = {
         <div class="grid grid-cols-3 gap-3 sm:flex sm:items-center sm:gap-6">
           <div class="text-center">
             <div class="text-xs text-gray-500 font-exo">Contributed</div>
-            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-green">12.5 BNB</div>
+            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-green">12.5 USDT</div>
           </div>
           <div class="text-center">
             <div class="text-xs text-gray-500 font-exo">$HOME</div>
@@ -840,7 +912,7 @@ tailwind.config = {
             <tbody class="text-sm font-exo">
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">Jun 02, 2026</td>
-                <td class="py-4 pr-4 text-white font-semibold">5.0 BNB</td>
+                <td class="py-4 pr-4 text-white font-semibold">5.0 USDT</td>
                 <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Private</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xa1b2...c9d8</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
@@ -848,7 +920,7 @@ tailwind.config = {
               </tr>
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">May 28, 2026</td>
-                <td class="py-4 pr-4 text-white font-semibold">4.5 BNB</td>
+                <td class="py-4 pr-4 text-white font-semibold">4.5 USDT</td>
                 <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Private</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xb3c4...e5f6</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
@@ -856,7 +928,7 @@ tailwind.config = {
               </tr>
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">May 21, 2026</td>
-                <td class="py-4 pr-4 text-white font-semibold">3.0 BNB</td>
+                <td class="py-4 pr-4 text-white font-semibold">3.0 USDT</td>
                 <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Seed</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xc5d6...a7b8</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
@@ -979,7 +1051,7 @@ tailwind.config = {
           <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
-          The minimum contribution varies by tier: 1 BNB for Seed, 0.5 BNB for Private, and 0.1 BNB for Public. Each tier also has a maximum cap per wallet address.
+          The minimum contribution varies by tier: 1,000 USDT for Seed, 500 USDT for Private, and 100 USDT for Public. Each tier also has a maximum cap per wallet address.
         </div>
       </div>
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.05s;">
@@ -1015,7 +1087,7 @@ tailwind.config = {
           <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
-          If the soft cap of 150 BNB is not reached by the end of the presale period, all contributions are refundable. Our smart contract includes a refund mechanism that allows you to claim your BNB back.
+          If the soft cap of 150,000 USDT is not reached by the end of the presale period, all contributions are refundable. Our smart contract includes a refund mechanism that allows you to claim your USDT back.
         </div>
       </div>
     </div>
@@ -1096,7 +1168,7 @@ tailwind.config = {
         <div class="absolute -top-2.5 right-3 bg-neon-green text-deep-900 text-[10px] font-bold font-orbitron px-3 py-0.5 rounded-full tracking-widest z-10 shadow-[0_0_15px_rgba(0,255,136,0.4)]">
           RECOMMENDED
         </div>
-        <button onclick="mockConnect('Trust Wallet')" class="w-full p-4 rounded-xl glass-card-light hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group border border-neon-green/30 hover:border-neon-green/60">
+        <button onclick="connectWallet('Trust Wallet')" class="w-full p-4 rounded-xl glass-card-light hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group border border-neon-green/30 hover:border-neon-green/60">
           <div class="w-12 h-12 rounded-xl bg-neon-green/15 flex items-center justify-center group-hover:bg-neon-green/25 transition-colors shadow-[0_0_20px_rgba(0,255,136,0.15)]">
             <svg class="w-7 h-7 text-neon-green" viewBox="0 0 32 32" fill="none">
               <rect x="2" y="2" width="28" height="28" rx="7" stroke="currentColor" stroke-width="2"/>
@@ -1112,7 +1184,7 @@ tailwind.config = {
         </button>
       </div>
       <!-- MetaMask -->
-      <button onclick="mockConnect('MetaMask')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
+      <button onclick="connectWallet('MetaMask')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
         <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
           <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 4,9 7,17 12,22 17,17 20,9"/></svg>
         </div>
@@ -1123,7 +1195,7 @@ tailwind.config = {
         <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
       <!-- OKX Wallet -->
-      <button onclick="mockConnect('OKX Wallet')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
+      <button onclick="connectWallet('OKX Wallet')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
         <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
           <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
@@ -1134,7 +1206,7 @@ tailwind.config = {
         <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
       <!-- Other Wallets -->
-      <button onclick="mockConnect('WalletConnect')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
+      <button onclick="connectWallet('WalletConnect')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
         <div class="w-10 h-10 rounded-lg bg-neon-green/20 flex items-center justify-center group-hover:bg-neon-green/30 transition-colors">
           <svg class="w-6 h-6 text-neon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
         </div>
@@ -1179,18 +1251,18 @@ tailwind.config = {
 
     <!-- Amount -->
     <div class="mb-5">
-      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block">Amount (BNB)</label>
+      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block">Amount (USDT)</label>
       <div class="relative">
-        <input type="number" id="buy-amount" value="5" min="0.5" max="30" step="0.1"
+        <input type="number" id="buy-amount" value="1000" min="50" max="50000" step="100"
                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white font-bold font-exo text-lg focus:outline-none focus:border-neon-green transition-colors"
                oninput="updateBuyPreview()" />
-        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-orbitron font-bold text-sm">BNB</span>
+        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-orbitron font-bold text-sm">USDT</span>
       </div>
       <div class="flex flex-wrap justify-between gap-y-2 mt-2">
-        <button onclick="setBuyAmount(1)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">1 BNB</button>
-        <button onclick="setBuyAmount(5)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">5 BNB</button>
-        <button onclick="setBuyAmount(10)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">10 BNB</button>
-        <button onclick="setBuyAmount(30)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">30 BNB (Max)</button>
+        <button onclick="setBuyAmount(100)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">100 USDT</button>
+        <button onclick="setBuyAmount(1000)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">1,000 USDT</button>
+        <button onclick="setBuyAmount(5000)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">5,000 USDT</button>
+        <button onclick="setBuyAmount(30000)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">30,000 (Max)</button>
       </div>
     </div>
 
@@ -1238,7 +1310,7 @@ tailwind.config = {
 
     <!-- Send to wallet -->
     <div class="mb-6 p-4 rounded-xl bg-neon-green/5 border border-neon-green/20">
-      <div class="text-xs text-gray-500 font-exo mb-1">Send BNB to:</div>
+      <div class="text-xs text-gray-500 font-exo mb-1">Send USDT (BEP-20) to:</div>
       <div class="flex items-center gap-2">
         <code class="text-neon-green font-mono text-sm break-all">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</code>
         <button onclick="copyAddress()" class="p-1.5 text-gray-500 hover:text-neon-green transition-colors cursor-pointer shrink-0" title="Copy address">
@@ -1434,32 +1506,238 @@ tailwind.config = {
   observer.observe(bar);
 })();
 
-// ── Wallet Modal ──
+// ── Wallet Connection (Real Web3) ──
+
 function toggleWalletModal() {
   const modal = document.getElementById('wallet-modal');
   modal.classList.toggle('hidden');
   modal.classList.toggle('flex');
 }
 
-function mockConnect(wallet) {
-  const btn = document.getElementById('wallet-btn-text');
-  const btnParent = document.getElementById('connect-wallet-btn');
-  btn.textContent = '0x71C7...6b9F';
+/**
+ * Connect real wallet via browser provider (MetaMask, Binance Wallet, OKX)
+ * or trigger WalletConnect for TP Wallet
+ */
+async function connectWallet(walletType) {
   toggleWalletModal();
-  showToast(`Connected to ${wallet}`);
-  // Update button style to show connected state
-  btnParent.classList.remove('from-neon-green','to-neon-mint','text-deep-900');
-  btnParent.classList.add('border','border-neon-green','text-neon-green','bg-transparent');
-  // Update the hidden mobile text too
-  const mobileSpan = btnParent.querySelector('.sm\\:hidden');
-  if (mobileSpan) mobileSpan.textContent = '0x71C7...6b9F';
+
+  try {
+    // ── Browser Extension Wallets ──
+    if (walletType === 'MetaMask' || walletType === 'OKX Wallet') {
+      if (!window.ethereum) {
+        showToast('No wallet detected. Please install MetaMask or use TP Wallet.');
+        return;
+      }
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      await provider.send('eth_requestAccounts', []);
+      signer = await provider.getSigner();
+      userAddress = await signer.getAddress();
+      const network = await provider.getNetwork();
+      currentChainId = Number(network.chainId);
+      await _setupContracts();
+      await _onWalletConnected();
+      return;
+    }
+
+    // ── Trust Wallet / WalletConnect ──
+    if (walletType === 'Trust Wallet') {
+      // Open Trust Wallet via deep link or WalletConnect
+      if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        // Mobile: deep link to Trust Wallet
+        const dappUrl = encodeURIComponent(window.location.href);
+        window.open(`trust://browser?url=${dappUrl}`, '_blank');
+        showToast('Opening Trust Wallet... If nothing happens, install Trust Wallet from your app store.');
+      }
+      // Try injected provider (Trust Wallet browser)
+      if (window.ethereum) {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send('eth_requestAccounts', []);
+        signer = await provider.getSigner();
+        userAddress = await signer.getAddress();
+        const network = await provider.getNetwork();
+        currentChainId = Number(network.chainId);
+        await _setupContracts();
+        await _onWalletConnected();
+        return;
+      }
+      // Desktop: show WalletConnect QR
+      showToast('On desktop, use MetaMask. On mobile, open this site inside Trust Wallet browser.');
+      return;
+    }
+
+    // ── Generic WalletConnect ──
+    if (walletType === 'WalletConnect') {
+      if (window.ethereum) {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const accounts = await provider.send('eth_requestAccounts', []);
+        signer = await provider.getSigner();
+        userAddress = accounts[0];
+        const network = await provider.getNetwork();
+        currentChainId = Number(network.chainId);
+        await _setupContracts();
+        await _onWalletConnected();
+        return;
+      }
+      showToast('No wallet found. Please install a Web3 wallet or use mobile Trust Wallet.');
+      return;
+    }
+  } catch (err) {
+    console.error('Wallet connection error:', err);
+    showToast('Connection failed: ' + (err.reason || err.message || 'User rejected'));
+  }
 }
 
-// ── Buy Modal ──
+async function _setupContracts() {
+  const chainConfig = CHAIN_CONFIG[currentChainId];
+  if (!chainConfig) {
+    showToast('Please switch to BSC network (Chain 56 or Testnet 97)');
+    return;
+  }
+  presaleContract = new ethers.Contract(PRESALE_CONTRACT_ADDRESS, PRESALE_ABI, signer);
+  usdtContract = new ethers.Contract(chainConfig.usdtAddress, USDT_ABI, signer);
+}
+
+async function _onWalletConnected() {
+  // Update UI
+  const btn = document.getElementById('wallet-btn-text');
+  const btnParent = document.getElementById('connect-wallet-btn');
+  btn.textContent = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+  btnParent.classList.remove('from-neon-green', 'to-neon-mint', 'text-deep-900');
+  btnParent.classList.add('border', 'border-neon-green', 'text-neon-green', 'bg-transparent');
+  const mobileSpan = btnParent.querySelector('.sm\\:hidden');
+  if (mobileSpan) mobileSpan.textContent = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+
+  showToast('Wallet connected! ' + CHAIN_CONFIG[currentChainId]?.name || '');
+
+  // Refresh live data
+  await refreshLiveData();
+}
+
+async function _ensureCorrectNetwork() {
+  if (!window.ethereum) return false;
+  const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+  currentChainId = parseInt(chainId, 16);
+
+  if (!CHAIN_CONFIG[currentChainId]) {
+    // Try switching to BSC Mainnet
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x38' }], // BSC Mainnet = 56 = 0x38
+      });
+      currentChainId = 56;
+      return true;
+    } catch (e) {
+      // Add BSC network if not present
+      if (e.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: '0x38',
+            chainName: 'BNB Smart Chain',
+            nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+            rpcUrls: ['https://bsc-dataseed.binance.org'],
+            blockExplorerUrls: ['https://bscscan.com'],
+          }],
+        });
+        currentChainId = 56;
+        return true;
+      }
+      showToast('Please switch to BSC network in your wallet');
+      return false;
+    }
+  }
+  return true;
+}
+
+// ── USDT Approval + Contribute ──
+
+async function contributeUSDT(amountWei, tier) {
+  if (!signer || !usdtContract || !presaleContract) {
+    showToast('Connect your wallet first');
+    return;
+  }
+
+  const onRightNetwork = await _ensureCorrectNetwork();
+  if (!onRightNetwork) return;
+
+  try {
+    // Step 1: Check USDT allowance
+    const allowance = await usdtContract.allowance(userAddress, PRESALE_CONTRACT_ADDRESS);
+    if (allowance < amountWei) {
+      showToast('Approve USDT spending in your wallet...');
+      const tx = await usdtContract.approve(PRESALE_CONTRACT_ADDRESS, amountWei);
+      await tx.wait();
+      showToast('USDT approved! Confirming contribution...');
+    }
+
+    // Step 2: Contribute
+    const tx = await presaleContract.contribute(amountWei, tier);
+    showToast('Confirm transaction in your wallet...');
+    await tx.wait();
+
+    // Success
+    const amountFormatted = ethers.formatUnits(amountWei, 18);
+    showToast(`Success! Contributed ${Number(amountFormatted).toLocaleString()} USDT to ${tier} tier`);
+
+    // Refresh UI
+    await refreshLiveData();
+    toggleBuyModal();
+  } catch (err) {
+    console.error('Contribution error:', err);
+    if (err.reason === 'user rejected' || err.code === 'ACTION_REJECTED') {
+      showToast('Transaction cancelled');
+    } else {
+      showToast('Error: ' + (err.reason || err.shortMessage || 'Transaction failed'));
+    }
+  }
+}
+
+// ── Live Data Refresh ──
+
+async function refreshLiveData() {
+  if (!presaleContract) return;
+
+  try {
+    const progress = await presaleContract.getProgress();
+    const totalRaisedFormatted = Number(ethers.formatUnits(progress[0], 18));
+    const softCapFormatted = Number(ethers.formatUnits(progress[1], 18));
+    const hardCapFormatted = Number(ethers.formatUnits(progress[2], 18));
+    const percent = Math.min(100, (totalRaisedFormatted / hardCapFormatted) * 100);
+
+    // Update progress bar
+    const bar = document.getElementById('main-progress-bar');
+    if (bar) bar.style.width = percent.toFixed(1) + '%';
+    const percentEl = document.getElementById('progress-percent');
+    if (percentEl) percentEl.textContent = percent.toFixed(1) + '%';
+
+    // Update hero stats
+    const raisedEl = document.getElementById('hero-raised');
+    if (raisedEl) raisedEl.textContent = totalRaisedFormatted.toLocaleString();
+    const contribEl = document.getElementById('hero-contributors');
+    if (contribEl) contribEl.textContent = Number(progress[3]).toLocaleString();
+
+    // Update user dashboard if connected
+    if (userAddress) {
+      const info = await presaleContract.getUserInfo(userAddress);
+      // Update dashboard values if elements exist
+      const contributedEl = document.querySelector('#dashboard .text-neon-green');
+      // ... dashboard update logic
+    }
+  } catch (err) {
+    console.error('Data refresh error:', err);
+  }
+}
+
+// ── Buy Modal (Real Web3) ──
 let selectedTier = 'private';
 let selectedPayment = 'tpwallet';
 
 function toggleBuyModal() {
+  if (!userAddress) {
+    showToast('Please connect your wallet first');
+    return;
+  }
   const modal = document.getElementById('buy-modal');
   modal.classList.toggle('hidden');
   modal.classList.toggle('flex');
@@ -1498,12 +1776,18 @@ function updateBuyPreview() {
 }
 
 function copyAddress() {
-  navigator.clipboard.writeText('0x71C7656EC7ab88b098defB751B7401B5f6d8976F').then(() => {
-    showToast('Address copied to clipboard');
+  const addr = usdtContract ? PRESALE_CONTRACT_ADDRESS : '0x_YOUR_DEPLOYED_CONTRACT_ADDRESS_HERE_';
+  navigator.clipboard.writeText(addr).then(() => {
+    showToast('Contract address copied to clipboard');
   });
 }
 
 function handleBuy(tier) {
+  if (!userAddress) {
+    showToast('Please connect your wallet first');
+    toggleWalletModal();
+    return;
+  }
   selectedTier = tier;
   toggleBuyModal();
   selectBuyTier(tier);
@@ -1520,12 +1804,48 @@ function selectPayment(method) {
   btn.classList.add('border-neon-green', 'text-neon-green', 'bg-neon-green/10');
 }
 
-function handlePurchase() {
+async function handlePurchase() {
   const amount = parseFloat(document.getElementById('buy-amount').value) || 0;
   if (amount <= 0) { showToast('Please enter a valid amount'); return; }
-  toggleBuyModal();
-  const methodNames = { tpwallet: 'TP Wallet', metamask: 'MetaMask', walletconnect: 'WalletConnect' };
-  showToast(`Subscription placed for ${amount} BNB via ${methodNames[selectedPayment]} — check your wallet to confirm`);
+  if (!userAddress) { showToast('Connect your wallet first'); return; }
+
+  // Convert to USDT wei (18 decimals)
+  const amountWei = ethers.parseUnits(amount.toString(), 18);
+  await contributeUSDT(amountWei, selectedTier);
+}
+
+// ── Listen for account/network changes ──
+if (window.ethereum) {
+  window.ethereum.on('accountsChanged', async (accounts) => {
+    if (accounts.length === 0) {
+      // Wallet disconnected
+      userAddress = null;
+      signer = null;
+      const btn = document.getElementById('wallet-btn-text');
+      btn.textContent = 'Login with TP Wallet';
+      const btnParent = document.getElementById('connect-wallet-btn');
+      btnParent.classList.add('from-neon-green', 'to-neon-mint', 'text-deep-900');
+      btnParent.classList.remove('border', 'border-neon-green', 'text-neon-green', 'bg-transparent');
+      showToast('Wallet disconnected');
+    } else {
+      userAddress = accounts[0];
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      signer = await provider.getSigner();
+      await _setupContracts();
+      await _onWalletConnected();
+    }
+  });
+  window.ethereum.on('chainChanged', async () => {
+    if (signer) {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      signer = await provider.getSigner();
+      const network = await provider.getNetwork();
+      currentChainId = Number(network.chainId);
+      await _setupContracts();
+      await refreshLiveData();
+      showToast('Network changed to ' + (CHAIN_CONFIG[currentChainId]?.name || 'Unknown'));
+    }
+  });
 }
 
 // ── FAQ Accordion ──
