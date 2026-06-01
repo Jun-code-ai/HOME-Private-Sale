@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Protocol — Private Presale</title>
+<title>HOME 豪门 — Private Presale</title>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,12 +23,12 @@ tailwind.config = {
       },
       colors: {
         neon: {
-          cyan: '#00FFFF',
-          blue: '#0080FF',
-          pink: '#FF006E',
-          purple: '#8B5CF6',
-          green: '#00FF88',
-          gold: '#FFD700',
+          green: '#00FF88',     // Primary neon green
+          mint: '#00E676',      // Bright accent green
+          teal: '#00BFA5',      // Secondary teal-green
+          emerald: '#00C853',   // Deep emerald
+          gold: '#FFD700',      // Luxury gold accent
+          amber: '#FFAB00',     // Warm amber highlight
         },
         deep: {
           900: '#050508',
@@ -50,8 +50,8 @@ tailwind.config = {
       },
       keyframes: {
         glowPulse: {
-          '0%': { boxShadow: '0 0 20px rgba(0, 255, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.1)' },
-          '100%': { boxShadow: '0 0 35px rgba(0, 255, 255, 0.5), 0 0 100px rgba(0, 255, 255, 0.2)' },
+          '0%': { boxShadow: '0 0 20px rgba(0, 255, 136, 0.3), 0 0 60px rgba(0, 255, 136, 0.1)' },
+          '100%': { boxShadow: '0 0 35px rgba(0, 255, 136, 0.5), 0 0 100px rgba(0, 255, 136, 0.2)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
@@ -62,8 +62,8 @@ tailwind.config = {
           '100%': { transform: 'translateY(100vh)' },
         },
         borderGlow: {
-          '0%, 100%': { borderColor: 'rgba(0, 255, 255, 0.3)' },
-          '50%': { borderColor: 'rgba(0, 255, 255, 0.8)' },
+          '0%, 100%': { borderColor: 'rgba(0, 255, 136, 0.3)' },
+          '50%': { borderColor: 'rgba(0, 255, 136, 0.8)' },
         },
         glitch: {
           '0%, 100%': { transform: 'translateX(0)' },
@@ -86,8 +86,8 @@ tailwind.config = {
         },
       },
       backgroundImage: {
-        'grid-pattern': 'linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px)',
-        'radial-glow': 'radial-gradient(ellipse at center, rgba(0, 255, 255, 0.15) 0%, transparent 70%)',
+        'grid-pattern': 'linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px)',
+        'radial-glow': 'radial-gradient(ellipse at center, rgba(0, 255, 136, 0.15) 0%, transparent 70%)',
       },
       backgroundSize: {
         'grid': '60px 60px',
@@ -120,13 +120,13 @@ tailwind.config = {
   }
 
   /* ── Glow text utility ── */
-  .text-glow-cyan { text-shadow: 0 0 10px rgba(0,255,255,0.6), 0 0 40px rgba(0,255,255,0.3), 0 0 80px rgba(0,255,255,0.1); }
-  .text-glow-blue { text-shadow: 0 0 10px rgba(0,128,255,0.6), 0 0 40px rgba(0,128,255,0.3); }
-  .text-glow-pink { text-shadow: 0 0 10px rgba(255,0,110,0.6), 0 0 40px rgba(255,0,110,0.3); }
-  .text-glow-green { text-shadow: 0 0 10px rgba(0,255,136,0.6), 0 0 40px rgba(0,255,136,0.3); }
+  .text-glow-green { text-shadow: 0 0 10px rgba(0,255,136,0.7), 0 0 40px rgba(0,255,136,0.4), 0 0 80px rgba(0,255,136,0.15); }
+  .text-glow-mint { text-shadow: 0 0 10px rgba(0,230,118,0.6), 0 0 40px rgba(0,230,118,0.3); }
+  .text-glow-gold { text-shadow: 0 0 10px rgba(255,215,0,0.6), 0 0 40px rgba(255,215,0,0.3); }
+  .text-glow-emerald { text-shadow: 0 0 10px rgba(0,200,83,0.6), 0 0 40px rgba(0,200,83,0.3); }
 
   /* ── Box glow utility ── */
-  .box-glow-cyan { box-shadow: 0 0 20px rgba(0,255,255,0.2), 0 0 60px rgba(0,255,255,0.05); }
+  .box-glow-green { box-shadow: 0 0 20px rgba(0,255,136,0.2), 0 0 60px rgba(0,255,136,0.05); }
 
   /* ── Glass card ── */
   .glass-card {
@@ -143,10 +143,10 @@ tailwind.config = {
   }
 
   /* ── Gradient borders ── */
-  .border-gradient-cyan {
+  .border-gradient-green {
     border: 1px solid transparent;
     background: linear-gradient(rgba(10,10,15,0.9), rgba(10,10,15,0.9)) padding-box,
-                linear-gradient(135deg, rgba(0,255,255,0.5), rgba(0,128,255,0.3), rgba(139,92,246,0.5)) border-box;
+                linear-gradient(135deg, rgba(0,255,136,0.5), rgba(0,230,118,0.3), rgba(0,191,165,0.5)) border-box;
   }
 
   /* ── Particle canvas ── */
@@ -176,7 +176,7 @@ tailwind.config = {
   /* ── Progress bar shimmer ── */
   .progress-shimmer {
     background: linear-gradient(90deg,
-      rgba(0,255,255,0) 0%, rgba(0,255,255,0.4) 50%, rgba(0,255,255,0) 100%
+      rgba(0,255,136,0) 0%, rgba(0,255,136,0.4) 50%, rgba(0,255,136,0) 100%
     );
     background-size: 200% 100%;
     animation: shimmer 2s ease-in-out infinite;
@@ -192,7 +192,7 @@ tailwind.config = {
   }
   .tilt-card:hover {
     transform: translateY(-8px) rotateX(2deg) rotateY(-1deg);
-    box-shadow: 0 20px 60px rgba(0,255,255,0.15), 0 0 100px rgba(0,128,255,0.05);
+    box-shadow: 0 20px 60px rgba(0,255,136,0.15), 0 0 100px rgba(0,230,118,0.05);
   }
 
   /* ── Marquee scroll smooth ── */
@@ -212,8 +212,8 @@ tailwind.config = {
   /* ── Custom scrollbar ── */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: #050508; }
-  ::-webkit-scrollbar-thumb { background: rgba(0,255,255,0.2); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(0,255,255,0.4); }
+  ::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0,255,136,0.4); }
 
   /* ── Glitch hover ── */
   .glitch-hover:hover { animation: glitch 0.3s ease-in-out; }
@@ -232,49 +232,54 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto glass-card rounded-2xl px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between">
     <!-- Logo -->
     <a href="#" class="flex items-center gap-2 sm:gap-3 group">
-      <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-base sm:text-lg font-bold text-deep-900 font-orbitron group-hover:animate-glitch">
-        N
+      <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-neon-green to-neon-mint flex items-center justify-center text-base sm:text-lg font-bold text-deep-900 font-orbitron group-hover:animate-glitch">
+        H
       </div>
       <span class="font-orbitron font-bold text-base sm:text-lg text-white hidden sm:block">
-        NOVA<span class="text-neon-cyan">.</span>
+        HOME<span class="text-neon-green"> 豪门</span>
       </span>
     </a>
 
     <!-- Desktop Links -->
     <div class="hidden lg:flex items-center gap-8">
-      <a href="#about" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">ABOUT</a>
-      <a href="#tokenomics" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">TOKENOMICS</a>
-      <a href="#buy" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">PRESALE</a>
-      <a href="#roadmap" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">ROADMAP</a>
-      <a href="#faq" class="text-sm text-gray-400 hover:text-neon-cyan transition-colors duration-200 font-exo tracking-wide">FAQ</a>
+      <a href="#about" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">ABOUT</a>
+      <a href="#tokenomics" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">TOKENOMICS</a>
+      <a href="#buy" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">PRESALE</a>
+      <a href="#roadmap" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">ROADMAP</a>
+      <a href="#faq" class="text-sm text-gray-400 hover:text-neon-green transition-colors duration-200 font-exo tracking-wide">FAQ</a>
     </div>
 
     <!-- Wallet Button -->
     <button id="connect-wallet-btn" onclick="toggleWalletModal()"
             class="group relative px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm font-orbitron tracking-wide overflow-hidden transition-all duration-300
-                   bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
-                   hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] active:scale-95 shrink-0">
+                   bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
+                   hover:shadow-[0_0_30px_rgba(0,255,136,0.5)] active:scale-95 shrink-0">
       <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
-        <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-        <span id="wallet-btn-text" class="hidden sm:inline">Connect Wallet</span>
-        <span class="sm:hidden">Connect</span>
+        <!-- TP Wallet Icon -->
+        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" fill="currentColor"/>
+          <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="wallet-btn-text" class="hidden sm:inline">Login with TP Wallet</span>
+        <span class="sm:hidden">TP Login</span>
       </span>
-      <div class="absolute inset-0 bg-gradient-to-r from-neon-cyan/0 via-white/20 to-neon-cyan/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-neon-green/0 via-white/20 to-neon-green/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
     </button>
 
     <!-- Mobile menu toggle -->
-    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gray-400 hover:text-neon-cyan shrink-0" aria-label="Toggle menu">
+    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gray-400 hover:text-neon-green shrink-0" aria-label="Toggle menu">
       <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
   </div>
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden lg:hidden mt-2 glass-card rounded-2xl px-6 py-4 space-y-3">
-    <a href="#about" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">ABOUT</a>
-    <a href="#tokenomics" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">TOKENOMICS</a>
-    <a href="#buy" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">PRESALE</a>
-    <a href="#roadmap" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">ROADMAP</a>
-    <a href="#faq" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-cyan py-2 font-exo">FAQ</a>
+    <a href="#about" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">ABOUT</a>
+    <a href="#tokenomics" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">TOKENOMICS</a>
+    <a href="#buy" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">PRESALE</a>
+    <a href="#roadmap" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">ROADMAP</a>
+    <a href="#faq" onclick="toggleMobileMenu()" class="block text-sm text-gray-400 hover:text-neon-green py-2 font-exo">FAQ</a>
   </div>
 </nav>
 
@@ -287,9 +292,9 @@ tailwind.config = {
 
   <!-- Background orbs -->
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-cyan/10 rounded-full blur-[120px] animate-pulse"></div>
-    <div class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-neon-blue/10 rounded-full blur-[100px] animate-pulse" style="animation-delay: 2s;"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-purple/5 rounded-full blur-[150px]"></div>
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-green/10 rounded-full blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-neon-mint/10 rounded-full blur-[100px] animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-teal/5 rounded-full blur-[150px]"></div>
   </div>
 
   <!-- Grid background -->
@@ -297,7 +302,7 @@ tailwind.config = {
 
   <!-- Scanline effect -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.03]">
-    <div class="animate-scanline w-full h-px bg-neon-cyan"></div>
+    <div class="animate-scanline w-full h-px bg-neon-green"></div>
   </div>
 
   <!-- Content -->
@@ -313,28 +318,28 @@ tailwind.config = {
 
     <!-- Main Title -->
     <h1 class="reveal font-orbitron font-black text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-tight mb-6" style="transition-delay: 0.1s;">
-      <span class="text-glow-cyan">NOVA</span><br class="sm:hidden">
-      <span class="text-white">PROTOCOL</span>
+      <span class="text-glow-green">HOME</span><br class="sm:hidden">
+      <span class="text-white">豪门</span>
     </h1>
 
     <!-- Subtitle -->
     <p class="reveal text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-exo leading-relaxed" style="transition-delay: 0.2s;">
       The next-generation DeFi infrastructure powering trustless cross-chain liquidity.<br class="hidden sm:block">
-      <span class="text-neon-cyan font-semibold">Be an early bird. Secure your allocation.</span>
+      <span class="text-neon-green font-semibold">Be an early bird. Secure your allocation.</span>
     </p>
 
     <!-- CTA Buttons -->
     <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4 mb-16" style="transition-delay: 0.3s;">
       <a href="#buy"
          class="group w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
-                bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
-                hover:shadow-[0_0_40px_rgba(0,255,255,0.5)] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2">
+                bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
+                hover:shadow-[0_0_40px_rgba(0,255,136,0.5)] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2">
         Buy Early Bird
         <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
       </a>
       <a href="#about"
          class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
-                border border-gray-700 text-gray-300 hover:border-neon-cyan hover:text-neon-cyan
+                border border-gray-700 text-gray-300 hover:border-neon-green hover:text-neon-green
                 transition-all duration-300 active:scale-95">
         Learn More
       </a>
@@ -343,7 +348,7 @@ tailwind.config = {
     <!-- Stats Glance -->
     <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto" style="transition-delay: 0.4s;">
       <div class="glass-card rounded-xl p-3 sm:p-4">
-        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-cyan"><span id="hero-raised">287.5</span> BNB</div>
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-green"><span id="hero-raised">287.5</span> BNB</div>
         <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Total Raised</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
@@ -351,11 +356,11 @@ tailwind.config = {
         <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Contributors</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
-        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-pink">1 BNB</div>
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-gold">1 BNB</div>
         <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Min Contribution</div>
       </div>
       <div class="glass-card rounded-xl p-3 sm:p-4">
-        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-purple" id="countdown">14d 06h</div>
+        <div class="text-lg sm:text-2xl font-bold font-orbitron text-neon-teal" id="countdown">14d 06h</div>
         <div class="text-[10px] sm:text-xs text-gray-500 mt-1 font-exo">Remaining</div>
       </div>
     </div>
@@ -387,7 +392,7 @@ tailwind.config = {
           </div>
           <div class="text-center">
             <div class="text-gray-500">Hard Cap</div>
-            <div class="text-neon-cyan font-bold font-orbitron">500 BNB</div>
+            <div class="text-neon-green font-bold font-orbitron">500 BNB</div>
           </div>
         </div>
       </div>
@@ -395,7 +400,7 @@ tailwind.config = {
       <!-- Progress Bar -->
       <div class="relative h-5 bg-white/5 rounded-full overflow-hidden mb-2">
         <div id="main-progress-bar" class="absolute inset-y-0 left-0 rounded-full transition-all duration-1000 ease-out"
-             style="width: 0%; background: linear-gradient(90deg, #00FF88, #00FFFF, #0080FF);">
+             style="width: 0%; background: linear-gradient(90deg, #00C853, #00FF88, #00E676);">
           <div class="progress-shimmer absolute inset-0 rounded-full"></div>
         </div>
         <!-- Soft cap marker -->
@@ -404,7 +409,7 @@ tailwind.config = {
         </div>
       </div>
       <div class="text-right text-sm font-bold font-orbitron">
-        <span class="text-neon-cyan" id="progress-percent">57.5%</span>
+        <span class="text-neon-green" id="progress-percent">57.5%</span>
         <span class="text-gray-600 mx-1">—</span>
         <span class="text-gray-500 text-xs font-exo">212.5 BNB remaining</span>
       </div>
@@ -418,13 +423,13 @@ tailwind.config = {
 <section class="relative py-24 px-6" id="about">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">About The Project</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">About The Project</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
-        Liquidity Without <span class="text-glow-cyan">Boundaries</span>
+        Liquidity Without <span class="text-glow-green">Boundaries</span>
       </h2>
       <p class="text-gray-400 max-w-3xl mx-auto text-lg font-exo leading-relaxed">
-        Nova Protocol is a cross-chain liquidity aggregator that connects isolated blockchain
-        ecosystems. Built on a modular architecture, Nova enables seamless asset transfers,
+        HOME Protocol is a cross-chain liquidity aggregator that connects isolated blockchain
+        ecosystems. Built on a modular architecture, HOME enables seamless asset transfers,
         yield optimization, and deep liquidity across 12+ chains.
       </p>
     </div>
@@ -432,22 +437,22 @@ tailwind.config = {
     <!-- Feature Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="reveal tilt-card glass-card rounded-2xl p-8 group cursor-pointer" style="transition-delay: 0s;">
-        <div class="w-14 h-14 rounded-xl bg-neon-cyan/10 flex items-center justify-center mb-6 group-hover:bg-neon-cyan/20 transition-colors">
-          <svg class="w-7 h-7 text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <div class="w-14 h-14 rounded-xl bg-neon-green/10 flex items-center justify-center mb-6 group-hover:bg-neon-green/20 transition-colors">
+          <svg class="w-7 h-7 text-neon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         </div>
         <h3 class="text-xl font-bold font-orbitron text-white mb-3">Lightning Speed</h3>
         <p class="text-gray-400 font-exo text-sm leading-relaxed">Sub-second cross-chain swaps powered by intent-based architecture and solver networks.</p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-8 group cursor-pointer" style="transition-delay: 0.15s;">
-        <div class="w-14 h-14 rounded-xl bg-neon-blue/10 flex items-center justify-center mb-6 group-hover:bg-neon-blue/20 transition-colors">
-          <svg class="w-7 h-7 text-neon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <div class="w-14 h-14 rounded-xl bg-neon-mint/10 flex items-center justify-center mb-6 group-hover:bg-neon-mint/20 transition-colors">
+          <svg class="w-7 h-7 text-neon-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
         </div>
         <h3 class="text-xl font-bold font-orbitron text-white mb-3">Battle-Tested Security</h3>
         <p class="text-gray-400 font-exo text-sm leading-relaxed">Audited by CertiK & Trail of Bits. Multi-sig treasury with 24h timelock on all admin actions.</p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-8 group cursor-pointer" style="transition-delay: 0.3s;">
-        <div class="w-14 h-14 rounded-xl bg-neon-purple/10 flex items-center justify-center mb-6 group-hover:bg-neon-purple/20 transition-colors">
-          <svg class="w-7 h-7 text-neon-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+        <div class="w-14 h-14 rounded-xl bg-neon-teal/10 flex items-center justify-center mb-6 group-hover:bg-neon-teal/20 transition-colors">
+          <svg class="w-7 h-7 text-neon-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
         </div>
         <h3 class="text-xl font-bold font-orbitron text-white mb-3">Omnichain by Design</h3>
         <p class="text-gray-400 font-exo text-sm leading-relaxed">Native connectivity to Ethereum, BSC, Arbitrum, Optimism, Polygon, Avalanche & more.</p>
@@ -463,12 +468,12 @@ tailwind.config = {
   <div class="absolute inset-0 bg-radial-glow opacity-30 pointer-events-none"></div>
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Token Distribution</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Token Distribution</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
-        $NOVA <span class="text-glow-cyan">Tokenomics</span>
+        $HOME <span class="text-glow-green">Tokenomics</span>
       </h2>
       <p class="text-gray-400 max-w-2xl mx-auto text-lg font-exo">
-        Total Supply: <span class="text-white font-bold">100,000,000 $NOVA</span>
+        Total Supply: <span class="text-white font-bold">100,000,000 $HOME</span>
       </p>
     </div>
 
@@ -480,19 +485,19 @@ tailwind.config = {
             <!-- Ring segments (stroke-dasharray based on 2*PI*40 ≈ 251.33 circumference) -->
             <!-- Presale 35% -->
             <circle cx="100" cy="100" r="65" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="22"/>
-            <circle cx="100" cy="100" r="65" fill="none" stroke="#00FFFF" stroke-width="22"
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#00FF88" stroke-width="22"
                     stroke-dasharray="142.9 265.5" stroke-linecap="round" class="donut-segment"
                     id="seg-presale" style="stroke-dashoffset: 0;"/>
             <!-- Liquidity 25% -->
-            <circle cx="100" cy="100" r="65" fill="none" stroke="#0080FF" stroke-width="22"
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#00E676" stroke-width="22"
                     stroke-dasharray="102 265.5" stroke-linecap="round" class="donut-segment"
                     id="seg-liquidity" style="stroke-dashoffset: -142.9;"/>
             <!-- Ecosystem 20% -->
-            <circle cx="100" cy="100" r="65" fill="none" stroke="#8B5CF6" stroke-width="22"
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#00BFA5" stroke-width="22"
                     stroke-dasharray="81.7 265.5" stroke-linecap="round" class="donut-segment"
                     id="seg-ecosystem" style="stroke-dashoffset: -244.9;"/>
             <!-- Team 12% -->
-            <circle cx="100" cy="100" r="65" fill="none" stroke="#FF006E" stroke-width="22"
+            <circle cx="100" cy="100" r="65" fill="none" stroke="#FFD700" stroke-width="22"
                     stroke-dasharray="49 265.5" stroke-linecap="round" class="donut-segment"
                     id="seg-team" style="stroke-dashoffset: -326.6;"/>
             <!-- Advisors 5% -->
@@ -507,7 +512,7 @@ tailwind.config = {
             <circle cx="100" cy="100" r="42" fill="#0A0A0F"/>
             <!-- Center text -->
             <text x="100" y="97" text-anchor="middle" fill="white" font-size="11" font-family="Exo 2, sans-serif" transform="rotate(90, 100, 100)">TOTAL</text>
-            <text x="100" y="113" text-anchor="middle" fill="#00FFFF" font-size="14" font-weight="700" font-family="Orbitron, sans-serif" transform="rotate(90, 100, 100)">100M</text>
+            <text x="100" y="113" text-anchor="middle" fill="#00FF88" font-size="14" font-weight="700" font-family="Orbitron, sans-serif" transform="rotate(90, 100, 100)">100M</text>
           </svg>
         </div>
       </div>
@@ -516,31 +521,31 @@ tailwind.config = {
       <div class="reveal space-y-4" style="transition-delay: 0.2s;">
         <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
           <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-neon-cyan shadow-[0_0_10px_rgba(0,255,255,0.5)]"></div>
+            <div class="w-4 h-4 rounded-full bg-neon-green shadow-[0_0_10px_rgba(0,255,136,0.5)]"></div>
             <span class="font-exo text-white text-sm">Presale</span>
           </div>
-          <span class="font-orbitron font-bold text-neon-cyan">35%</span>
+          <span class="font-orbitron font-bold text-neon-green">35%</span>
         </div>
         <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
           <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-neon-blue shadow-[0_0_10px_rgba(0,128,255,0.5)]"></div>
+            <div class="w-4 h-4 rounded-full bg-neon-mint shadow-[0_0_10px_rgba(0,230,118,0.5)]"></div>
             <span class="font-exo text-white text-sm">Liquidity</span>
           </div>
-          <span class="font-orbitron font-bold text-neon-blue">25%</span>
+          <span class="font-orbitron font-bold text-neon-mint">25%</span>
         </div>
         <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
           <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-neon-purple shadow-[0_0_10px_rgba(139,92,246,0.5)]"></div>
+            <div class="w-4 h-4 rounded-full bg-neon-teal shadow-[0_0_10px_rgba(0,191,165,0.5)]"></div>
             <span class="font-exo text-white text-sm">Ecosystem</span>
           </div>
-          <span class="font-orbitron font-bold text-neon-purple">20%</span>
+          <span class="font-orbitron font-bold text-neon-teal">20%</span>
         </div>
         <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
           <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-neon-pink shadow-[0_0_10px_rgba(255,0,110,0.5)]"></div>
+            <div class="w-4 h-4 rounded-full bg-neon-gold shadow-[0_0_10px_rgba(255,0,110,0.5)]"></div>
             <span class="font-exo text-white text-sm">Team & Advisors</span>
           </div>
-          <span class="font-orbitron font-bold text-neon-pink">17%</span>
+          <span class="font-orbitron font-bold text-neon-gold">17%</span>
         </div>
         <div class="flex items-center justify-between glass-card rounded-xl px-5 py-3.5">
           <div class="flex items-center gap-3">
@@ -560,23 +565,23 @@ tailwind.config = {
 <section class="relative py-24 px-6" id="buy">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Early Bird Access</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Early Bird Access</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
-        Secure Your <span class="text-glow-cyan">Allocation</span>
+        Secure Your <span class="text-glow-green">Allocation</span>
       </h2>
       <p class="text-gray-400 max-w-2xl mx-auto text-lg font-exo">
-        Connect your wallet and grab $NOVA at the lowest price before public launch.
+        Connect your wallet and grab $HOME at the lowest price before public launch.
       </p>
     </div>
 
     <!-- Tiers -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
       <!-- Tier 1: Seed -->
-      <div class="reveal border-gradient-cyan rounded-2xl p-8 flex flex-col" style="transition-delay: 0s;">
-        <div class="text-xs text-neon-cyan font-orbitron tracking-widest mb-3">TIER 1</div>
+      <div class="reveal border-gradient-green rounded-2xl p-8 flex flex-col" style="transition-delay: 0s;">
+        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3">TIER 1</div>
         <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Seed</h3>
         <div class="text-3xl font-black font-orbitron text-white mb-1">$0.08</div>
-        <div class="text-sm text-gray-500 font-exo mb-6">per $NOVA token</div>
+        <div class="text-sm text-gray-500 font-exo mb-6">per $HOME token</div>
         <ul class="space-y-3 mb-8 flex-1">
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -594,21 +599,21 @@ tailwind.config = {
         <div class="text-xs text-neon-green/60 font-exo mb-4">🔥 387 / 500 slots filled</div>
         <button onclick="handleBuy('seed')"
                 class="w-full py-3.5 rounded-xl font-bold font-orbitron text-sm tracking-wide
-                       bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
-                       hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] transition-all duration-300 active:scale-95">
+                       bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
+                       hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] transition-all duration-300 active:scale-95">
           Buy Seed
         </button>
       </div>
 
       <!-- Tier 2: Private (HIGHLIGHTED) -->
-      <div class="reveal border-gradient-cyan rounded-2xl p-8 flex flex-col relative md:scale-[1.03] bg-deep-700/50" style="transition-delay: 0.15s;">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900 text-[10px] font-bold font-orbitron px-4 py-1 rounded-full tracking-widest">
+      <div class="reveal border-gradient-green rounded-2xl p-8 flex flex-col relative md:scale-[1.03] bg-deep-700/50" style="transition-delay: 0.15s;">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-neon-green to-neon-mint text-deep-900 text-[10px] font-bold font-orbitron px-4 py-1 rounded-full tracking-widest">
           MOST POPULAR
         </div>
-        <div class="text-xs text-neon-cyan font-orbitron tracking-widest mb-3 mt-1">TIER 2</div>
+        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3 mt-1">TIER 2</div>
         <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Private</h3>
         <div class="text-3xl font-black font-orbitron text-white mb-1">$0.10</div>
-        <div class="text-sm text-gray-500 font-exo mb-6">per $NOVA token</div>
+        <div class="text-sm text-gray-500 font-exo mb-6">per $HOME token</div>
         <ul class="space-y-3 mb-8 flex-1">
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -626,18 +631,18 @@ tailwind.config = {
         <div class="text-xs text-neon-green/60 font-exo mb-4">⚡ 623 / 1000 slots filled</div>
         <button onclick="handleBuy('private')"
                 class="w-full py-3.5 rounded-xl font-bold font-orbitron text-sm tracking-wide
-                       bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
-                       hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] transition-all duration-300 active:scale-95">
+                       bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
+                       hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] transition-all duration-300 active:scale-95">
           Buy Private
         </button>
       </div>
 
       <!-- Tier 3: Public -->
-      <div class="reveal border-gradient-cyan rounded-2xl p-8 flex flex-col" style="transition-delay: 0.3s;">
-        <div class="text-xs text-neon-cyan font-orbitron tracking-widest mb-3">TIER 3</div>
+      <div class="reveal border-gradient-green rounded-2xl p-8 flex flex-col" style="transition-delay: 0.3s;">
+        <div class="text-xs text-neon-green font-orbitron tracking-widest mb-3">TIER 3</div>
         <h3 class="text-2xl font-bold font-orbitron text-white mb-2">Public</h3>
         <div class="text-3xl font-black font-orbitron text-white mb-1">$0.15</div>
-        <div class="text-sm text-gray-500 font-exo mb-6">per $NOVA token</div>
+        <div class="text-sm text-gray-500 font-exo mb-6">per $HOME token</div>
         <ul class="space-y-3 mb-8 flex-1">
           <li class="flex items-start gap-2 text-sm text-gray-400 font-exo">
             <svg class="w-4 h-4 text-neon-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -666,7 +671,7 @@ tailwind.config = {
       <p class="text-gray-500 text-sm font-exo mb-4">Prefer to contribute directly?</p>
       <button onclick="toggleBuyModal()"
               class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold font-orbitron text-sm
-                     border border-neon-cyan/30 text-neon-cyan hover:bg-neon-cyan/10 transition-all duration-300">
+                     border border-neon-green/30 text-neon-green hover:bg-neon-green/10 transition-all duration-300">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
         Buy With Custom Amount
       </button>
@@ -681,23 +686,23 @@ tailwind.config = {
   <div class="absolute inset-0 bg-radial-glow opacity-20 pointer-events-none"></div>
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-20 reveal">
-      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Development Path</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Development Path</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
-        Project <span class="text-glow-cyan">Roadmap</span>
+        Project <span class="text-glow-green">Roadmap</span>
       </h2>
     </div>
 
     <!-- Timeline -->
     <div class="relative">
       <!-- Center line -->
-      <div class="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-neon-cyan via-neon-blue to-neon-purple md:-translate-x-px"></div>
+      <div class="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-neon-green via-neon-mint to-neon-teal md:-translate-x-px"></div>
 
       <div class="space-y-12">
         <!-- Phase 1 -->
         <div class="reveal relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
           <div class="md:w-1/2 md:pr-16 md:text-right order-2 md:order-1 pl-12 md:pl-0">
             <div class="glass-card rounded-xl p-6 inline-block">
-              <span class="text-[10px] text-neon-cyan font-orbitron tracking-widest">Q3 2024 — COMPLETED</span>
+              <span class="text-[10px] text-neon-green font-orbitron tracking-widest">Q3 2024 — COMPLETED</span>
               <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 1: Foundation</h4>
               <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
                 <li class="flex md:justify-end items-center gap-2"><span>✓ Core protocol architecture</span><svg class="w-3.5 h-3.5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></li>
@@ -715,12 +720,12 @@ tailwind.config = {
         <!-- Phase 2 -->
         <div class="reveal relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
           <div class="md:w-1/2 md:pr-16 hidden md:block order-1"></div>
-          <div class="absolute left-0 md:left-1/2 w-[38px] h-[38px] rounded-full bg-deep-800 border-2 border-neon-cyan flex items-center justify-center md:-translate-x-1/2 z-10 shadow-[0_0_15px_rgba(0,255,255,0.4)] animate-glow-pulse">
-            <div class="w-3 h-3 rounded-full bg-neon-cyan"></div>
+          <div class="absolute left-0 md:left-1/2 w-[38px] h-[38px] rounded-full bg-deep-800 border-2 border-neon-green flex items-center justify-center md:-translate-x-1/2 z-10 shadow-[0_0_15px_rgba(0,255,136,0.4)] animate-glow-pulse">
+            <div class="w-3 h-3 rounded-full bg-neon-green"></div>
           </div>
           <div class="md:w-1/2 md:pl-16 order-2 pl-12 md:pl-16">
             <div class="glass-card rounded-xl p-6 inline-block">
-              <span class="text-[10px] text-neon-cyan font-orbitron tracking-widest">Q4 2024 — IN PROGRESS</span>
+              <span class="text-[10px] text-neon-green font-orbitron tracking-widest">Q4 2024 — IN PROGRESS</span>
               <h4 class="text-lg font-bold font-orbitron text-white mt-1">Phase 2: Presale & Launch</h4>
               <ul class="mt-3 space-y-1.5 text-sm text-gray-400 font-exo">
                 <li>→ Private presale (YOU ARE HERE)</li>
@@ -782,9 +787,9 @@ tailwind.config = {
 <section class="relative py-24 px-6" id="dashboard">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Your Dashboard</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Your Dashboard</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
-        Track Your <span class="text-glow-cyan">Contribution</span>
+        Track Your <span class="text-glow-green">Contribution</span>
       </h2>
       <p class="text-gray-400 max-w-2xl mx-auto text-lg font-exo">
         Connect your wallet anytime to view your contribution history, pending tokens, and vesting schedule.
@@ -796,7 +801,7 @@ tailwind.config = {
       <!-- Wallet header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/5">
         <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center font-bold font-orbitron text-deep-900 text-lg">W</div>
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-neon-green to-neon-mint flex items-center justify-center font-bold font-orbitron text-deep-900 text-lg">W</div>
           <div>
             <div class="text-sm text-gray-500 font-exo">Connected Wallet</div>
             <div class="text-white font-mono text-sm">0x71C7...6b9F</div>
@@ -805,15 +810,15 @@ tailwind.config = {
         <div class="grid grid-cols-3 gap-3 sm:flex sm:items-center sm:gap-6">
           <div class="text-center">
             <div class="text-xs text-gray-500 font-exo">Contributed</div>
-            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-cyan">12.5 BNB</div>
+            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-green">12.5 BNB</div>
           </div>
           <div class="text-center">
-            <div class="text-xs text-gray-500 font-exo">$NOVA</div>
+            <div class="text-xs text-gray-500 font-exo">$HOME</div>
             <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-green">156,250</div>
           </div>
           <div class="text-center">
             <div class="text-xs text-gray-500 font-exo">Tier</div>
-            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-pink">Private</div>
+            <div class="text-lg sm:text-xl font-bold font-orbitron text-neon-gold">Private</div>
           </div>
         </div>
       </div>
@@ -836,7 +841,7 @@ tailwind.config = {
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">Jun 02, 2026</td>
                 <td class="py-4 pr-4 text-white font-semibold">5.0 BNB</td>
-                <td class="py-4 pr-4"><span class="text-xs bg-neon-cyan/10 text-neon-cyan px-2 py-0.5 rounded-full">Private</span></td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Private</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xa1b2...c9d8</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
                   <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
@@ -844,7 +849,7 @@ tailwind.config = {
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">May 28, 2026</td>
                 <td class="py-4 pr-4 text-white font-semibold">4.5 BNB</td>
-                <td class="py-4 pr-4"><span class="text-xs bg-neon-cyan/10 text-neon-cyan px-2 py-0.5 rounded-full">Private</span></td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Private</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xb3c4...e5f6</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
                   <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
@@ -852,7 +857,7 @@ tailwind.config = {
               <tr class="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
                 <td class="py-4 pr-4 text-gray-300">May 21, 2026</td>
                 <td class="py-4 pr-4 text-white font-semibold">3.0 BNB</td>
-                <td class="py-4 pr-4"><span class="text-xs bg-neon-cyan/10 text-neon-cyan px-2 py-0.5 rounded-full">Seed</span></td>
+                <td class="py-4 pr-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full">Seed</span></td>
                 <td class="py-4 pr-4 text-gray-500 font-mono text-xs">0xc5d6...a7b8</td>
                 <td class="py-4"><span class="text-xs bg-neon-green/10 text-neon-green px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
                   <span class="w-1.5 h-1.5 rounded-full bg-neon-green"></span>Confirmed</span></td>
@@ -868,17 +873,17 @@ tailwind.config = {
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="glass-card rounded-xl p-4 text-center">
             <div class="text-xs text-gray-500 font-exo mb-1">Unlocked at TGE</div>
-            <div class="text-2xl font-bold font-orbitron text-neon-cyan">52,083</div>
+            <div class="text-2xl font-bold font-orbitron text-neon-green">52,083</div>
             <div class="text-xs text-gray-600 mt-1">33.3% of allocation</div>
           </div>
           <div class="glass-card rounded-xl p-4 text-center">
             <div class="text-xs text-gray-500 font-exo mb-1">Vesting Over 60 Days</div>
-            <div class="text-2xl font-bold font-orbitron text-neon-blue">104,167</div>
+            <div class="text-2xl font-bold font-orbitron text-neon-mint">104,167</div>
             <div class="text-xs text-gray-600 mt-1">66.7% of allocation</div>
           </div>
           <div class="glass-card rounded-xl p-4 text-center">
             <div class="text-xs text-gray-500 font-exo mb-1">Fully Vested By</div>
-            <div class="text-2xl font-bold font-orbitron text-neon-purple">Aug 2026</div>
+            <div class="text-2xl font-bold font-orbitron text-neon-teal">Aug 2026</div>
             <div class="text-xs text-gray-600 mt-1">~60 days from TGE</div>
           </div>
         </div>
@@ -893,36 +898,36 @@ tailwind.config = {
 <section class="relative py-24 px-6" id="team">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Core Team</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Core Team</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
-        Built by <span class="text-glow-cyan">Builders</span>
+        Built by <span class="text-glow-green">Builders</span>
       </h2>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Member -->
       <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer">
-        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-cyan to-neon-blue mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-deep-900">AK</div>
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-green to-neon-mint mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-deep-900">AK</div>
         <h4 class="text-lg font-bold font-orbitron text-white">Alex K.</h4>
-        <p class="text-sm text-neon-cyan font-exo mb-3">CEO & Founder</p>
+        <p class="text-sm text-neon-green font-exo mb-3">CEO & Founder</p>
         <p class="text-xs text-gray-500 font-exo leading-relaxed">Ex-Citadel. 8y in DeFi. Founded 2 successful protocols.</p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.1s;">
-        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-pink to-neon-purple mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-white">SM</div>
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-gold to-neon-teal mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-white">SM</div>
         <h4 class="text-lg font-bold font-orbitron text-white">Sarah M.</h4>
-        <p class="text-sm text-neon-pink font-exo mb-3">CTO</p>
+        <p class="text-sm text-neon-gold font-exo mb-3">CTO</p>
         <p class="text-xs text-gray-500 font-exo leading-relaxed">Ex-Google. Smart contract architect. Solidity wizard.</p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.2s;">
-        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-green to-neon-cyan mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-deep-900">DR</div>
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-green to-neon-green mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-deep-900">DR</div>
         <h4 class="text-lg font-bold font-orbitron text-white">David R.</h4>
         <p class="text-sm text-neon-green font-exo mb-3">Head of Product</p>
         <p class="text-xs text-gray-500 font-exo leading-relaxed">5x Web3 founder. UX-obsessed. Community-first builder.</p>
       </div>
       <div class="reveal tilt-card glass-card rounded-2xl p-6 text-center group cursor-pointer" style="transition-delay: 0.3s;">
-        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-white">LJ</div>
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-neon-mint to-neon-teal mx-auto mb-4 flex items-center justify-center text-2xl font-bold font-orbitron text-white">LJ</div>
         <h4 class="text-lg font-bold font-orbitron text-white">Lisa J.</h4>
-        <p class="text-sm text-neon-blue font-exo mb-3">Head of Growth</p>
+        <p class="text-sm text-neon-mint font-exo mb-3">Head of Growth</p>
         <p class="text-xs text-gray-500 font-exo leading-relaxed">Scaled 3 projects to $100M+ TVL. KOL network across Asia.</p>
       </div>
     </div>
@@ -961,9 +966,9 @@ tailwind.config = {
 <section class="relative py-24 px-6" id="faq">
   <div class="max-w-4xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <span class="text-xs text-neon-cyan font-exo tracking-[0.3em] uppercase">Got Questions?</span>
+      <span class="text-xs text-neon-green font-exo tracking-[0.3em] uppercase">Got Questions?</span>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mt-4 mb-6">
-        Frequently <span class="text-glow-cyan">Asked</span>
+        Frequently <span class="text-glow-green">Asked</span>
       </h2>
     </div>
 
@@ -971,7 +976,7 @@ tailwind.config = {
       <div class="reveal glass-card rounded-xl overflow-hidden">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
           <span class="font-bold font-exo text-white pr-4">What is the minimum contribution for the presale?</span>
-          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
           The minimum contribution varies by tier: 1 BNB for Seed, 0.5 BNB for Private, and 0.1 BNB for Public. Each tier also has a maximum cap per wallet address.
@@ -979,8 +984,8 @@ tailwind.config = {
       </div>
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.05s;">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
-          <span class="font-bold font-exo text-white pr-4">When will I receive my $NOVA tokens?</span>
-          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          <span class="font-bold font-exo text-white pr-4">When will I receive my $HOME tokens?</span>
+          <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
           Token distribution follows each tier's vesting schedule. Seed tier gets 33.3% at TGE with the rest vesting over 3 months. Private tier gets 50% at TGE with the rest vesting over 2 months. Public tier gets 50% at TGE with the rest after 1 month.
@@ -989,7 +994,7 @@ tailwind.config = {
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.1s;">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
           <span class="font-bold font-exo text-white pr-4">How do I connect my wallet to participate?</span>
-          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
           Click the "Connect Wallet" button in the top right corner. We support Trust Wallet, MetaMask, and any WalletConnect-compatible wallet. Simply scan the QR code or approve the connection in your wallet app.
@@ -998,7 +1003,7 @@ tailwind.config = {
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.15s;">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
           <span class="font-bold font-exo text-white pr-4">Is the smart contract audited?</span>
-          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
           Yes! Our smart contracts have been audited by CertiK and Trail of Bits. Audit reports are publicly available — links can be found in our documentation. We prioritize security above everything.
@@ -1007,7 +1012,7 @@ tailwind.config = {
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.2s;">
         <button onclick="toggleFAQ(this)" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer">
           <span class="font-bold font-exo text-white pr-4">What happens if the soft cap is not reached?</span>
-          <svg class="w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
           If the soft cap of 150 BNB is not reached by the end of the presale period, all contributions are refundable. Our smart contract includes a refund mechanism that allows you to claim your BNB back.
@@ -1022,11 +1027,11 @@ tailwind.config = {
 <!-- ════════════════════════════════════════ -->
 <section class="relative py-24 px-6">
   <div class="max-w-4xl mx-auto text-center reveal">
-    <div class="glass-card-light rounded-3xl p-10 sm:p-16 border-gradient-cyan relative overflow-hidden">
+    <div class="glass-card-light rounded-3xl p-10 sm:p-16 border-gradient-green relative overflow-hidden">
       <div class="absolute inset-0 bg-radial-glow opacity-40 pointer-events-none"></div>
       <div class="relative z-10">
         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black font-orbitron text-white mb-6">
-          Don't Miss <span class="text-glow-cyan">Out</span>
+          Don't Miss <span class="text-glow-green">Out</span>
         </h2>
         <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-8 font-exo">
           The private sale closes in 14 days. Early birds get the best price and highest bonus.
@@ -1035,13 +1040,13 @@ tailwind.config = {
         <div class="flex flex-col sm:flex-row justify-center gap-4">
           <button onclick="handleBuy('private')"
                   class="px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
-                         bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
-                         hover:shadow-[0_0_40px_rgba(0,255,255,0.5)] transition-all duration-300 active:scale-95">
-            Buy $NOVA Now
+                         bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
+                         hover:shadow-[0_0_40px_rgba(0,255,136,0.5)] transition-all duration-300 active:scale-95">
+            Buy $HOME Now
           </button>
           <a href="#faq"
              class="px-8 py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
-                    border border-gray-700 text-gray-300 hover:border-neon-cyan hover:text-neon-cyan
+                    border border-gray-700 text-gray-300 hover:border-neon-green hover:text-neon-green
                     transition-all duration-300">
             Read FAQ
           </a>
@@ -1058,18 +1063,18 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
       <a href="#" class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center text-lg font-bold text-deep-900 font-orbitron">N</div>
-        <span class="font-orbitron font-bold text-lg text-white">NOVA<span class="text-neon-cyan">.</span></span>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-green to-neon-mint flex items-center justify-center text-lg font-bold text-deep-900 font-orbitron">H</div>
+        <span class="font-orbitron font-bold text-lg text-white">HOME<span class="text-neon-green"> 豪门</span></span>
       </a>
       <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-gray-600 font-exo">
-        <a href="#" class="hover:text-neon-cyan transition-colors">Docs</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors">Audit</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors">Twitter</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors">Discord</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors">Telegram</a>
-        <a href="#" class="hover:text-neon-cyan transition-colors">GitHub</a>
+        <a href="#" class="hover:text-neon-green transition-colors">Docs</a>
+        <a href="#" class="hover:text-neon-green transition-colors">Audit</a>
+        <a href="#" class="hover:text-neon-green transition-colors">Twitter</a>
+        <a href="#" class="hover:text-neon-green transition-colors">Discord</a>
+        <a href="#" class="hover:text-neon-green transition-colors">Telegram</a>
+        <a href="#" class="hover:text-neon-green transition-colors">GitHub</a>
       </div>
-      <span class="text-xs text-gray-700 font-exo">© 2026 Nova Protocol. All rights reserved.</span>
+      <span class="text-xs text-gray-700 font-exo">© 2026 HOME 豪门. All rights reserved.</span>
     </div>
   </div>
 </footer>
@@ -1078,24 +1083,35 @@ tailwind.config = {
 <!-- WALLET MODAL (Mock) -->
 <!-- ════════════════════════════════════════ -->
 <div id="wallet-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
-  <div class="glass-card-light rounded-2xl p-8 w-full max-w-md mx-4 animate-slide-up border-gradient-cyan">
+  <div class="glass-card-light rounded-2xl p-8 w-full max-w-md mx-4 animate-slide-up border-gradient-green">
     <div class="flex items-center justify-between mb-6">
       <h3 class="text-xl font-bold font-orbitron text-white">Connect Wallet</h3>
-      <button onclick="toggleWalletModal()" class="p-2 text-gray-500 hover:text-neon-cyan transition-colors cursor-pointer">
+      <button onclick="toggleWalletModal()" class="p-2 text-gray-500 hover:text-neon-green transition-colors cursor-pointer">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     </div>
     <div class="space-y-3">
-      <button onclick="mockConnect('Trust Wallet')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
-        <div class="w-10 h-10 rounded-lg bg-neon-blue/20 flex items-center justify-center group-hover:bg-neon-blue/30 transition-colors">
-          <svg class="w-6 h-6 text-neon-blue" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+      <!-- Trust Wallet — Featured / Recommended -->
+      <div class="relative">
+        <div class="absolute -top-2.5 right-3 bg-neon-green text-deep-900 text-[10px] font-bold font-orbitron px-3 py-0.5 rounded-full tracking-widest z-10 shadow-[0_0_15px_rgba(0,255,136,0.4)]">
+          RECOMMENDED
         </div>
-        <div class="text-left flex-1">
-          <div class="text-white font-bold font-exo">Trust Wallet</div>
-          <div class="text-xs text-gray-500">WalletConnect</div>
-        </div>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-cyan group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </button>
+        <button onclick="mockConnect('Trust Wallet')" class="w-full p-4 rounded-xl glass-card-light hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group border border-neon-green/30 hover:border-neon-green/60">
+          <div class="w-12 h-12 rounded-xl bg-neon-green/15 flex items-center justify-center group-hover:bg-neon-green/25 transition-colors shadow-[0_0_20px_rgba(0,255,136,0.15)]">
+            <svg class="w-7 h-7 text-neon-green" viewBox="0 0 32 32" fill="none">
+              <rect x="2" y="2" width="28" height="28" rx="7" stroke="currentColor" stroke-width="2"/>
+              <circle cx="16" cy="16" r="5" fill="currentColor"/>
+              <path d="M16 4v4M16 24v4M4 16h4M24 16h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="text-left flex-1">
+            <div class="text-white font-bold font-exo text-base">Trust Wallet</div>
+            <div class="text-xs text-neon-green/70 font-exo">Tap to connect via WalletConnect</div>
+          </div>
+          <svg class="w-5 h-5 text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <!-- MetaMask -->
       <button onclick="mockConnect('MetaMask')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
         <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
           <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 4,9 7,17 12,22 17,17 20,9"/></svg>
@@ -1104,17 +1120,29 @@ tailwind.config = {
           <div class="text-white font-bold font-exo">MetaMask</div>
           <div class="text-xs text-gray-500">Browser Extension</div>
         </div>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-cyan group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
-      <button onclick="mockConnect('WalletConnect')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
-        <div class="w-10 h-10 rounded-lg bg-neon-cyan/20 flex items-center justify-center group-hover:bg-neon-cyan/30 transition-colors">
-          <svg class="w-6 h-6 text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+      <!-- OKX Wallet -->
+      <button onclick="mockConnect('OKX Wallet')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
+        <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
         <div class="text-left flex-1">
-          <div class="text-white font-bold font-exo">WalletConnect</div>
-          <div class="text-xs text-gray-500">Scan QR Code</div>
+          <div class="text-white font-bold font-exo">OKX Wallet</div>
+          <div class="text-xs text-gray-500">WalletConnect</div>
         </div>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-cyan group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <!-- Other Wallets -->
+      <button onclick="mockConnect('WalletConnect')" class="w-full p-4 rounded-xl glass-card hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group">
+        <div class="w-10 h-10 rounded-lg bg-neon-green/20 flex items-center justify-center group-hover:bg-neon-green/30 transition-colors">
+          <svg class="w-6 h-6 text-neon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+        </div>
+        <div class="text-left flex-1">
+          <div class="text-white font-bold font-exo">Other Wallets</div>
+          <div class="text-xs text-gray-500">WalletConnect • 50+ supported</div>
+        </div>
+        <svg class="w-4 h-4 text-gray-600 group-hover:text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
     </div>
     <p class="text-xs text-gray-600 text-center mt-6 font-exo">By connecting, you agree to our Terms of Service</p>
@@ -1125,10 +1153,10 @@ tailwind.config = {
 <!-- BUY MODAL (Mock) -->
 <!-- ════════════════════════════════════════ -->
 <div id="buy-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
-  <div class="glass-card-light rounded-2xl p-8 w-full max-w-lg mx-4 animate-slide-up border-gradient-cyan">
+  <div class="glass-card-light rounded-2xl p-8 w-full max-w-lg mx-4 animate-slide-up border-gradient-green">
     <div class="flex items-center justify-between mb-6">
-      <h3 class="text-xl font-bold font-orbitron text-white">Buy $NOVA</h3>
-      <button onclick="toggleBuyModal()" class="p-2 text-gray-500 hover:text-neon-cyan transition-colors cursor-pointer">
+      <h3 class="text-xl font-bold font-orbitron text-white">Buy $HOME</h3>
+      <button onclick="toggleBuyModal()" class="p-2 text-gray-500 hover:text-neon-green transition-colors cursor-pointer">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     </div>
@@ -1137,13 +1165,13 @@ tailwind.config = {
     <div class="mb-5">
       <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block">Select Tier</label>
       <div class="grid grid-cols-3 gap-2">
-        <button onclick="selectBuyTier('seed')" id="buy-tier-seed" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-white/10 text-gray-500 hover:border-neon-cyan/50 hover:text-neon-cyan transition-all tier-btn cursor-pointer">
+        <button onclick="selectBuyTier('seed')" id="buy-tier-seed" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-white/10 text-gray-500 hover:border-neon-green/50 hover:text-neon-green transition-all tier-btn cursor-pointer">
           Seed<br><span class="text-xs text-gray-600">$0.08</span>
         </button>
-        <button onclick="selectBuyTier('private')" id="buy-tier-private" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-neon-cyan text-neon-cyan bg-neon-cyan/5 transition-all tier-btn cursor-pointer">
-          Private<br><span class="text-xs text-neon-cyan">$0.10</span>
+        <button onclick="selectBuyTier('private')" id="buy-tier-private" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-neon-green text-neon-green bg-neon-green/5 transition-all tier-btn cursor-pointer">
+          Private<br><span class="text-xs text-neon-green">$0.10</span>
         </button>
-        <button onclick="selectBuyTier('public')" id="buy-tier-public" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-white/10 text-gray-500 hover:border-neon-cyan/50 hover:text-neon-cyan transition-all tier-btn cursor-pointer">
+        <button onclick="selectBuyTier('public')" id="buy-tier-public" class="p-3 rounded-xl text-sm font-orbitron font-bold border border-white/10 text-gray-500 hover:border-neon-green/50 hover:text-neon-green transition-all tier-btn cursor-pointer">
           Public<br><span class="text-xs text-gray-600">$0.15</span>
         </button>
       </div>
@@ -1154,15 +1182,15 @@ tailwind.config = {
       <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-2 block">Amount (BNB)</label>
       <div class="relative">
         <input type="number" id="buy-amount" value="5" min="0.5" max="30" step="0.1"
-               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white font-bold font-exo text-lg focus:outline-none focus:border-neon-cyan transition-colors"
+               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white font-bold font-exo text-lg focus:outline-none focus:border-neon-green transition-colors"
                oninput="updateBuyPreview()" />
         <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-orbitron font-bold text-sm">BNB</span>
       </div>
       <div class="flex flex-wrap justify-between gap-y-2 mt-2">
-        <button onclick="setBuyAmount(1)" class="text-xs text-gray-500 hover:text-neon-cyan font-exo cursor-pointer">1 BNB</button>
-        <button onclick="setBuyAmount(5)" class="text-xs text-gray-500 hover:text-neon-cyan font-exo cursor-pointer">5 BNB</button>
-        <button onclick="setBuyAmount(10)" class="text-xs text-gray-500 hover:text-neon-cyan font-exo cursor-pointer">10 BNB</button>
-        <button onclick="setBuyAmount(30)" class="text-xs text-gray-500 hover:text-neon-cyan font-exo cursor-pointer">30 BNB (Max)</button>
+        <button onclick="setBuyAmount(1)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">1 BNB</button>
+        <button onclick="setBuyAmount(5)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">5 BNB</button>
+        <button onclick="setBuyAmount(10)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">10 BNB</button>
+        <button onclick="setBuyAmount(30)" class="text-xs text-gray-500 hover:text-neon-green font-exo cursor-pointer">30 BNB (Max)</button>
       </div>
     </div>
 
@@ -1170,24 +1198,50 @@ tailwind.config = {
     <div class="glass-card rounded-xl p-4 mb-6 space-y-2">
       <div class="flex justify-between text-sm font-exo">
         <span class="text-gray-500">Tokens</span>
-        <span class="text-white font-bold"><span id="preview-tokens">50,000</span> $NOVA</span>
+        <span class="text-white font-bold"><span id="preview-tokens">50,000</span> $HOME</span>
       </div>
       <div class="flex justify-between text-sm font-exo">
         <span class="text-gray-500">Bonus (15%)</span>
-        <span class="text-neon-green font-bold">+<span id="preview-bonus">7,500</span> $NOVA</span>
+        <span class="text-neon-green font-bold">+<span id="preview-bonus">7,500</span> $HOME</span>
       </div>
       <div class="flex justify-between text-sm font-exo pt-2 border-t border-white/5">
         <span class="text-gray-500">Total</span>
-        <span class="text-neon-cyan font-bold text-lg"><span id="preview-total">57,500</span> $NOVA</span>
+        <span class="text-neon-green font-bold text-lg"><span id="preview-total">57,500</span> $HOME</span>
+      </div>
+    </div>
+
+    <!-- Pay With -->
+    <div class="mb-5">
+      <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-3 block">Pay With</label>
+      <div class="grid grid-cols-3 gap-2">
+        <button onclick="selectPayment('tpwallet')" id="pay-tpwallet"
+                class="p-3 rounded-xl text-xs font-orbitron font-bold border border-neon-green text-neon-green bg-neon-green/10 transition-all payment-btn cursor-pointer flex flex-col items-center gap-1">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            <path d="M12 3v4M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          TP Wallet
+        </button>
+        <button onclick="selectPayment('metamask')" id="pay-metamask"
+                class="p-3 rounded-xl text-xs font-orbitron font-bold border border-white/10 text-gray-500 hover:border-orange-400/50 hover:text-orange-400 transition-all payment-btn cursor-pointer flex flex-col items-center gap-1">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 4,9 7,17 12,22 17,17 20,9"/></svg>
+          MetaMask
+        </button>
+        <button onclick="selectPayment('walletconnect')" id="pay-walletconnect"
+                class="p-3 rounded-xl text-xs font-orbitron font-bold border border-white/10 text-gray-500 hover:border-neon-green/50 hover:text-neon-green transition-all payment-btn cursor-pointer flex flex-col items-center gap-1">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+          WalletConnect
+        </button>
       </div>
     </div>
 
     <!-- Send to wallet -->
-    <div class="mb-6 p-4 rounded-xl bg-neon-cyan/5 border border-neon-cyan/20">
+    <div class="mb-6 p-4 rounded-xl bg-neon-green/5 border border-neon-green/20">
       <div class="text-xs text-gray-500 font-exo mb-1">Send BNB to:</div>
       <div class="flex items-center gap-2">
-        <code class="text-neon-cyan font-mono text-sm break-all">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</code>
-        <button onclick="copyAddress()" class="p-1.5 text-gray-500 hover:text-neon-cyan transition-colors cursor-pointer shrink-0" title="Copy address">
+        <code class="text-neon-green font-mono text-sm break-all">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</code>
+        <button onclick="copyAddress()" class="p-1.5 text-gray-500 hover:text-neon-green transition-colors cursor-pointer shrink-0" title="Copy address">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
         </button>
       </div>
@@ -1195,9 +1249,9 @@ tailwind.config = {
 
     <button onclick="handlePurchase()"
             class="w-full py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
-                   bg-gradient-to-r from-neon-cyan to-neon-blue text-deep-900
-                   hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] transition-all duration-300 active:scale-95 cursor-pointer">
-      Confirm Purchase
+                   bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
+                   hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] transition-all duration-300 active:scale-95 cursor-pointer">
+      Subscribe with TP Wallet
     </button>
     <p class="text-xs text-gray-600 text-center mt-4 font-exo">This is a mock interface. No real transaction will occur.</p>
   </div>
@@ -1207,7 +1261,7 @@ tailwind.config = {
 <!-- TOAST NOTIFICATION -->
 <!-- ════════════════════════════════════════ -->
 <div id="toast" class="fixed bottom-4 sm:bottom-8 left-4 right-4 sm:left-auto sm:right-8 sm:max-w-sm z-[200] translate-y-[200%] opacity-0 transition-all duration-300 ease-out pointer-events-none">
-  <div class="glass-card-light rounded-xl px-5 py-4 flex items-center gap-3 border-gradient-cyan">
+  <div class="glass-card-light rounded-xl px-5 py-4 flex items-center gap-3 border-gradient-green">
     <svg class="w-5 h-5 text-neon-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
     <span id="toast-msg" class="text-sm font-exo text-white"></span>
   </div>
@@ -1251,7 +1305,7 @@ tailwind.config = {
       this.size = Math.random() * 2 + 0.5;
       this.speed = Math.random() * 0.5 + 0.2;
       this.opacity = Math.random() * 0.5 + 0.2;
-      this.hue = Math.random() > 0.5 ? 195 : 210; // cyan or blue
+      this.hue = Math.random() > 0.5 ? 145 : 160; // green spectrum
     }
     update() {
       this.y += this.speed;
@@ -1285,7 +1339,7 @@ tailwind.config = {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(0, 255, 255, ${0.06 * (1 - dist / connectionDist)})`;
+          ctx.strokeStyle = `rgba(0, 255, 136, ${0.06 * (1 - dist / connectionDist)})`;
           ctx.stroke();
         }
       }
@@ -1389,16 +1443,21 @@ function toggleWalletModal() {
 
 function mockConnect(wallet) {
   const btn = document.getElementById('wallet-btn-text');
+  const btnParent = document.getElementById('connect-wallet-btn');
   btn.textContent = '0x71C7...6b9F';
   toggleWalletModal();
   showToast(`Connected to ${wallet}`);
-  // Update dashboard if present
-  document.getElementById('connect-wallet-btn').classList.remove('from-neon-cyan','to-neon-blue','text-deep-900');
-  document.getElementById('connect-wallet-btn').classList.add('border','border-neon-green','text-neon-green','bg-transparent');
+  // Update button style to show connected state
+  btnParent.classList.remove('from-neon-green','to-neon-mint','text-deep-900');
+  btnParent.classList.add('border','border-neon-green','text-neon-green','bg-transparent');
+  // Update the hidden mobile text too
+  const mobileSpan = btnParent.querySelector('.sm\\:hidden');
+  if (mobileSpan) mobileSpan.textContent = '0x71C7...6b9F';
 }
 
 // ── Buy Modal ──
 let selectedTier = 'private';
+let selectedPayment = 'tpwallet';
 
 function toggleBuyModal() {
   const modal = document.getElementById('buy-modal');
@@ -1409,12 +1468,12 @@ function toggleBuyModal() {
 function selectBuyTier(tier) {
   selectedTier = tier;
   document.querySelectorAll('.tier-btn').forEach(b => {
-    b.classList.remove('border-neon-cyan', 'text-neon-cyan', 'bg-neon-cyan/5');
+    b.classList.remove('border-neon-green', 'text-neon-green', 'bg-neon-green/5');
     b.classList.add('border-white/10', 'text-gray-500');
   });
   const btn = document.getElementById(`buy-tier-${tier}`);
   btn.classList.remove('border-white/10', 'text-gray-500');
-  btn.classList.add('border-neon-cyan', 'text-neon-cyan', 'bg-neon-cyan/5');
+  btn.classList.add('border-neon-green', 'text-neon-green', 'bg-neon-green/5');
   updateBuyPreview();
 }
 
@@ -1450,11 +1509,23 @@ function handleBuy(tier) {
   selectBuyTier(tier);
 }
 
+function selectPayment(method) {
+  selectedPayment = method;
+  document.querySelectorAll('.payment-btn').forEach(b => {
+    b.classList.remove('border-neon-green', 'text-neon-green', 'bg-neon-green/10');
+    b.classList.add('border-white/10', 'text-gray-500');
+  });
+  const btn = document.getElementById(`pay-${method}`);
+  btn.classList.remove('border-white/10', 'text-gray-500');
+  btn.classList.add('border-neon-green', 'text-neon-green', 'bg-neon-green/10');
+}
+
 function handlePurchase() {
   const amount = parseFloat(document.getElementById('buy-amount').value) || 0;
   if (amount <= 0) { showToast('Please enter a valid amount'); return; }
   toggleBuyModal();
-  showToast(`Purchase order placed for ${amount} BNB — check your wallet to confirm`);
+  const methodNames = { tpwallet: 'TP Wallet', metamask: 'MetaMask', walletconnect: 'WalletConnect' };
+  showToast(`Subscription placed for ${amount} BNB via ${methodNames[selectedPayment]} — check your wallet to confirm`);
 }
 
 // ── FAQ Accordion ──
