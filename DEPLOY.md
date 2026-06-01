@@ -11,7 +11,7 @@ This is a **real Web3 presale** on **BNB Smart Chain** accepting **USDT (BEP-20)
 | Chain | BSC Mainnet (Chain 56) |
 | Accepted Token | USDT (0x55d398326f99059fF775485246999027B3197955) |
 | Frontend | HTML + Tailwind CSS + ethers.js v6 |
-| Wallet Support | Trust Wallet, MetaMask, OKX, WalletConnect |
+| Wallet Support | TokenPocket, MetaMask, OKX, WalletConnect |
 
 ---
 

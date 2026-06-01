@@ -327,13 +327,12 @@ let currentChainId = null;
                    bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
                    hover:shadow-[0_0_30px_rgba(0,255,136,0.5)] active:scale-95 shrink-0">
       <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
-        <!-- TP Wallet Icon -->
+        <!-- TokenPocket Icon -->
         <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-          <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
-          <circle cx="12" cy="12" r="4" fill="currentColor"/>
-          <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span id="wallet-btn-text" class="hidden sm:inline">Login with TP Wallet</span>
+        <span id="wallet-btn-text" class="hidden sm:inline">Login with TokenPocket</span>
         <span class="sm:hidden">TP Login</span>
       </span>
       <div class="absolute inset-0 bg-gradient-to-r from-neon-green/0 via-white/20 to-neon-green/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
@@ -1069,7 +1068,7 @@ let currentChainId = null;
           <svg class="w-5 h-5 text-neon-green shrink-0 transition-transform duration-300 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="faq-answer hidden px-6 pb-5 text-gray-400 font-exo text-sm leading-relaxed">
-          Click the "Connect Wallet" button in the top right corner. We support Trust Wallet, MetaMask, and any WalletConnect-compatible wallet. Simply scan the QR code or approve the connection in your wallet app.
+          Click the "Connect Wallet" button in the top right corner. We support TokenPocket, MetaMask, and any WalletConnect-compatible wallet. Simply scan the QR code or approve the connection in your wallet app.
         </div>
       </div>
       <div class="reveal glass-card rounded-xl overflow-hidden" style="transition-delay: 0.15s;">
@@ -1163,22 +1162,23 @@ let currentChainId = null;
       </button>
     </div>
     <div class="space-y-3">
-      <!-- Trust Wallet — Featured / Recommended -->
+      <!-- TokenPocket — Featured / Recommended -->
       <div class="relative">
         <div class="absolute -top-2.5 right-3 bg-neon-green text-deep-900 text-[10px] font-bold font-orbitron px-3 py-0.5 rounded-full tracking-widest z-10 shadow-[0_0_15px_rgba(0,255,136,0.4)]">
           RECOMMENDED
         </div>
-        <button onclick="connectWallet('Trust Wallet')" class="w-full p-4 rounded-xl glass-card-light hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group border border-neon-green/30 hover:border-neon-green/60">
+        <button onclick="connectWallet('TokenPocket')" class="w-full p-4 rounded-xl glass-card-light hover:bg-white/[0.08] transition-all duration-200 flex items-center gap-4 cursor-pointer group border border-neon-green/30 hover:border-neon-green/60">
           <div class="w-12 h-12 rounded-xl bg-neon-green/15 flex items-center justify-center group-hover:bg-neon-green/25 transition-colors shadow-[0_0_20px_rgba(0,255,136,0.15)]">
+            <!-- TokenPocket logo icon -->
             <svg class="w-7 h-7 text-neon-green" viewBox="0 0 32 32" fill="none">
-              <rect x="2" y="2" width="28" height="28" rx="7" stroke="currentColor" stroke-width="2"/>
-              <circle cx="16" cy="16" r="5" fill="currentColor"/>
-              <path d="M16 4v4M16 24v4M4 16h4M24 16h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <rect x="2" y="2" width="28" height="28" rx="8" stroke="currentColor" stroke-width="2"/>
+              <path d="M10 16l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="1" stroke-dasharray="4 2" opacity="0.5"/>
             </svg>
           </div>
           <div class="text-left flex-1">
-            <div class="text-white font-bold font-exo text-base">Trust Wallet</div>
-            <div class="text-xs text-neon-green/70 font-exo">Tap to connect via WalletConnect</div>
+            <div class="text-white font-bold font-exo text-base">TokenPocket</div>
+            <div class="text-xs text-neon-green/70 font-exo">Chrome Extension • Mobile App • Injected Provider</div>
           </div>
           <svg class="w-5 h-5 text-neon-green group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -1286,14 +1286,13 @@ let currentChainId = null;
     <div class="mb-5">
       <label class="text-xs text-gray-500 font-exo tracking-widest uppercase mb-3 block">Pay With</label>
       <div class="grid grid-cols-3 gap-2">
-        <button onclick="selectPayment('tpwallet')" id="pay-tpwallet"
+        <button onclick="selectPayment('tokenpocket')" id="pay-tokenpocket"
                 class="p-3 rounded-xl text-xs font-orbitron font-bold border border-neon-green text-neon-green bg-neon-green/10 transition-all payment-btn cursor-pointer flex flex-col items-center gap-1">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
-            <circle cx="12" cy="12" r="4" fill="currentColor"/>
-            <path d="M12 3v4M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          TP Wallet
+          TokenPocket
         </button>
         <button onclick="selectPayment('metamask')" id="pay-metamask"
                 class="p-3 rounded-xl text-xs font-orbitron font-bold border border-white/10 text-gray-500 hover:border-orange-400/50 hover:text-orange-400 transition-all payment-btn cursor-pointer flex flex-col items-center gap-1">
@@ -1323,7 +1322,7 @@ let currentChainId = null;
             class="w-full py-4 rounded-xl font-bold text-lg font-orbitron tracking-wide
                    bg-gradient-to-r from-neon-green to-neon-mint text-deep-900
                    hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] transition-all duration-300 active:scale-95 cursor-pointer">
-      Subscribe with TP Wallet
+      Subscribe with TokenPocket
     </button>
     <p class="text-xs text-gray-600 text-center mt-4 font-exo">This is a mock interface. No real transaction will occur.</p>
   </div>
@@ -1515,17 +1514,58 @@ function toggleWalletModal() {
 }
 
 /**
- * Connect real wallet via browser provider (MetaMask, Binance Wallet, OKX)
- * or trigger WalletConnect for TP Wallet
+ * Connect real wallet via browser provider.
+ *
+ * TokenPocket (https://tokenpocket.pro):
+ *   - Desktop: Chrome extension → injects window.ethereum (with isTokenPocket=true)
+ *   - Mobile: Built-in DApp browser also injects window.ethereum
+ *   - External browser: use tpocket:// deep link to open TokenPocket
  */
 async function connectWallet(walletType) {
   toggleWalletModal();
 
   try {
-    // ── Browser Extension Wallets ──
-    if (walletType === 'MetaMask' || walletType === 'OKX Wallet') {
+    // ── TokenPocket ──
+    if (walletType === 'TokenPocket') {
+      // Detect TokenPocket: it sets window.ethereum.isTokenPocket = true
+      const hasTP = window.ethereum && window.ethereum.isTokenPocket;
+
+      if (hasTP) {
+        // TokenPocket extension or in-app browser is active
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send('eth_requestAccounts', []);
+        signer = await provider.getSigner();
+        userAddress = await signer.getAddress();
+        const network = await provider.getNetwork();
+        currentChainId = Number(network.chainId);
+        await _setupContracts();
+        await _onWalletConnected();
+        showToast('Connected to TokenPocket — BSC ready');
+        return;
+      }
+
+      // TokenPocket not detected → guide user
+      if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        // Mobile: open TokenPocket via deep link
+        const currentUrl = encodeURIComponent(window.location.href);
+        window.open(`tpocket://browser?url=${currentUrl}`, '_blank');
+        showToast('Opening TokenPocket... Get it at tokenpocket.pro');
+        setTimeout(() => {
+          showToast('Install TokenPocket from tokenpocket.pro if not redirected');
+        }, 2500);
+        return;
+      }
+
+      // Desktop: prompt to install extension
+      showToast('Install TokenPocket Chrome extension from tokenpocket.pro');
+      window.open('https://www.tokenpocket.pro/', '_blank');
+      return;
+    }
+
+    // ── MetaMask ──
+    if (walletType === 'MetaMask') {
       if (!window.ethereum) {
-        showToast('No wallet detected. Please install MetaMask or use TP Wallet.');
+        showToast('No wallet detected. Install MetaMask (metamask.io) or TokenPocket.');
         return;
       }
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -1539,33 +1579,25 @@ async function connectWallet(walletType) {
       return;
     }
 
-    // ── Trust Wallet / WalletConnect ──
-    if (walletType === 'Trust Wallet') {
-      // Open Trust Wallet via deep link or WalletConnect
-      if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        // Mobile: deep link to Trust Wallet
-        const dappUrl = encodeURIComponent(window.location.href);
-        window.open(`trust://browser?url=${dappUrl}`, '_blank');
-        showToast('Opening Trust Wallet... If nothing happens, install Trust Wallet from your app store.');
-      }
-      // Try injected provider (Trust Wallet browser)
-      if (window.ethereum) {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        await provider.send('eth_requestAccounts', []);
-        signer = await provider.getSigner();
-        userAddress = await signer.getAddress();
-        const network = await provider.getNetwork();
-        currentChainId = Number(network.chainId);
-        await _setupContracts();
-        await _onWalletConnected();
+    // ── OKX Wallet ──
+    if (walletType === 'OKX Wallet') {
+      const okxProvider = window.okxwallet || window.ethereum;
+      if (!okxProvider) {
+        showToast('OKX Wallet not detected. Install from okx.com/web3');
         return;
       }
-      // Desktop: show WalletConnect QR
-      showToast('On desktop, use MetaMask. On mobile, open this site inside Trust Wallet browser.');
+      const provider = new ethers.BrowserProvider(okxProvider);
+      await provider.send('eth_requestAccounts', []);
+      signer = await provider.getSigner();
+      userAddress = await signer.getAddress();
+      const network = await provider.getNetwork();
+      currentChainId = Number(network.chainId);
+      await _setupContracts();
+      await _onWalletConnected();
       return;
     }
 
-    // ── Generic WalletConnect ──
+    // ── Other Wallets ──
     if (walletType === 'WalletConnect') {
       if (window.ethereum) {
         const provider = new ethers.BrowserProvider(window.ethereum);
@@ -1578,7 +1610,8 @@ async function connectWallet(walletType) {
         await _onWalletConnected();
         return;
       }
-      showToast('No wallet found. Please install a Web3 wallet or use mobile Trust Wallet.');
+      showToast('No wallet found. Install TokenPocket from tokenpocket.pro');
+      window.open('https://www.tokenpocket.pro/', '_blank');
       return;
     }
   } catch (err) {
@@ -1731,7 +1764,7 @@ async function refreshLiveData() {
 
 // ── Buy Modal (Real Web3) ──
 let selectedTier = 'private';
-let selectedPayment = 'tpwallet';
+let selectedPayment = 'tokenpocket';
 
 function toggleBuyModal() {
   if (!userAddress) {
@@ -1822,7 +1855,7 @@ if (window.ethereum) {
       userAddress = null;
       signer = null;
       const btn = document.getElementById('wallet-btn-text');
-      btn.textContent = 'Login with TP Wallet';
+      btn.textContent = 'Login with TokenPocket';
       const btnParent = document.getElementById('connect-wallet-btn');
       btnParent.classList.add('from-neon-green', 'to-neon-mint', 'text-deep-900');
       btnParent.classList.remove('border', 'border-neon-green', 'text-neon-green', 'bg-transparent');
