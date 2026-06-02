@@ -19,26 +19,33 @@ contract HOMEPresale {
     // ── Errors ──
     error NotOwner();
     error PresaleNotActive();
+    error PresaleStillActive();
     error BelowMinimum(uint256 min);
     error AboveMaximum(uint256 max);
     error HardCapReached();
+    error SoftCapNotReached();
+    error SoftCapAlreadyReached();
     error TierFull();
     error TransferFailed();
     error InvalidTier();
+    error NoContribution();
+    error AlreadyRefunded();
 
     // ── Events ──
     event Contributed(
         address indexed user,
-        string tier,
+        string indexed tier,
         uint256 usdtAmount,
         uint256 tokenAmount,
         uint256 bonusTokens,
         uint256 timestamp
     );
+    event Refunded(address indexed user, uint256 amount);
+    event FundsClaimed(uint256 amount);
     event CapsUpdated(uint256 softCap, uint256 hardCap);
     event TierUpdated(string tier, uint256 price, uint256 maxContributors);
     event PresaleToggled(bool active);
-    event FundsWithdrawn(address to, uint256 amount);
+    event BNBReceived(address indexed sender, uint256 amount);
 
     // ── Structs ──
     struct Tier {
@@ -65,6 +72,7 @@ contract HOMEPresale {
     mapping(address => uint256) public contributions;   // USDT contributed per wallet
     mapping(address => uint256) public tokensOwed;      // $HOME tokens owed per wallet
     mapping(address => string) public userTier;          // Which tier each user chose
+    mapping(address => bool) public refunded;            // Has user already refunded?
     string[] public tierKeys;                             // ["seed", "private", "public"]
     address[] public contributors;                        // List of all contributor addresses
 
@@ -115,8 +123,10 @@ contract HOMEPresale {
      * Flow:
      *   1. User calls USDT.approve(presaleAddress, _amount) first
      *   2. User calls contribute(_amount, "private")
-     *   3. Contract transfers USDT from user → treasuryWallet
+     *   3. Contract holds USDT until soft cap is reached
      *   4. Contract records contribution + calculates $HOME tokens owed
+     *   5. After soft cap: owner calls claimFunds() → USDT to treasury
+     *   6. If presale ends below soft cap: users call refund()
      */
     function contribute(uint256 _amount, string calldata _tier) external {
         if (!isActive) revert PresaleNotActive();
@@ -148,8 +158,8 @@ contract HOMEPresale {
         tokensOwed[msg.sender] += totalTokens;
         totalRaised += _amount;
 
-        // External call LAST (CEI pattern)
-        bool success = usdt.transferFrom(msg.sender, treasuryWallet, _amount);
+        // External call LAST (CEI pattern) — contract holds USDT until soft cap
+        bool success = usdt.transferFrom(msg.sender, address(this), _amount);
         if (!success) revert TransferFailed();
 
         emit Contributed(msg.sender, _tier, _amount, baseTokens, bonusTokens, block.timestamp);
@@ -248,6 +258,19 @@ contract HOMEPresale {
     }
 
     /**
+     * @notice Owner claims accumulated USDT after soft cap is reached
+     * @dev Only callable when totalRaised >= softCap. Sends all USDT to treasury.
+     */
+    function claimFunds() external onlyOwner {
+        if (totalRaised < softCap) revert SoftCapNotReached();
+        uint256 balance = usdt.balanceOf(address(this));
+        if (balance == 0) revert TransferFailed();
+        bool ok = usdt.transfer(treasuryWallet, balance);
+        if (!ok) revert TransferFailed();
+        emit FundsClaimed(balance);
+    }
+
+    /**
      * @notice Withdraw any BNB accidentally sent to contract
      */
     function withdrawBNB() external onlyOwner {
@@ -268,9 +291,33 @@ contract HOMEPresale {
         if (bal > 0) tok.transfer(treasuryWallet, bal);
     }
 
-    // ── Receive (reject accidental BNB sends) ──
+    // ── Public: Refund ──
+
+    /**
+     * @notice Refund contribution if presale ends below soft cap
+     * @dev Only callable when presale is NOT active AND totalRaised < softCap
+     *      Each user can only refund once. Returns full USDT contribution.
+     */
+    function refund() external {
+        if (isActive) revert PresaleStillActive();
+        if (totalRaised >= softCap) revert SoftCapAlreadyReached();
+        uint256 amount = contributions[msg.sender];
+        if (amount == 0) revert NoContribution();
+        if (refunded[msg.sender]) revert AlreadyRefunded();
+
+        refunded[msg.sender] = true;
+        contributions[msg.sender] = 0;
+        tokensOwed[msg.sender] = 0;
+
+        bool ok = usdt.transfer(msg.sender, amount);
+        if (!ok) revert TransferFailed();
+
+        emit Refunded(msg.sender, amount);
+    }
+
+    // ── Receive ──
     receive() external payable {
-        // Accept BNB but log it — owner can withdraw via withdrawBNB()
+        emit BNBReceived(msg.sender, msg.value);
     }
 }
 
